@@ -1,0 +1,14 @@
+
+include 'bcapi' //标准api
+include 'memsvc' //pos记账通过节点
+include 'peer' //普通节点
+include 'p22p' //优化的点对点协议，将来申请专利（logN算法）
+include 'slicer' //多链机制
+include 'backend:bc_mysql' //落地mysql模式（高可靠多机）
+include 'backend:bc_redis'//快速节点redis模式，待完善开发
+include 'ecrypto'   // 标准的加密库
+include 'vms:dockervm' // 智能合约，docker模式
+include 'consensus:cs_api'  //共识组件：共识api
+include 'consensus:cs_raft' //共识组件：raft共识
+include 'consensus:cs_dpos' //共识组件：dpos共识
+rootProject.name = 'chaincore'

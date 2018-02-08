@@ -1,0 +1,30 @@
+
+buildscript {
+
+	dependencies { 
+	classpath "onight.osgi:zpp-gradle:3.0.0"
+	 }
+}
+
+apply plugin: 'zippo'
+
+
+subprojects {
+	project.group='org.cwv.chaincode'
+	
+	apply plugin: 'zippo'
+    if(project.name!='bcapi') {
+    	dependencies {
+		compile ("org.cwv:org.cwv.v.bcapi:3.0.0")
+	}
+    }
+
+
+	dependencies {
+		compile ("org.fc.zippo:org.fc.zippo.oapi:3.2.0")
+	}
+
+	version = '3.0.0'
+
+	jar { manifest.attributes provider: 'org.fc.chaincode' }
+}
