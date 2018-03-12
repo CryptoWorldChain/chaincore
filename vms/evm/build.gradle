@@ -1,0 +1,17 @@
+
+version = '3.0.0'
+repositories{
+	maven{ url "http://dl.bintray.com/ethereum/maven/"}
+}
+
+dependencies { 
+	//	 testCompile 'junit:junit:4.12'
+	includeInJar 'org.ethereum:ethereumj-core:1.5.0-RELEASE'
+}
+
+jar {
+	manifest{
+		//		attributes( 'Spring-Context': 'applicationContext-common.xml, applicationContext-beans.xml')
+		attributes( 'Import-Ignore':'org.spongycastle,com.madgag.spongycastle')
+	}
+}

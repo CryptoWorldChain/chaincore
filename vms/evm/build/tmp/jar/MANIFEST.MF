@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.fc.brewchain.bcapi
+Import-Lib: lib
+Bundle-ManifestVersion: 2
+Bnd-LastModified: 1516505676000
+Import-Package: org.apache.commons.codec.binary;version="[1.10,2)",org
+ .apache.commons.lang3;version="[3.5,4)",org.ethereum.crypto,org.ether
+ eum.crypto.jce,org.spongycastle.jce.spec,org.spongycastle.math.ec,org
+ .spongycastle.util.encoders,scala;version="[2.11,3)",scala.collection
+ ;version="[2.11,3)",scala.collection.generic;version="[2.11,3)",scala
+ .collection.immutable;version="[2.11,3)",scala.collection.mutable;ver
+ sion="[2.11,3)",scala.reflect;version="[2.11,3)",scala.runtime;versio
+ n="[2.11,3)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.7))"
+DynamicImport-Package: *
+Tool: Bnd-3.2.0.201605172007
+Export-Package: org.fc.brewchain.bcapi,org.fc.brewchain.bcapi.crypto;u
+ ses:="scala,scala.collection,scala.reflect,scala.runtime",org.fc.brew
+ chain.bcapi.exception
+Bundle-Name: bcapi
+Bundle-Version: 3.0.0
+provider: org.fc.brewchain
+Import-Ignore: org.spongycastle,org.ethereum.crypto
+Import-Ignore-ZP: com.googlecode.protobuf,com.google.protobuf,com.esot
+ ericsoftware.kryo,jnr.posix,org.apache.avro
+Created-By: 1.8.0_112 (Oracle Corporation)
+

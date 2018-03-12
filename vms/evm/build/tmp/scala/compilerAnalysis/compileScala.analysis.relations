@@ -1,0 +1,46 @@
+products:
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> bcapi/build/classes/main/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap$$anonfun$mapToBigInt$1.class
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> bcapi/build/classes/main/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap$$anonfun$mapToHex$1.class
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> bcapi/build/classes/main/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap$.class
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> bcapi/build/classes/main/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.class
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> bcapi/build/classes/main/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper$.class
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> bcapi/build/classes/main/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.class
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> bcapi/build/classes/main/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/KeyPair$.class
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> bcapi/build/classes/main/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/KeyPair.class
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.scala -> bcapi/build/classes/main/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC$$anonfun$1.class
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.scala -> bcapi/build/classes/main/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC$.class
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.scala -> bcapi/build/classes/main/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.class
+binary dependencies:
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> /Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home/jre/lib/rt.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> /re/gradlecache/caches/modules-2/files-2.1/com.madgag.spongycastle/core/1.53.0.0/619f704791db186304325bd129b2e7ec34f77438/core-1.53.0.0.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> /re/gradlecache/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.5/6c6c702c89bfff3cd9e80b04d668c5e190d588c6/commons-lang3-3.5.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> /re/gradlecache/caches/modules-2/files-2.1/org.ethereum/ethereumj-core/1.5.0-RELEASE/8f4f1fce2811f98763b51c9e827cd6305d804e68/ethereumj-core-1.5.0-RELEASE.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> /re/gradlecache/caches/modules-2/files-2.1/org.scala-lang/scala-library/2.11.8/ddd5a8bced249bedd86fb4578a39b9fb71480573/scala-library-2.11.8.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> /Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home/jre/lib/rt.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> /re/gradlecache/caches/modules-2/files-2.1/com.googlecode.protobuf-java-format/protobuf-java-format/1.4/b8163b6940102c1808814471476f5293dfb419df/protobuf-java-format-1.4.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> /re/gradlecache/caches/modules-2/files-2.1/com.madgag.spongycastle/core/1.53.0.0/619f704791db186304325bd129b2e7ec34f77438/core-1.53.0.0.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> /re/gradlecache/caches/modules-2/files-2.1/com.madgag.spongycastle/prov/1.53.0.0/72c4892e05c7563fbab0c4ada0187cd879113389/prov-1.53.0.0.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> /re/gradlecache/caches/modules-2/files-2.1/commons-codec/commons-codec/1.10/4b95f4897fa13f2cd904aee711aeafc0c5295cd8/commons-codec-1.10.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> /re/gradlecache/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.5/6c6c702c89bfff3cd9e80b04d668c5e190d588c6/commons-lang3-3.5.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> /re/gradlecache/caches/modules-2/files-2.1/org.ethereum/ethereumj-core/1.5.0-RELEASE/8f4f1fce2811f98763b51c9e827cd6305d804e68/ethereumj-core-1.5.0-RELEASE.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> /re/gradlecache/caches/modules-2/files-2.1/org.scala-lang/scala-library/2.11.8/ddd5a8bced249bedd86fb4578a39b9fb71480573/scala-library-2.11.8.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.scala -> /Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home/jre/lib/rt.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.scala -> /re/gradlecache/caches/modules-2/files-2.1/com.madgag.spongycastle/core/1.53.0.0/619f704791db186304325bd129b2e7ec34f77438/core-1.53.0.0.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.scala -> /re/gradlecache/caches/modules-2/files-2.1/org.ethereum/ethereumj-core/1.5.0-RELEASE/8f4f1fce2811f98763b51c9e827cd6305d804e68/ethereumj-core-1.5.0-RELEASE.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.scala -> /re/gradlecache/caches/modules-2/files-2.1/org.projectlombok/lombok/1.16.14/8486573ff5a5f17f48920c860caf534e7461976b/lombok-1.16.14.jar
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.scala -> /re/gradlecache/caches/modules-2/files-2.1/org.scala-lang/scala-library/2.11.8/ddd5a8bced249bedd86fb4578a39b9fb71480573/scala-library-2.11.8.jar
+source dependencies:
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala
+external dependencies:
+class names:
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> org.fc.brewchain.bcapi.crypto.BitMap
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> org.fc.brewchain.bcapi.crypto.BitMap$
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> org.fc.brewchain.bcapi.crypto.BitMap$$anonfun$mapToBigInt$1
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/BitMap.scala -> org.fc.brewchain.bcapi.crypto.BitMap$$anonfun$mapToHex$1
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> org.fc.brewchain.bcapi.crypto.EncHelper
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> org.fc.brewchain.bcapi.crypto.EncHelper$
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> org.fc.brewchain.bcapi.crypto.KeyPair
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/EncHelper.scala -> org.fc.brewchain.bcapi.crypto.KeyPair$
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.scala -> org.fc.brewchain.bcapi.crypto.TestC
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.scala -> org.fc.brewchain.bcapi.crypto.TestC$
+   bcapi/src/main/scala/org/fc/brewchain/bcapi/org.fc.brewchain.ecrypto/TestC.scala -> org.fc.brewchain.bcapi.crypto.TestC$$anonfun$1
