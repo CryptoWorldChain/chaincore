@@ -1,0 +1,11 @@
+  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="onight.act.persist.mysql.mapper.UserCountMapper">
+
+	<select id="selectUserCount" resultType="onight.act.persist.entity.UserCount">
+		select count(1) as
+		user_count,
+		CUST_ID as cust_id
+		from T_ACT_INFO
+		where CUST_ID = #{cust_id,jdbcType=VARCHAR}
+	</select>
+</mapper>
