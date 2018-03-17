@@ -1,0 +1,20 @@
+
+version = '3.0.0'
+
+dependencies {
+	includeInJar 'org.springframework.data:spring-data-redis:1.7.8.RELEASE'
+	includeInJar 'redis.clients:jedis:2.8.1'
+//	includeInJar 'org.apache.commons:commons-pool2:2.4.2'
+	//includeInJar 'com.lambdaworks:lettuce:2.3.3'
+	includeInJar 'biz.paluch.redis:lettuce:3.4.2.Final'
+	//	 testCompile 'junit:junit:4.12'
+}
+
+jar {
+	manifest{
+		//		attributes( 'Spring-Context': 'applicationContext-common.xml, applicationContext-beans.xml')
+		attributes( 'Import-Ignore':'org.springframework,redis.clients.jedis')
+		attributes( 'DynamicImport-Package': '*')
+		attributes( 'Import-Lib': 'lib')
+	}
+}
