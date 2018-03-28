@@ -1,0 +1,95 @@
+    {
+      "ltype": "CQSSC",
+      "steps":[
+        {
+          "gs_ecode":"INIT",
+          "gs_chcode":"初始化",
+          "gs_desc":"游戏期号初始化，入库ISSUE表完成",
+          "timesec_offset":0,
+          "gs_order": "001",
+          "next_orders":"002",
+          "evm_script_id":"263d6c79cb7799c0ee88dc3b6716c70e",
+          "evm_params":"bfd392ddbda607313ad7e4721a112e10e247f037,8a1de0c0580a36c12f667f81d6e65eac25944365"
+        },
+        {
+          "gs_ecode":"SALE_PREPARE",
+          "gs_chcode":"预售中",
+          "timesec_offset": -300,
+          "gs_desc":"与官方数据同步，期号数据准备成功，等待开售，一般提前5分钟来获取",
+          "gs_order": "002",
+          "next_orders":"003"
+          "evm_script_id":"475c03e782e407df6abc2e21acab41d3",
+          "evm_params":"6051c35e6f8148c68475a92053dc40e"
+        },
+        {
+          "gs_ecode":"SALE_PREPARE",
+          "gs_chcode":"正常销售中",
+          "timesec_offset":0,
+          "gs_desc":"游戏正常销售中*,-30表示提前30秒结束",
+          "gs_order": "003",
+          "next_orders":"005"
+        },
+        {
+          "gs_ecode":"SALE_DONE",
+          "gs_chcode":"销售结束",
+          "timesec_offset":-30,
+          "gs_desc":"游戏销售正常结束",
+          "gs_order": "005",
+          "next_orders":"006"
+        },
+        {
+          "gs_ecode":"WAGER_LOCK",
+          "gs_chcode":"数据封存",
+          "gs_desc":"备份并封存本期销售数据",
+          "gs_order": "006",
+          "next_orders": "007",
+          "evm_script_id":"f9ead7fd4ad4ce050b3ec58b2d1f2e59",
+          "evm_params":"44c155255d395937f79eb83ea8b676b082f15fb8"
+        },
+        {
+          "gs_ecode":"WIN_NUM_GET",
+          "gs_chcode":"获取开奖号码",
+          "gs_order": "007",
+          "next_orders":"010",
+          "evm_script_id":"e7d02aec38cfd6ff68d29150fb60b52a",
+          "evm_params":"44c155255d395937f79eb83ea8b676b082f15fb8"
+        },
+        {
+          "gs_ecode":"WIN_CALCULATE",
+          "gs_chcode":"算奖",
+          "gs_desc":"计算中奖结果",
+          "gs_order": "010",
+          "next_orders":"012",
+          "evm_script_id":"614c6073b549e4b45970a307af0c7a6f",
+          "evm_params":"44c155255d395937f79eb83ea8b676b082f15fb8"
+        },
+        {
+          "gs_ecode":"MONEY_DISPATCH",
+          "gs_chcode":"派奖",
+          "gs_desc":"将中奖金额派奖到资金账户",
+          "gs_order": "012",
+          "next_orders":"013",
+          "evm_script_id":"c11fc5d9d88183ecbba898043e57c907",
+          "evm_params":"44c155255d395937f79eb83ea8b676b082f15fb8"
+        },
+        {
+          "gs_ecode":"PROFIT_DISPATCH",
+          "gs_chcode":"返点",
+          "gs_desc":"计算返点给资金账户",
+          "gs_order": "013",
+          "next_orders":"999"
+          "evm_script_id":"8e1036ca7f3327e0c8c1ba66d527bde2",
+          "evm_params":"165d9d635dafec7b37df3af697a17b2aee5b0530,eeb67d8f39a111cf4412f43b1e5db46c17f8464b"
+        },
+        {
+          "gs_ecode":"LAST",
+          "gs_chcode":"期结束",
+          "gs_desc":"本期结束",
+          "gs_order": "999",
+          "node_type":"1",
+          "wait_orders":"013",
+          "evm_script_id":"1ed752c996dc4d1879e565a09fb3c6c5",
+          "evm_params":"d642b5a320331f2ec44080629ea19a4527ba3ca0"
+        }
+      ]
+    }

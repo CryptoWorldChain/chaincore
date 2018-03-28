@@ -12,6 +12,9 @@ import onight.tfw.ntrans.api.NActor
 import onight.oapi.scala.traits.OLog
 import org.fc.brewchain.p22p.node.PNode
 import onight.tfw.otransio.api.PackHeader
+import org.fc.brewchain.bcapi.BCPacket
+import org.fc.brewchain.p22p.node.NodeInstance
+import org.apache.commons.lang3.StringUtils
 
 @NActorProvider
 object MessageSender extends NActor with OLog {
@@ -21,24 +24,35 @@ object MessageSender extends NActor with OLog {
   @BeanProperty
   var sockSender: IPacketSender = null;
 
+  def appendUid(pack: BCPacket, node: PNode): Unit = {
+    if (node != NodeInstance.root()
+      && !StringUtils.equals(node.bcuid, NodeInstance.root().bcuid)) {
+      pack.putHeader(PackHeader.PACK_TO, node.bcuid);
+      pack.putHeader(PackHeader.PACK_URI, node.uri);
+    } else {
+      log.debug("No need appendUid for local node");
+    }
+    pack.putHeader(PackHeader.PACK_FROM, NodeInstance.root().bcuid);
+  }
   def sendMessage(gcmd: String, body: Message, node: PNode, cb: CallBack[FramePacket]) {
-    val pack = PacketHelper.buildFromBody(body, gcmd);
-    pack.putHeader(PackHeader.PACK_TO, node.name);
-    pack.putHeader(PackHeader.PACK_TO_IDX, "" + node.node_idx);
-    pack.putHeader(PackHeader.PACK_URI, node.uri);
+    val pack = BCPacket.buildSyncFrom(body, gcmd.substring(0, 3), gcmd.substring(3));
+    appendUid(pack, node)
+    log.debug("sendMessage:" + pack)
     sockSender.asyncSend(pack, cb)
   }
   def postMessage(gcmd: String, body: Message, node: PNode) {
-    val pack = PacketHelper.buildFromBody(body, gcmd);
-    pack.putHeader(PackHeader.PACK_TO, node.name);
-    pack.putHeader(PackHeader.PACK_TO_IDX, "" + node.node_idx);
-    pack.putHeader(PackHeader.PACK_URI, node.uri);
+    val pack = BCPacket.buildAsyncFrom(body, gcmd.substring(0, 3), gcmd.substring(3));
+    appendUid(pack, node)
+    log.debug("postMessage:" + pack)
     sockSender.post(pack)
   }
 
   def dropNode(node: PNode) {
-    sockSender.tryDropConnection("" + node.node_idx);
-    sockSender.tryDropConnection(node.name);
+    sockSender.tryDropConnection(node.bcuid);
+  }
+
+  def changeNodeName(oldName: String, newName: String) {
+    sockSender.changeNodeName(oldName, newName);
   }
 }
 
