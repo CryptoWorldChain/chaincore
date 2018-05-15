@@ -1,0 +1,49 @@
+
+buildscript {
+	dependencies { 
+		classpath "onight.osgi:zpp-gradle:3.0.0"
+		classpath "org.brewchain:org.brewchain.bcapi:3.3.3"
+		classpath "org.brewchain:org.brewchain.account:1.0.3"
+	 }
+}
+
+version = '1.0.0'
+
+project.group='org.brewchain'
+
+apply plugin: 'zippo'
+
+
+dependencies {
+	//	 testCompile 'junit:junit:4.12'
+	compile ("org.fc.zippo:org.fc.zippo.oapi:3.3.0")
+	
+    includeInJar "com.madgag.spongycastle:core:1.58.0.0"
+    
+	//compile 'com.google.guava:guava:19.0'
+
+    includeInJar "com.google.code.findbugs:jsr305:3.0.0"
+    includeInJar "org.apache.commons:commons-collections4:4.0"
+    
+	includeInJar 'com.fasterxml.jackson:jackson-parent:2.5'
+    includeInJar "com.fasterxml.jackson.core:jackson-databind:2.5.1"
+    
+    includeInJar "org.ethereum:solcJ-all:0.4.8"	
+    
+	compile 'org.brewchain:org.brewchain.bcapi:3.3.3'
+	compile 'org.brewchain:org.brewchain.ecrypto:3.0.5'
+	
+    compile 'org.brewchain:org.brewchain.account:1.0.3'
+    
+	compile 'org.osgi:org.osgi.annotation:6.0.0'
+	
+}
+
+
+jar {
+	manifest{
+		// attributes( 'Spring-Context': 'applicationContext-common.xml, applicationContext-beans.xml')
+		attributes( 'Import-Ignore':'com.fasterxml,org.spongycastle.util,org.brewchain,org.apache.maven.model,org.apache.commons.collections4,org.apache.felix.ipojo')
+		attributes( 'provider':'org.brewchain')
+	}
+}

@@ -1,0 +1,11 @@
+build
+bin
+.gradle
+gradle
+classes
+.settings
+.DS_STORE
+.DS_Store
+odb.*
+logs
+.cache-main

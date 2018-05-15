@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package org.brewchain.account.gens;
+
+// bc_unsend_tx -- 未发送交易
+// { bc_unsend_tx, 'txHash1' }, { bc_unsend_tx, 'txHash2' }, { bc_unsend_tx, 'txHash3' }
+
+// bc_wait_tx -- 已确认未block交易
+// 
+
+message SingleTransaction {
+	bytes txHash = 1;
+	int32 nonce = 2;
+	int32 fee = 3;
+	int32 feeLimit = 4;
+	bytes receiveAddress= 5;
+	bytes senderAddress = 6;
+	int64 amount= 7;
+	bytes data= 8;
+	int64 timestamp = 9;
+	bytes exdata = 10;
+	string signature = 11;
+	string pubKey = 12;
+	repeated bytes delegate = 13;
+	string token = 14;
+}
+
+message MultiTransaction {
+	bytes txHash = 1;
+	MultiTransactionBody txBody = 2;
+} 
+
+message MultiTransactionBody {
+	repeated MultiTransactionInput inputs = 1;
+	repeated MultiTransactionOutput outputs = 2;
+	bytes exdata = 3;
+	repeated MultiTransactionSignature signatures = 4;
+	repeated bytes delegate = 5;
+	bytes data = 6;
+	int64 timestamp = 7;
+}
+
+message MultiTransactionInput {
+	int32 nonce = 1;
+	int32 fee = 2;
+	int32 feeLimit = 3;
+	bytes address = 4;
+	int64 amount= 5;
+	string pubKey = 6;
+	string token = 7;
+	string symbol = 8;
+	bytes cryptoToken = 9;
+}
+
+message MultiTransactionOutput {
+	bytes address= 1;
+	int64 amount= 2;
+	string symbol = 3;
+	bytes cryptoToken = 4;
+}
+
+message MultiTransactionSignature {
+	string signature = 1;
+	string pubKey = 2;
+}

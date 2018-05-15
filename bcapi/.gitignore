@@ -1,0 +1,13 @@
+build
+bin
+.gradle
+gradle
+felix-cache
+classes
+rolling/
+.settings
+.DS_STORE
+.DS_Store
+conf/startup.properties
+odb.*
+logs

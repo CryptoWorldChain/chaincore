@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package org.brewchain.account.call.gens;
+
+message InternalCallArguments {
+    string method = 1;
+    repeated string params = 2;
+}

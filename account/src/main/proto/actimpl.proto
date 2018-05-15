@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package org.brewchain.account.gens;
+import "act.proto";
+
+enum PACTModule {
+	ACT = 0; // 账户，合约，合约代码
+};
+enum PACTCommand {
+    CAC = 0; // 保存账户，合约
+    GAC = 1; // 获取账户，合约
+    UAC = 2; // 创建多重签名账户
+}
+
+message ReqCreateAccount {
+    string address = 1;
+    string pubKey = 2;
+}
+
+message RespCreateAccount {
+    int32 retCode = 1;
+}
+
+message ReqCreateUnionAccount {
+    string address = 1;
+    int64 max = 2;
+    int64 acceptMax = 3;
+    int32 acceptLimit = 4;
+    repeated string relAddress = 5;
+    repeated string signature = 6;
+    repeated string pubKey = 7;
+}
+
+message RespCreateUnionAccount {
+    int32 retCode = 1;
+}
+
+message ReqGetAccount {
+    string address = 1;
+}
+
+message RespGetAccount {
+    int32 retCode = 1;
+    string address = 2;
+    AccountValueImpl account = 3;
+    
+}
+
+message ReqCreateContract {
+    Contract contract = 1;
+}
+
+message RespCreateContract {
+    int32 retCode = 1;
+}
+
+message AccountValueImpl {
+    int32 nonce = 1;
+    int64 balance = 2;
+    string pubKey = 3;
+    int64 max = 4;
+    int64 acceptMax = 5;
+    int32 acceptLimit = 6;
+    repeated string address = 7;
+    repeated AccountTokenValueImpl tokens = 8;
+    repeated AccountCryptoValueImpl cryptos = 9;
+}
+
+message AccountTokenValueImpl {
+    string token = 1;
+    int64 balance = 2;
+}
+
+message AccountCryptoValueImpl {
+    string symbol = 1; // 用于分类ERC721 Token的标记
+    repeated AccountCryptoTokenImpl tokens = 2;
+}
+
+message AccountCryptoTokenImpl {
+    string hash = 1; // Token的hash，hash(index,total,code,name,timestamp)
+    int64 timestamp = 2; // Token创建时间
+    int32 index = 3; // 该Token发行时的索引
+    int32 total = 4; // 该Token的发行总数量
+    string code = 5; // Token的编号
+    string name = 6; // Token的名称
+    string owner = 7; // 所有人的账户地址
+    int32 nonce = 8; // 交易次数
+    int64 ownertime = 9; // 所有人获取时间
+}

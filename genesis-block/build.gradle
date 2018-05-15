@@ -1,0 +1,45 @@
+
+buildscript {
+	dependencies { 
+		classpath "onight.osgi:zpp-gradle:3.0.0"
+		classpath "org.brewchain:org.brewchain.bcapi:3.3.3"
+		classpath "org.brewchain:org.brewchain.account:1.0.5"
+	 }
+}
+
+version = '1.0.0'
+
+project.group='org.brewchain'
+
+apply plugin: 'zippo'
+
+
+dependencies {
+	//	 testCompile 'junit:junit:4.12'
+	compile 'org.fc.zippo:org.fc.zippo.oapi:3.3.0'
+	
+	// compile ("com.sleepycat:je:5.0.73")
+	
+	// for SHA3 and SECP256K1
+    // includeInJar "com.madgag.spongycastle:core:1.54.0.0"
+    // includeInJar "com.madgag.spongycastle:prov:1.54.0.0"
+    // includeInJar "com.typesafe:config:1.2.1"
+    
+	//  compile 'org.fc.zippo:org.fc.zippo.oapi:3.3.0'
+	// compile 'com.google.guava:guava:19.0'
+	// compile ("org.brewchain:org.brewchain.bcapi:3.2.8")
+	// compile ("org.brewchain:org.brewchain.bc_bdb:3.0.6")
+	compile 'org.brewchain:org.brewchain.bcapi:3.3.3'
+    // compile ("org.brewchain:org.brewchain.ecrypto:3.0.3")
+    compile 'org.brewchain:org.brewchain.account:1.0.5'
+	compile 'org.osgi:org.osgi.annotation:6.0.0'
+}	
+
+
+jar {
+	manifest{
+		// attributes( 'Spring-Context': 'applicationContext-common.xml, applicationContext-beans.xml')
+		attributes( 'Import-Ignore':'scalaj.http,org.fc.brewchain')
+		attributes( 'provider':'org.brewchain')
+	}
+}

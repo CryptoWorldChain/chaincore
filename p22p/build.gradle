@@ -1,18 +1,37 @@
-
+buildscript {
+	  repositories {
+	    maven {
+	      url "https://plugins.gradle.org/m2/"
+	    }
+	  }
+	dependencies { 
+		classpath "onight.osgi:zpp-gradle:3.2.0"
+	 }
+}
 version = '3.0.0'
+
 repositories{
 	maven{ url "http://dl.bintray.com/ethereum/maven/"}
 }
+ 
+ 
+project.group='org.brewchain'
+
+apply plugin: 'zippo'
 
 dependencies {
 	//	 testCompile 'junit:junit:4.12'
-	//includeInJar 'org.ethereum:ethereumj-core:1.4.3-RELEASE'
+	compile ("org.fc.zippo:org.fc.zippo.oapi:3.3.2")
+	//compile "com.madgag.spongycastle:core:1.58.0.0"
+    //compile "com.madgag.spongycastle:prov:1.58.0.0"
+	
+	compile 'org.osgi:org.osgi.annotation:6.0.0'
+	
+	compile ("org.brewchain:org.brewchain.bcapi:3.3.2")
 }
 
 jar {
 	manifest{
-		//attributes( 'Spring-Context': 'applicationContext-common.xml, applicationContext-beans.xml')
-				attributes( 'Import-Ignore':'org.spongycastle,org.ethereum.crypto')
-
+		attributes( 'Import-Ignore':'')
 	}
 }

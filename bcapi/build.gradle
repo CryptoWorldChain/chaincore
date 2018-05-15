@@ -1,0 +1,37 @@
+
+buildscript {
+	dependencies { 
+		classpath "onight.osgi:zpp-gradle:3.2.0"
+	 }
+}
+version = '3.3.3' 
+
+repositories{
+	maven{ url "http://dl.bintray.com/ethereum/maven/"}
+}
+ 
+
+project.group='org.brewchain'
+
+apply plugin: 'zippo'
+
+
+dependencies {
+	//	 testCompile 'junit:junit:4.12'
+	compile ("org.fc.zippo:org.fc.zippo.oapi:3.3.2")
+	compile 'joda-time:joda-time:2.9.9'
+	
+	
+	// for SHA3 and SECP256K1
+	compile 'org.osgi:org.osgi.annotation:6.0.0'
+	
+}
+
+
+jar {
+	manifest{
+		//		attributes( 'Spring-Context': 'applicationContext-common.xml, applicationContext-beans.xml')
+		attributes( 'Import-Ignore':'org.spongycastle')
+		attributes( 'provider':'org.brewchain')
+	}
+}

@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package org.brewchain.account.gens;
+
+
+message Account {
+    bytes address = 1;
+    AccountValue value = 2;
+}
+
+message AccountValue {
+    int32 nonce = 1;
+    int64 balance = 2;
+    bytes pubKey = 3;
+    int64 max = 4;
+    int64 acceptMax = 5;
+    int32 acceptLimit = 6;
+    repeated bytes address = 7;
+    repeated AccountTokenValue tokens = 8;
+    repeated AccountCryptoValue cryptos = 9;
+}
+
+message AccountTokenValue {
+    string token = 1;
+    int64 balance = 2;
+}
+
+message AccountCryptoValue {
+    string symbol = 1; // 用于分类ERC721 Token的标记
+    repeated AccountCryptoToken tokens = 2;
+}
+
+message AccountCryptoToken {
+    bytes hash = 1; // Token的hash，hash(index,total,code,name,timestamp)
+    int64 timestamp = 2; // Token创建时间
+    int32 index = 3; // 该Token发行时的索引
+    int32 total = 4; // 该Token的发行总数量
+    string code = 5; // Token的编号
+    string name = 6; // Token的名称
+    bytes owner = 7; // 所有人的账户地址
+    int32 nonce = 8; // 交易次数
+    int64 ownertime = 9; // 所有人获取时间
+}
+
+message Contract {
+    bytes address = 1;
+    ContractValue value = 2;
+}
+
+message ContractValue {
+    int32 nonce = 1;
+    int64 balance = 2;
+    bytes storage = 3;
+    bytes codeHash = 4;
+    bytes code = 5;
+    bytes data = 6;
+}
+
+message ICO {
+    repeated ICOValue value = 1;
+}
+message ICOValue {
+    string token = 1;
+    bytes address = 2;
+    int64 timestamp = 3;
+}

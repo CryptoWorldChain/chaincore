@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package org.brewchain.account.gens;
+
+enum PTXTModule {
+    TXT = 0; // 交易
+};
+
+enum PTXTCommand {
+    STX = 0; // 保存交易
+    GUT = 1; // 获取未发送交易
+	AYC = 2; // 同步交易
+	GTX = 3; // 获取交易
+	MTX = 4; // 保存多重交易
+
+	// 暂时不用
+	// CTX = 3; // 节点确认交易
+	// DTX = 4; // 节点回滚交易 
+	// BTX = 5; // 获取已确认未block交易
+}
+
+message ReqCreateMultiTransaction {
+	MultiTransactionImpl transaction = 1;
+}
+
+message RespCreateTransaction {
+    string txHash = 1;
+	int32 retCode = 2;
+	string retMsg = 3;
+}
+
+message ReqGetTxToSync {
+	int32 total = 1;
+}
+
+message RespGetTxToSync {
+	repeated MultiTransactionImpl txs = 1;
+	int32 txCount = 2;
+}
+
+message ReqSyncTx {
+	repeated MultiTransactionImpl txs = 1;
+}
+
+message RespSyncTx {
+	int32 retCode = 1;
+	repeated string errList = 2;
+}
+
+message ReqGetTxByHash {
+	string hexTxHash = 1;
+}
+
+message RespGetTxByHash {
+	MultiTransactionImpl transaction = 1;
+	int32 retCode = 2;
+}
+
+
+message MultiTransactionImpl {
+    string txHash = 1;
+	MultiTransactionBodyImpl txBody = 2;
+} 
+
+message MultiTransactionBodyImpl {
+	repeated MultiTransactionInputImpl inputs = 1;
+	repeated MultiTransactionOutputImpl outputs = 2;
+	string exdata = 3;
+	repeated MultiTransactionSignatureImpl signatures = 4;
+	repeated string delegate = 5;
+	string data = 6;
+	int64 timestamp = 7;
+}
+
+message MultiTransactionInputImpl {
+	int32 nonce = 1;
+	int32 fee = 2;
+	int32 feeLimit = 3;
+	string address = 4;
+	int64 amount= 5;
+	string pubKey = 6;
+	string token = 7;
+	string symbol = 8;
+	string cryptoToken = 9;
+}
+
+message MultiTransactionOutputImpl {
+	string address= 1;
+	int64 amount= 2;
+	string symbol = 3;
+	string cryptoToken = 4;
+}
+
+message MultiTransactionSignatureImpl {
+	string signature = 1;
+	string pubKey = 2;
+}

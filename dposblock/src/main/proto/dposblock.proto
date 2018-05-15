@@ -1,0 +1,190 @@
+syntax = "proto3";
+
+package org.brewchain.dposblk.pbgens;
+
+enum PModule {
+	DOB = 0;
+};
+enum PCommand {
+	JIN = 0; //申请加入节点集群,follow up
+	INF = 1; //获取当前网络信息
+	
+	MIN = 2; //发送coinbase
+	
+	DTV = 3; //轮训记账次序
+	
+	DTR = 4; //轮训记账投票结果
+	
+	SYN = 5; //同步block
+	
+	VFY = 6;	 //块校验
+	TTT = 30;//ping,pong,wall ,testing
+};
+
+enum DNodeState{
+	DN_INIT = 0;
+	DN_SYNC_BLOCK = 1;
+	DN_BAKCUP = 2;//备用节点
+	DN_CO_MINER = 3;//超级节点的附属节点
+	DN_DUTY_MINER = 4; //轮值节点
+	
+}
+
+message PDNode{
+	string 		bcuid = 1;//节点
+	string 		co_address = 2;//拥有合约cws的地址
+	DNodeState	state = 3;
+	int32 		cur_block = 4;
+	int32 		txcount = 5;
+	int64 		duty_start_ms = 9;//表示当前duty的开始时间
+	int64		duty_end_ms	 = 10;//表示当前duty的最后时间
+	string		duty_uid = 11;//记录当前duty的uid
+	int64		last_duty_time = 12;//上次提交的时间
+	int64		last_block_time = 14;//
+	int32		node_count = 20;//当前节点的信息
+	int32		bit_idx = 13;//bitidx;
+}
+
+message PSCoMine{//加入
+	PDNode  dn = 1;
+	string message_id = 30;
+}
+
+message PRetCoMine{//加入的返回信息
+	int32 ret_code = 1;//返回
+	string ret_message = 2;//返回信息
+	PDNode dn = 3;//交换一下我自己的节点信息
+	repeated PDNode co_nodes = 4;//超级节点列表
+	repeated PDNode back_nodes = 5;//备选节点列表
+	DNodeState	co_result = 6;
+	
+	string message_id = 30;
+	string sign = 100;//对上述数据的签名结果
+}
+
+message PSNodeInfo{//获取本地节点信息
+	string req_token = 1;//是否获取拓扑信息
+	string message_id = 30;
+}
+
+message PRetNodeInfo{//加入的返回信息
+	int32 ret_code = 1;//返回
+	string ret_message = 2;//返回信息
+
+	PDNode dn = 3;//交换一下我自己的节点信息
+	repeated PDNode co_nodes = 4;//超级节点列表
+	repeated PDNode back_nodes = 5;//备选节点列表
+	
+	string message_id = 30;
+	string sign = 100;//对上述数据的签名结果
+}
+
+message  PSCoinbase{
+	int64 	term_id = 1;
+	string 	co_address = 2;
+	int64 	cws_rewards = 3;
+	int32	block_height = 4;
+	int32	slice_id = 5;
+	int32 	co_nodes = 6;//how many node to vote.
+	repeated string	d_address = 7;//
+	string	term_sign = 8;
+	string 		bcuid = 10;//节点
+	int64	mine_time = 11;
+	
+	PBlockEntry block_header = 20;
+	string 	message_id = 30;
+	
+}
+
+message  PRetCoinbase{
+	int32 ret_code = 1;
+	string ret_message = 2;
+
+	int32	cur_block_height = 3;
+	int32	slice_id = 4;
+	
+	enum CoinbaseResult{
+		CR_PROVEN = 0;
+		CR_REJECT = 1;
+	}
+	CoinbaseResult	result = 5;
+	string 		bcuid = 10;//节点
+	
+	string 	message_id = 30;
+}
+
+message  PSDutyTermVote{
+	int64 	term_id = 1;
+	string 	co_address = 2;
+	int64 	cws_guaranty = 3;//保证金
+	
+	message BlockRange{
+		int32	start_block = 1;
+		int32	end_block	= 2;
+		int32	each_block_sec = 3;//
+	}
+	
+	BlockRange	block_range = 4;
+	int32	slice_id = 5;
+	int32 	co_nodes = 6;//how many node to vote.
+	int64 	term_start_ms = 8;
+	int64	term_end_ms = 9;//when to end
+	
+	message TermBlock{
+		int32 	block_height = 1;
+		string	miner_coaddr = 2;
+	}
+	repeated TermBlock miner_queue = 10 ;
+	
+	string 	last_term_uid = 11;
+	int64	last_term_id  = 12;
+	
+	string 		bcuid = 13;//节点
+	
+	string 	message_id = 30;
+	string 	sign = 50;//
+}
+
+message  PDutyTermResult{
+	int32 ret_code = 1;
+	string ret_message = 2;
+	
+	enum VoteResult {
+		VR_GRANTED = 0;
+		VR_REJECT = 1;
+	}
+	VoteResult	result = 3;
+	int64 	term_id = 4;
+	string 	vote_address = 5;
+	string 		bcuid = 10;//节点
+	string 	message_id = 30;
+	string 	sign = 50;//
+}
+
+message PBlockEntry{
+	int32 	block_height = 1;
+	string 	coinbase_bcuid = 2;
+	int32	slice_id = 3;
+	bytes	block_header = 10;
+	string 	sign = 50;
+}
+
+
+message PSSyncBlocks{
+	PDNode 	dn = 1;//获取信息
+	int32 	start_id = 2;//一般是取0
+	int32	end_id = 3;//分页 
+	repeated int32 block_idx = 4;//byids
+	string 	bcuid = 10;//节点
+	string message_id = 30;
+}
+
+message PRetSyncBlocks{
+	int32 ret_code = 1;
+	string ret_message = 2;
+	repeated PBlockEntry block_headers = 3;
+	string message_id = 30;
+	string 		bcuid = 10;//节点
+}
+
+ 

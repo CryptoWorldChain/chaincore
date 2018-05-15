@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package org.brewchain.account.gens;
+
+enum PTSTModule {
+    TST = 0; // 交易
+};
+
+enum PTSTCommand {
+    BST = 0; // Single Block Test
+    TOT = 1; // Token 交易测试
+    MOT = 2; // 多重签名 交易测试
+    ICT = 3; // 内部调用 交易测试
+    SST = 4; // 签名测试
+    CTT = 6; // 加密token测试
+    TTT = 5; // 多线程测试
+
+    STM = 7; // 单交易转多重交易
+    GBX = 8; // 根据交易获取Block测试
+}
+
+message ReqTxTest {
+    int32 balance = 1;
+}
+
+message RespTxTest {
+    int32 retCode = 1;
+}
+
+message ReqTTT {
+    int32 block = 1;
+    int32 tx = 2;
+    int32 account = 3;
+}

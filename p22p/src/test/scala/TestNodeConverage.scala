@@ -17,26 +17,27 @@ import org.fc.brewchain.p22p.node.router.RandomNR
 import onight.tfw.otransio.api.PacketHelper
 import org.fc.brewchain.p22p.node.Network
 import org.fc.brewchain.p22p.node.router.CircleNR
+import com.google.protobuf.StringValue
 
 object TestNodeConverge extends OLog {
 
   def main(args: Array[String]): Unit = {
-    val nodeCount = 1000;
+    val nodeCount = 10;
     val nodes = new ListBuffer[PNode]();
-    val networks = new ListBuffer[Network]();
+    val networks = new ListBuffer[Network]() ;
     val nodesMap = new HashMap[String, PNode]();
+    var bitenc = BigInt(0)
     for (i <- 0 to nodeCount - 1) {
-      val node = new PNode(name = "a" + i, node_idx = i);
+      val node = new PNode(_name = "a" + i, _node_idx = i, "");
       nodes.+=(node);
-      networks.append(new Network())
+      bitenc = bitenc.setBit(i);
+      networks.append(new Network("test:"+i,""))
     }
     networks.map { net =>
       nodes.map { node =>
         net.addDNode(node);
       }
     }
-    CircleNR.resetMap(nodeCount);
-
     // cut nodes
     Scheduler.scheduleWithFixedDelay(new Runnable {
       def run() = {
@@ -48,7 +49,7 @@ object TestNodeConverge extends OLog {
         var maxconn = 0
         networks.map { net =>
           if (net.connectedMap.size != nodes.size + 1) {
-//            println("netmapsize. =:" + net.connectedMap)
+            //            println("netmapsize. =:" + net.connectedMap)
           }
           net.connectedMap.map(conns =>
             if (maxconn < conns._2.size) {
@@ -59,7 +60,7 @@ object TestNodeConverge extends OLog {
         networks.map { net =>
           net.connectedMap.map(conns =>
             if (maxconn == conns._2.size) {
-//              println("maxMap. =:" + conns)
+              //              println("maxMap. =:" + conns)
             })
         }
 
@@ -82,14 +83,14 @@ object TestNodeConverge extends OLog {
         }
       }
     }, 5, 5, TimeUnit.SECONDS)
-    val rootn = PNode("ROOT", -1);
+    val rootn = PNode("ROOT", -1, "");
+    val circleNr = CircleNR(bitenc);
     Scheduler.scheduleWithFixedDelay(new Runnable {
       def run() = {
         val net = networks((Math.random() * nodeCount % nodeCount).asInstanceOf[Int]);
         val n = net.nodeByIdx((Math.random() * nodeCount % nodeCount).asInstanceOf[Int]).get;
-
-//      RandomNR.broadcastMessage(PacketHelper.genSyncPack("TEST", "ABC", "hello"),rootn)(n, network = net)
-        CircleNR.broadcastMessage(PacketHelper.genSyncPack("TEST", "ABC", "hello"), rootn)(n, network = net)
+        //      RandomNR.broadcastMessage(PacketHelper.genSyncPack("TEST", "ABC", "hello"),rootn)(n, network = net)
+        circleNr.broadcastMessage("TTTPZP",Left(StringValue.newBuilder().setValue("abc").build()), rootn)(n, network = net,messageid="abc")
         //        node.forwardMessage("aaa", msg, node.directNode.keys, node);
       }
     }, 1, 100, TimeUnit.MICROSECONDS)
@@ -99,7 +100,8 @@ object TestNodeConverge extends OLog {
     val msg = PVBase.newBuilder().setMessageUid(UUIDGenerator.generate()).build()
     for (i <- 1 to sendcc) {
       val node = nodes(0); //(Math.random() * nodeCount % nodeCount).asInstanceOf[Int]);
-      //      node.forwardMessage("aaa", msg, node.directNode.keys, node);
+//      circleNr.broadcastMessage(PacketHelper.genSyncPack("TEST", "ABC", "hello"), rootn)(n, network = net)
+//            node.forwardMessage("aaa", msg, node.directNode.keys, node);
     }
     log.debug("cost=" + (System.currentTimeMillis() - start))
 

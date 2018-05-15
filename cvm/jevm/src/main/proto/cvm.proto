@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package org.brewchain.cvm.pbgens;
+
+enum PModule {
+	CVM = 0;
+};
+
+enum PCommand {
+	BCD = 0; //编译Solidity源码到字节码
+	RUF = 1; //运行方法
+	RUC = 2; //运行合约
+};
+
+message PSBuildCode{//编译
+
+	string code = 1 [jstype = JS_NORMAL];//合约代码
+	string version = 5;//合约版本，默认v1.0.0
+
+	string addr = 3; //要创建合约账户地址
+	string pub_key = 4; //要创建合约账户公钥
+//	string token = 5;  //erc20类型需要提供token，默认=非erc20
+
+	int64 fee = 7; //默认=0
+	int64 fee_limit = 8; //默认=fee
+//	string to_addr = 9;
+
+	string sign = 10;//创建合约交易签名
+
+}
+
+message PRetBuild{
+	int32 ret_code = 1;//返回
+	string ret_message = 2;//返回信息
+	repeated PMContract info = 3;
+}
+
+message PMContract{
+	string name = 1;
+	string addr = 2;
+	string bin = 3 [jstype = JS_NORMAL];
+	repeated string fun_name = 4 [jstype = JS_NORMAL];
+	string abi = 5 [jstype = JS_NORMAL];
+	string metadata = 6 [jstype = JS_NORMAL];
+}
+
+message PSRunFun{//运行方法
+	bool constant = 1; //默认false
+	string type = 2; //默认function
+	string name = 3; //方法名称
+	repeated PMFunPut inputs = 4;//方法的输入
+	repeated PMFunPut outputs = 5;//方法的输出
+
+
+	int64 fee = 7;
+	int64 fee_limit = 8; //默认=fee
+	string to_addr = 9;
+	string ctx_sign = 10; //合约交易签名
+
+	string func_args = 11 [jstype = JS_NORMAL];
+
+	string pub_key = 12;
+	string from_addr = 13;
+}
+
+message PMFunPut{
+	//{'name':'to', 'type':'address'}
+	string name = 1 ;
+	string type = 2 ;
+}
+message PSRunContract{//运行合约
+	string code = 1; //合约源码，"contract A { uint public num;  function set(uint a) {   num = a;    log1(0x1111, 0x2222); }}"
+	string fun_name = 2; //要运行的合约中的方法名称
+
+
+	string from_addr = 3; // Account Seed
+	string pub_key = 12;
+	string to_addr = 4; // 0x0000000000000000000000000000000000001234
+	string data = 5;
+	int64  fee = 6; //300000
+	int64  fee_limit = 7; //10000000000
+	int64  value = 8; //
+
+}
+
+message PRetRun{
+	int32 ret_code = 1;//返回
+	string ret_message = 2;//返回信息
+	string run_info = 3 [jstype = JS_NORMAL];
+}

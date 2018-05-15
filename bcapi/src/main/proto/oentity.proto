@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package org.brewchain.bcapi.gens;
+
+
+message OKey{
+	bytes data  = 1;
+}
+
+message OValue{
+	int64 count  = 1;
+	int32 decimals = 2;
+	string info = 3;
+	bytes extdata = 4;
+	
+	string second_key = 5;//二级索引
+	int32 nonce = 6;
+}
+
+message OPair{
+	OKey key = 1;
+	OValue value = 2;
+}

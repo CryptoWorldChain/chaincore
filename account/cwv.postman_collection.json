@@ -1,0 +1,171 @@
+{
+	"info": {
+		"name": "cwv",
+		"_postman_id": "b5cf4712-443f-41ca-8696-c9bff6e2e15d",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "chain",
+			"description": "",
+			"item": [
+				{
+					"name": "创建账户",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\": \"1111111111111111\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/fbs/act/pbcac.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fbs",
+								"act",
+								"pbcac.do"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "账户地址是否存在",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\": \"1111111111111111\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/fbs/act/pbcae.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fbs",
+								"act",
+								"pbcae.do"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "增加Balance",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\": \"1111111111111111\",\n\t\"balance\": \"100\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/fbs/act/pbaab.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fbs",
+								"act",
+								"pbaab.do"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "查询账户",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\": \"1111111111111111\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/fbs/act/pbgac.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fbs",
+								"act",
+								"pbgac.do"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "增加交易索引",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\": \"1111111111111111\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/fbs/act/pbino.do",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"fbs",
+								"act",
+								"pbino.do"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

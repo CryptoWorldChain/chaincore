@@ -1,0 +1,73 @@
+syntax = "proto3";
+import "tx.proto";
+package org.brewchain.account.gens;
+
+enum PBCTModule {
+    BCT = 0; // Block
+};
+
+enum PBCTCommand {
+	GBC = 0; // 生成Block Header
+	SBC = 1; // 广播block Header
+
+	SSS = 2; // 获取节点的Block
+	BIO = 3; // Block信息
+}
+
+message ReqGetBlock {
+    int32 txCount = 1;
+	string extraData = 2;
+}
+
+message BlockEntity {
+	BlockHeader header = 1;
+	BlockBody body = 2;
+}
+
+message BlockHeader {
+	bytes parentHash = 1;
+	bytes coinbase = 2;
+	// bytes stateRoot;
+	bytes txTrieRoot = 3;
+	// bytes receiptTrieRoot;
+	int64 timestamp = 4;
+	int32 number = 5;
+	// bytes gasLimit;
+	// int32 gasUsed;
+	// bytes mixHash;
+	bytes reward = 6;
+	bytes extraData = 7;
+	bytes nonce = 8;
+	bytes blockHash = 9;
+	repeated bytes txHashs = 10;
+	int64 sliceId = 11;
+}
+
+message BlockBody {
+	repeated MultiTransaction txs = 1;
+}
+
+message RespGetBlock {
+	BlockHeader header = 1;
+	int32 retCode = 2;
+}
+
+message ReqSyncBlock {
+	BlockHeader header = 1;
+}
+
+message RespSyncBlock {
+	int32 retCode = 1;
+}
+
+message ReqBlockInfo {
+
+}
+
+message RespBlockInfo {
+	int32 number = 1;
+	int32 blockCount = 2;
+	int32 waitSync = 3;
+	int32 waitBlock = 4;
+	string cache = 5;
+}

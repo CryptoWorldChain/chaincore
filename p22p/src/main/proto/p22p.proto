@@ -13,15 +13,20 @@ enum PCommand {
 	INF = 3;//获取当前节点信息
 	VOT = 4;//PBFT投票
 	
+	VTI = 5;//stateview的信息
+
+	RRR = 6;//消息路由
 	
 	HBT = 10;//HeartBeat!检查心跳
+	
+	TTT = 30;//ping,pong,wall ,tesing
 };
 
 message PMNodeInfo{
 	string node_name = 1;//节点
-	string protocol = 2;//节点链接支持的协议类型，tcp，http/https，udp，mq……
-	string address = 3;//地址
-	int32 port = 4;//端口
+	string uri = 2;//节点链接支持的协议类型，tcp，http/https，udp，mq……
+	//string address = 3;//地址
+	//int32 port = 4;//端口
 	int64 startup_time = 5;//启动时间
 	string pub_key = 6;//该节点的公钥
 	string bcuid = 7;//节点的唯一ID
@@ -42,6 +47,9 @@ message PSJoin{//加入
 		NODE_CONNECT = 1;//节点请求连接
 	}
 	Operation op = 2;//操作类型
+	int32	node_count = 3;//network counter
+	int32	node_notified_count = 4;//already notified nodes
+	string nid = 50;//网络ID	
 }
 
 message PRetJoin{//加入的返回信息
@@ -57,6 +65,8 @@ message PRetJoin{//加入的返回信息
 
 message PSNodeInfo{//加入
 	string req_token = 1;//是否获取拓扑信息
+	PMNodeInfo node = 2;
+	string nid = 50;//网络ID	
 }
 
 message PRetNodeInfo{//加入的返回信息
@@ -65,9 +75,10 @@ message PRetNodeInfo{//加入的返回信息
 
 	PMNodeInfo current = 4;//本节点信息
 	
-	repeated PMNodeInfo pendings = 5;//交换一下我知道的节点信息
+	string bit_encs = 5;// for pending
+	repeated PMNodeInfo pnodes = 6;//交换一下我知道的节点信息
 	
-	repeated PMNodeInfo nodes = 6;//交换一下我知道的节点信息
+	repeated PMNodeInfo dnodes = 7;//交换一下我知道的节点信息
 	
 	string sign = 100;//对上述数据的签名结果
 }
@@ -75,32 +86,172 @@ message PRetNodeInfo{//加入的返回信息
 message PBSwitchNodes{	//交换我所知道的节点信息
 	repeated PMNodeInfo  nodes = 1;//所有节点的信息
 	PMNodeInfo my_info = 2;
+	string nid = 50;//网络ID	
 	string sign = 100;//对上述数据的签名结果
 }
 
 enum PBFTStage{
-	PRE_PREPARE = 0;
-	PREPARE = 1;
-	COMMIT = 2;
-	REPLY = 3;
+	INIT = 0;
+	PRE_PREPARE = 1;
+	PREPARE = 2;
+	COMMIT = 3;
+	REPLY = 4;
+	NOOP = 5;// do nothing.. still wait for other actions
+	DUPLICATE = 6;//重复消息
+	
+	PENDING_SEND = 10;
+	
+	REJECT = 99;
 }
+
+enum PVType{
+	NETWORK_IDX = 0;//投票pending 的节点
+	VIEW_CHANGE = 1; // can make snapshot
+}
+
 
 message PVBase{
 	PBFTStage state = 1 ;//状态
-	uint32 m_type = 2;//消息类型
+	PVType m_type = 2;//消息类型
 	uint32 v = 3;//该消息类型对应的view_id序列
 	uint32 max_vid = 4;//最大的id
-	uint32 n = 5;// number
-	bytes contents = 10;
-	
+	uint32 n = 5;// 参与投票的节点数
+	uint64 create_time = 6;
+	uint64 last_update_time = 7;
+	PBFTStage old_state = 8 ;//上次状态
+	PBFTStage reject_state = 9 ;//上次状态
+	bytes contents = 10; //具体的内容
+	uint32 store_num = 11;// 为了支持快照定义的版本
+	uint32 view_counter = 12;//计数器,为快照准备
+	string origin_bcuid = 20;//从哪个节点名称来的
 	string message_uid = 30;//消息的uuid
+
 	string from_bcuid = 31;//从哪个节点名称来的
+	
+	string nid = 50;//网络ID
 	string sign = 100; //对上述数据的签名结果
 }
 
 message PBVoteNodeIdx{//投票决定节点的idx,80%通过才行
-	repeated PMNodeInfo nodes = 1;//所有节点的信息
+	repeated PMNodeInfo pending_nodes = 1;//所有节点的信息
+	
 	string node_bits_enc = 2;//所有节点的编码信息
+	string pending_bits_enc = 3;//
+	repeated PMNodeInfo d_nodes = 4;//所有直连信息
+	string nid = 50;//网络ID
 }
 
 
+message PBVoteViewChange{//投票决定节点的idx,80%通过才行
+	uint32 v = 1;//当前的v
+	uint32 view_counter = 2;//counter必须匹配才行
+	uint32 store_num = 3;// 为了支持快照定义的版本
+	string nid = 50;//网络ID
+}
+
+
+message PSVoteState{
+	PVType t = 1;//消息类型
+	int32 v = 2;//状态计数器
+	string nid = 50;//网络ID	 
+}
+
+message NodeStateInfo{
+	string k = 1;//
+	PVBase	v = 2;//当前信息
+}
+
+message PRetVoteState{
+	int32 ret_code = 1;//返回
+	string ret_message = 2;//返回信息
+
+	PVType 	m_type = 3;//消息类型
+	NodeStateInfo	cur = 4;//当前信息
+	repeated NodeStateInfo	nodes = 5;//所有节点的信息
+	
+	string nid = 50;//网络ID	 
+}
+
+
+enum TestMessageType{
+	WALL  = 0;
+	PING  = 1;
+	PONG  = 2;
+	
+}
+message PSTestMessage{
+	string content = 1;//消息字段
+	TestMessageType type = 2;//
+	int64 wall_time = 3;
+	int64 recv_time = 4;
+	string messageid = 5;
+	string org_bcuid = 6;
+	string from_bcuid = 7;
+	bool dwall = 8;
+	bool block = 10;
+	int64 ps = 9 ;
+	string nid = 50;//网络ID
+}
+
+message PRetTestMessage{
+	int32 ret_code = 1;//返回
+	string ret_message = 2;//返回信息
+
+	int32 dnode_count = 3;
+	int32 pending_count = 4;
+	
+	string bitencs = 5;
+	string nid = 50;//网络ID
+}
+ 
+
+message PSRouteMessage {
+	
+	enum PBNodeType{
+		PB_EMPTY = 0;
+		PB_FULLNODE = 1;
+		PB_FLAT_SET = 2;
+		PB_NODE_SET = 3;
+		PB_DEEP_TREE_SET = 4;
+	}
+	message PBFlatSet{
+		int32 fromIdx = 1;
+		string nextHops_enc = 2; 
+	}
+
+	message PBNode{
+		PBNodeType pbnt = 1;
+		bytes data = 2;
+	}
+	message PBNodeSet{
+		repeated PBNode nodes = 1;
+	}
+
+	message PBDeepTreeSet{
+		int32 fromIdx = 1 ;
+		PBNodeSet treeHops = 2 ;
+	}
+	
+	enum PBRouteMsgType{
+		PM_VBASE = 0;
+		PM_TEST = 1;
+	}
+	
+	string gcmd = 1;
+	bytes body = 2;
+	int32 fromIdx = 3;
+	PBNode nextHops = 4;
+	string network = 5;
+	string messageid = 6;
+	PBRouteMsgType msgtype = 7;
+	string encbits = 8;
+	string nid = 50;//网络ID
+}
+
+message PRetRouteMessage {
+	int32 ret_code = 1;//返回
+	string ret_message = 2;//返回信息
+	int32 dnode_count = 3;
+	int32 pending_count = 4;
+	string bitencs = 5;
+}

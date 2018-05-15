@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package org.brewchain.account.gens;
+
+enum PSYSModule {
+	SYS = 0; // 账户，合约，合约代码
+};
+enum PSYSCommand {
+    ACB = 0; // 增加账户加密token
+}
+
+message ReqAddCryptoToken {
+    string hexAddress = 1;
+    repeated string hexHash = 2; // Token的hash，hash(index,total,code,name,timestamp)
+    repeated int64 timestamp = 3; // Token创建时间
+    repeated int32 index = 4; // 该Token发行时的索引
+    repeated int32 total = 5; // 该Token的发行总数量
+    repeated string code = 6; // Token的编号
+    repeated string name = 7; // Token的名称
+    repeated string symbol = 8;
+}
+
+message RespAddCryptoToken {
+    int32 retCode = 1;
+    int32 total = 2;
+}

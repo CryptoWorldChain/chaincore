@@ -150,12 +150,36 @@ public final class P22P {
     VOT(4),
     /**
      * <pre>
+     *stateview的信息
+     * </pre>
+     *
+     * <code>VTI = 5;</code>
+     */
+    VTI(5),
+    /**
+     * <pre>
+     *消息路由
+     * </pre>
+     *
+     * <code>RRR = 6;</code>
+     */
+    RRR(6),
+    /**
+     * <pre>
      *HeartBeat!检查心跳
      * </pre>
      *
      * <code>HBT = 10;</code>
      */
     HBT(10),
+    /**
+     * <pre>
+     *ping,pong,wall ,tesing
+     * </pre>
+     *
+     * <code>TTT = 30;</code>
+     */
+    TTT(30),
     UNRECOGNIZED(-1),
     ;
 
@@ -201,12 +225,36 @@ public final class P22P {
     public static final int VOT_VALUE = 4;
     /**
      * <pre>
+     *stateview的信息
+     * </pre>
+     *
+     * <code>VTI = 5;</code>
+     */
+    public static final int VTI_VALUE = 5;
+    /**
+     * <pre>
+     *消息路由
+     * </pre>
+     *
+     * <code>RRR = 6;</code>
+     */
+    public static final int RRR_VALUE = 6;
+    /**
+     * <pre>
      *HeartBeat!检查心跳
      * </pre>
      *
      * <code>HBT = 10;</code>
      */
     public static final int HBT_VALUE = 10;
+    /**
+     * <pre>
+     *ping,pong,wall ,tesing
+     * </pre>
+     *
+     * <code>TTT = 30;</code>
+     */
+    public static final int TTT_VALUE = 30;
 
 
     public final int getNumber() {
@@ -232,7 +280,10 @@ public final class P22P {
         case 2: return SET;
         case 3: return INF;
         case 4: return VOT;
+        case 5: return VTI;
+        case 6: return RRR;
         case 10: return HBT;
+        case 30: return TTT;
         default: return null;
       }
     }
@@ -291,40 +342,96 @@ public final class P22P {
   public enum PBFTStage
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
-     * <code>PRE_PREPARE = 0;</code>
+     * <code>INIT = 0;</code>
      */
-    PRE_PREPARE(0),
+    INIT(0),
     /**
-     * <code>PREPARE = 1;</code>
+     * <code>PRE_PREPARE = 1;</code>
      */
-    PREPARE(1),
+    PRE_PREPARE(1),
     /**
-     * <code>COMMIT = 2;</code>
+     * <code>PREPARE = 2;</code>
      */
-    COMMIT(2),
+    PREPARE(2),
     /**
-     * <code>REPLY = 3;</code>
+     * <code>COMMIT = 3;</code>
      */
-    REPLY(3),
+    COMMIT(3),
+    /**
+     * <code>REPLY = 4;</code>
+     */
+    REPLY(4),
+    /**
+     * <pre>
+     * do nothing.. still wait for other actions
+     * </pre>
+     *
+     * <code>NOOP = 5;</code>
+     */
+    NOOP(5),
+    /**
+     * <pre>
+     *重复消息
+     * </pre>
+     *
+     * <code>DUPLICATE = 6;</code>
+     */
+    DUPLICATE(6),
+    /**
+     * <code>PENDING_SEND = 10;</code>
+     */
+    PENDING_SEND(10),
+    /**
+     * <code>REJECT = 99;</code>
+     */
+    REJECT(99),
     UNRECOGNIZED(-1),
     ;
 
     /**
-     * <code>PRE_PREPARE = 0;</code>
+     * <code>INIT = 0;</code>
      */
-    public static final int PRE_PREPARE_VALUE = 0;
+    public static final int INIT_VALUE = 0;
     /**
-     * <code>PREPARE = 1;</code>
+     * <code>PRE_PREPARE = 1;</code>
      */
-    public static final int PREPARE_VALUE = 1;
+    public static final int PRE_PREPARE_VALUE = 1;
     /**
-     * <code>COMMIT = 2;</code>
+     * <code>PREPARE = 2;</code>
      */
-    public static final int COMMIT_VALUE = 2;
+    public static final int PREPARE_VALUE = 2;
     /**
-     * <code>REPLY = 3;</code>
+     * <code>COMMIT = 3;</code>
      */
-    public static final int REPLY_VALUE = 3;
+    public static final int COMMIT_VALUE = 3;
+    /**
+     * <code>REPLY = 4;</code>
+     */
+    public static final int REPLY_VALUE = 4;
+    /**
+     * <pre>
+     * do nothing.. still wait for other actions
+     * </pre>
+     *
+     * <code>NOOP = 5;</code>
+     */
+    public static final int NOOP_VALUE = 5;
+    /**
+     * <pre>
+     *重复消息
+     * </pre>
+     *
+     * <code>DUPLICATE = 6;</code>
+     */
+    public static final int DUPLICATE_VALUE = 6;
+    /**
+     * <code>PENDING_SEND = 10;</code>
+     */
+    public static final int PENDING_SEND_VALUE = 10;
+    /**
+     * <code>REJECT = 99;</code>
+     */
+    public static final int REJECT_VALUE = 99;
 
 
     public final int getNumber() {
@@ -345,10 +452,15 @@ public final class P22P {
 
     public static PBFTStage forNumber(int value) {
       switch (value) {
-        case 0: return PRE_PREPARE;
-        case 1: return PREPARE;
-        case 2: return COMMIT;
-        case 3: return REPLY;
+        case 0: return INIT;
+        case 1: return PRE_PREPARE;
+        case 2: return PREPARE;
+        case 3: return COMMIT;
+        case 4: return REPLY;
+        case 5: return NOOP;
+        case 6: return DUPLICATE;
+        case 10: return PENDING_SEND;
+        case 99: return REJECT;
         default: return null;
       }
     }
@@ -401,6 +513,227 @@ public final class P22P {
     // @@protoc_insertion_point(enum_scope:org.fc.brewchain.p22p.pbgens.PBFTStage)
   }
 
+  /**
+   * Protobuf enum {@code org.fc.brewchain.p22p.pbgens.PVType}
+   */
+  public enum PVType
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <pre>
+     *投票pending 的节点
+     * </pre>
+     *
+     * <code>NETWORK_IDX = 0;</code>
+     */
+    NETWORK_IDX(0),
+    /**
+     * <pre>
+     * can make snapshot
+     * </pre>
+     *
+     * <code>VIEW_CHANGE = 1;</code>
+     */
+    VIEW_CHANGE(1),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <pre>
+     *投票pending 的节点
+     * </pre>
+     *
+     * <code>NETWORK_IDX = 0;</code>
+     */
+    public static final int NETWORK_IDX_VALUE = 0;
+    /**
+     * <pre>
+     * can make snapshot
+     * </pre>
+     *
+     * <code>VIEW_CHANGE = 1;</code>
+     */
+    public static final int VIEW_CHANGE_VALUE = 1;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static PVType valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static PVType forNumber(int value) {
+      switch (value) {
+        case 0: return NETWORK_IDX;
+        case 1: return VIEW_CHANGE;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<PVType>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        PVType> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<PVType>() {
+            public PVType findValueByNumber(int number) {
+              return PVType.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return org.fc.brewchain.p22p.pbgens.P22P.getDescriptor().getEnumTypes().get(3);
+    }
+
+    private static final PVType[] VALUES = values();
+
+    public static PVType valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private PVType(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:org.fc.brewchain.p22p.pbgens.PVType)
+  }
+
+  /**
+   * Protobuf enum {@code org.fc.brewchain.p22p.pbgens.TestMessageType}
+   */
+  public enum TestMessageType
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>WALL = 0;</code>
+     */
+    WALL(0),
+    /**
+     * <code>PING = 1;</code>
+     */
+    PING(1),
+    /**
+     * <code>PONG = 2;</code>
+     */
+    PONG(2),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>WALL = 0;</code>
+     */
+    public static final int WALL_VALUE = 0;
+    /**
+     * <code>PING = 1;</code>
+     */
+    public static final int PING_VALUE = 1;
+    /**
+     * <code>PONG = 2;</code>
+     */
+    public static final int PONG_VALUE = 2;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static TestMessageType valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static TestMessageType forNumber(int value) {
+      switch (value) {
+        case 0: return WALL;
+        case 1: return PING;
+        case 2: return PONG;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<TestMessageType>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        TestMessageType> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<TestMessageType>() {
+            public TestMessageType findValueByNumber(int number) {
+              return TestMessageType.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return org.fc.brewchain.p22p.pbgens.P22P.getDescriptor().getEnumTypes().get(4);
+    }
+
+    private static final TestMessageType[] VALUES = values();
+
+    public static TestMessageType valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private TestMessageType(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:org.fc.brewchain.p22p.pbgens.TestMessageType)
+  }
+
   public interface PMNodeInfoOrBuilder extends
       // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PMNodeInfo)
       com.google.protobuf.MessageOrBuilder {
@@ -428,49 +761,23 @@ public final class P22P {
      *节点链接支持的协议类型，tcp，http/https，udp，mq……
      * </pre>
      *
-     * <code>string protocol = 2;</code>
+     * <code>string uri = 2;</code>
      */
-    java.lang.String getProtocol();
+    java.lang.String getUri();
     /**
      * <pre>
      *节点链接支持的协议类型，tcp，http/https，udp，mq……
      * </pre>
      *
-     * <code>string protocol = 2;</code>
+     * <code>string uri = 2;</code>
      */
     com.google.protobuf.ByteString
-        getProtocolBytes();
+        getUriBytes();
 
     /**
      * <pre>
-     *地址
-     * </pre>
-     *
-     * <code>string address = 3;</code>
-     */
-    java.lang.String getAddress();
-    /**
-     * <pre>
-     *地址
-     * </pre>
-     *
-     * <code>string address = 3;</code>
-     */
-    com.google.protobuf.ByteString
-        getAddressBytes();
-
-    /**
-     * <pre>
-     *端口
-     * </pre>
-     *
-     * <code>int32 port = 4;</code>
-     */
-    int getPort();
-
-    /**
-     * <pre>
-     *启动时间
+     *string address = 3;//地址
+     *int32 port = 4;//端口
      * </pre>
      *
      * <code>int64 startup_time = 5;</code>
@@ -607,9 +914,7 @@ public final class P22P {
     }
     private PMNodeInfo() {
       nodeName_ = "";
-      protocol_ = "";
-      address_ = "";
-      port_ = 0;
+      uri_ = "";
       startupTime_ = 0L;
       pubKey_ = "";
       bcuid_ = "";
@@ -656,18 +961,7 @@ public final class P22P {
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              protocol_ = s;
-              break;
-            }
-            case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              address_ = s;
-              break;
-            }
-            case 32: {
-
-              port_ = input.readInt32();
+              uri_ = s;
               break;
             }
             case 40: {
@@ -789,24 +1083,24 @@ public final class P22P {
       }
     }
 
-    public static final int PROTOCOL_FIELD_NUMBER = 2;
-    private volatile java.lang.Object protocol_;
+    public static final int URI_FIELD_NUMBER = 2;
+    private volatile java.lang.Object uri_;
     /**
      * <pre>
      *节点链接支持的协议类型，tcp，http/https，udp，mq……
      * </pre>
      *
-     * <code>string protocol = 2;</code>
+     * <code>string uri = 2;</code>
      */
-    public java.lang.String getProtocol() {
-      java.lang.Object ref = protocol_;
+    public java.lang.String getUri() {
+      java.lang.Object ref = uri_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        protocol_ = s;
+        uri_ = s;
         return s;
       }
     }
@@ -815,82 +1109,28 @@ public final class P22P {
      *节点链接支持的协议类型，tcp，http/https，udp，mq……
      * </pre>
      *
-     * <code>string protocol = 2;</code>
+     * <code>string uri = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getProtocolBytes() {
-      java.lang.Object ref = protocol_;
+        getUriBytes() {
+      java.lang.Object ref = uri_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        protocol_ = b;
+        uri_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
-    }
-
-    public static final int ADDRESS_FIELD_NUMBER = 3;
-    private volatile java.lang.Object address_;
-    /**
-     * <pre>
-     *地址
-     * </pre>
-     *
-     * <code>string address = 3;</code>
-     */
-    public java.lang.String getAddress() {
-      java.lang.Object ref = address_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        address_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     *地址
-     * </pre>
-     *
-     * <code>string address = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getAddressBytes() {
-      java.lang.Object ref = address_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        address_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int PORT_FIELD_NUMBER = 4;
-    private int port_;
-    /**
-     * <pre>
-     *端口
-     * </pre>
-     *
-     * <code>int32 port = 4;</code>
-     */
-    public int getPort() {
-      return port_;
     }
 
     public static final int STARTUP_TIME_FIELD_NUMBER = 5;
     private long startupTime_;
     /**
      * <pre>
-     *启动时间
+     *string address = 3;//地址
+     *int32 port = 4;//端口
      * </pre>
      *
      * <code>int64 startup_time = 5;</code>
@@ -1147,14 +1387,8 @@ public final class P22P {
       if (!getNodeNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, nodeName_);
       }
-      if (!getProtocolBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, protocol_);
-      }
-      if (!getAddressBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, address_);
-      }
-      if (port_ != 0) {
-        output.writeInt32(4, port_);
+      if (!getUriBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, uri_);
       }
       if (startupTime_ != 0L) {
         output.writeInt64(5, startupTime_);
@@ -1196,15 +1430,8 @@ public final class P22P {
       if (!getNodeNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, nodeName_);
       }
-      if (!getProtocolBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, protocol_);
-      }
-      if (!getAddressBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, address_);
-      }
-      if (port_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, port_);
+      if (!getUriBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, uri_);
       }
       if (startupTime_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
@@ -1260,12 +1487,8 @@ public final class P22P {
       boolean result = true;
       result = result && getNodeName()
           .equals(other.getNodeName());
-      result = result && getProtocol()
-          .equals(other.getProtocol());
-      result = result && getAddress()
-          .equals(other.getAddress());
-      result = result && (getPort()
-          == other.getPort());
+      result = result && getUri()
+          .equals(other.getUri());
       result = result && (getStartupTime()
           == other.getStartupTime());
       result = result && getPubKey()
@@ -1298,12 +1521,8 @@ public final class P22P {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + NODE_NAME_FIELD_NUMBER;
       hash = (53 * hash) + getNodeName().hashCode();
-      hash = (37 * hash) + PROTOCOL_FIELD_NUMBER;
-      hash = (53 * hash) + getProtocol().hashCode();
-      hash = (37 * hash) + ADDRESS_FIELD_NUMBER;
-      hash = (53 * hash) + getAddress().hashCode();
-      hash = (37 * hash) + PORT_FIELD_NUMBER;
-      hash = (53 * hash) + getPort();
+      hash = (37 * hash) + URI_FIELD_NUMBER;
+      hash = (53 * hash) + getUri().hashCode();
       hash = (37 * hash) + STARTUP_TIME_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getStartupTime());
@@ -1448,11 +1667,7 @@ public final class P22P {
         super.clear();
         nodeName_ = "";
 
-        protocol_ = "";
-
-        address_ = "";
-
-        port_ = 0;
+        uri_ = "";
 
         startupTime_ = 0L;
 
@@ -1497,9 +1712,7 @@ public final class P22P {
       public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo buildPartial() {
         org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo result = new org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo(this);
         result.nodeName_ = nodeName_;
-        result.protocol_ = protocol_;
-        result.address_ = address_;
-        result.port_ = port_;
+        result.uri_ = uri_;
         result.startupTime_ = startupTime_;
         result.pubKey_ = pubKey_;
         result.bcuid_ = bcuid_;
@@ -1555,16 +1768,9 @@ public final class P22P {
           nodeName_ = other.nodeName_;
           onChanged();
         }
-        if (!other.getProtocol().isEmpty()) {
-          protocol_ = other.protocol_;
+        if (!other.getUri().isEmpty()) {
+          uri_ = other.uri_;
           onChanged();
-        }
-        if (!other.getAddress().isEmpty()) {
-          address_ = other.address_;
-          onChanged();
-        }
-        if (other.getPort() != 0) {
-          setPort(other.getPort());
         }
         if (other.getStartupTime() != 0L) {
           setStartupTime(other.getStartupTime());
@@ -1715,21 +1921,21 @@ public final class P22P {
         return this;
       }
 
-      private java.lang.Object protocol_ = "";
+      private java.lang.Object uri_ = "";
       /**
        * <pre>
        *节点链接支持的协议类型，tcp，http/https，udp，mq……
        * </pre>
        *
-       * <code>string protocol = 2;</code>
+       * <code>string uri = 2;</code>
        */
-      public java.lang.String getProtocol() {
-        java.lang.Object ref = protocol_;
+      public java.lang.String getUri() {
+        java.lang.Object ref = uri_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          protocol_ = s;
+          uri_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1740,16 +1946,16 @@ public final class P22P {
        *节点链接支持的协议类型，tcp，http/https，udp，mq……
        * </pre>
        *
-       * <code>string protocol = 2;</code>
+       * <code>string uri = 2;</code>
        */
       public com.google.protobuf.ByteString
-          getProtocolBytes() {
-        java.lang.Object ref = protocol_;
+          getUriBytes() {
+        java.lang.Object ref = uri_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          protocol_ = b;
+          uri_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -1760,15 +1966,15 @@ public final class P22P {
        *节点链接支持的协议类型，tcp，http/https，udp，mq……
        * </pre>
        *
-       * <code>string protocol = 2;</code>
+       * <code>string uri = 2;</code>
        */
-      public Builder setProtocol(
+      public Builder setUri(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        protocol_ = value;
+        uri_ = value;
         onChanged();
         return this;
       }
@@ -1777,11 +1983,11 @@ public final class P22P {
        *节点链接支持的协议类型，tcp，http/https，udp，mq……
        * </pre>
        *
-       * <code>string protocol = 2;</code>
+       * <code>string uri = 2;</code>
        */
-      public Builder clearProtocol() {
+      public Builder clearUri() {
         
-        protocol_ = getDefaultInstance().getProtocol();
+        uri_ = getDefaultInstance().getUri();
         onChanged();
         return this;
       }
@@ -1790,143 +1996,16 @@ public final class P22P {
        *节点链接支持的协议类型，tcp，http/https，udp，mq……
        * </pre>
        *
-       * <code>string protocol = 2;</code>
+       * <code>string uri = 2;</code>
        */
-      public Builder setProtocolBytes(
+      public Builder setUriBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        protocol_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object address_ = "";
-      /**
-       * <pre>
-       *地址
-       * </pre>
-       *
-       * <code>string address = 3;</code>
-       */
-      public java.lang.String getAddress() {
-        java.lang.Object ref = address_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          address_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       *地址
-       * </pre>
-       *
-       * <code>string address = 3;</code>
-       */
-      public com.google.protobuf.ByteString
-          getAddressBytes() {
-        java.lang.Object ref = address_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          address_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       *地址
-       * </pre>
-       *
-       * <code>string address = 3;</code>
-       */
-      public Builder setAddress(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        address_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *地址
-       * </pre>
-       *
-       * <code>string address = 3;</code>
-       */
-      public Builder clearAddress() {
-        
-        address_ = getDefaultInstance().getAddress();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *地址
-       * </pre>
-       *
-       * <code>string address = 3;</code>
-       */
-      public Builder setAddressBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        address_ = value;
-        onChanged();
-        return this;
-      }
-
-      private int port_ ;
-      /**
-       * <pre>
-       *端口
-       * </pre>
-       *
-       * <code>int32 port = 4;</code>
-       */
-      public int getPort() {
-        return port_;
-      }
-      /**
-       * <pre>
-       *端口
-       * </pre>
-       *
-       * <code>int32 port = 4;</code>
-       */
-      public Builder setPort(int value) {
-        
-        port_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *端口
-       * </pre>
-       *
-       * <code>int32 port = 4;</code>
-       */
-      public Builder clearPort() {
-        
-        port_ = 0;
+        uri_ = value;
         onChanged();
         return this;
       }
@@ -1934,7 +2013,8 @@ public final class P22P {
       private long startupTime_ ;
       /**
        * <pre>
-       *启动时间
+       *string address = 3;//地址
+       *int32 port = 4;//端口
        * </pre>
        *
        * <code>int64 startup_time = 5;</code>
@@ -1944,7 +2024,8 @@ public final class P22P {
       }
       /**
        * <pre>
-       *启动时间
+       *string address = 3;//地址
+       *int32 port = 4;//端口
        * </pre>
        *
        * <code>int64 startup_time = 5;</code>
@@ -1957,7 +2038,8 @@ public final class P22P {
       }
       /**
        * <pre>
-       *启动时间
+       *string address = 3;//地址
+       *int32 port = 4;//端口
        * </pre>
        *
        * <code>int64 startup_time = 5;</code>
@@ -2596,6 +2678,42 @@ public final class P22P {
      * <code>.org.fc.brewchain.p22p.pbgens.PSJoin.Operation op = 2;</code>
      */
     org.fc.brewchain.p22p.pbgens.P22P.PSJoin.Operation getOp();
+
+    /**
+     * <pre>
+     *network counter
+     * </pre>
+     *
+     * <code>int32 node_count = 3;</code>
+     */
+    int getNodeCount();
+
+    /**
+     * <pre>
+     *already notified nodes
+     * </pre>
+     *
+     * <code>int32 node_notified_count = 4;</code>
+     */
+    int getNodeNotifiedCount();
+
+    /**
+     * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    java.lang.String getNid();
+    /**
+     * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getNidBytes();
   }
   /**
    * <pre>
@@ -2614,6 +2732,9 @@ public final class P22P {
     }
     private PSJoin() {
       op_ = 0;
+      nodeCount_ = 0;
+      nodeNotifiedCount_ = 0;
+      nid_ = "";
     }
 
     @java.lang.Override
@@ -2658,6 +2779,22 @@ public final class P22P {
               int rawValue = input.readEnum();
 
               op_ = rawValue;
+              break;
+            }
+            case 24: {
+
+              nodeCount_ = input.readInt32();
+              break;
+            }
+            case 32: {
+
+              nodeNotifiedCount_ = input.readInt32();
+              break;
+            }
+            case 402: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              nid_ = s;
               break;
             }
           }
@@ -2842,6 +2979,74 @@ public final class P22P {
       return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PSJoin.Operation.UNRECOGNIZED : result;
     }
 
+    public static final int NODE_COUNT_FIELD_NUMBER = 3;
+    private int nodeCount_;
+    /**
+     * <pre>
+     *network counter
+     * </pre>
+     *
+     * <code>int32 node_count = 3;</code>
+     */
+    public int getNodeCount() {
+      return nodeCount_;
+    }
+
+    public static final int NODE_NOTIFIED_COUNT_FIELD_NUMBER = 4;
+    private int nodeNotifiedCount_;
+    /**
+     * <pre>
+     *already notified nodes
+     * </pre>
+     *
+     * <code>int32 node_notified_count = 4;</code>
+     */
+    public int getNodeNotifiedCount() {
+      return nodeNotifiedCount_;
+    }
+
+    public static final int NID_FIELD_NUMBER = 50;
+    private volatile java.lang.Object nid_;
+    /**
+     * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public java.lang.String getNid() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNidBytes() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -2860,6 +3065,15 @@ public final class P22P {
       if (op_ != org.fc.brewchain.p22p.pbgens.P22P.PSJoin.Operation.MANU_DISCOVER.getNumber()) {
         output.writeEnum(2, op_);
       }
+      if (nodeCount_ != 0) {
+        output.writeInt32(3, nodeCount_);
+      }
+      if (nodeNotifiedCount_ != 0) {
+        output.writeInt32(4, nodeNotifiedCount_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 50, nid_);
+      }
     }
 
     public int getSerializedSize() {
@@ -2874,6 +3088,17 @@ public final class P22P {
       if (op_ != org.fc.brewchain.p22p.pbgens.P22P.PSJoin.Operation.MANU_DISCOVER.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, op_);
+      }
+      if (nodeCount_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, nodeCount_);
+      }
+      if (nodeNotifiedCount_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, nodeNotifiedCount_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(50, nid_);
       }
       memoizedSize = size;
       return size;
@@ -2897,6 +3122,12 @@ public final class P22P {
             .equals(other.getMyInfo());
       }
       result = result && op_ == other.op_;
+      result = result && (getNodeCount()
+          == other.getNodeCount());
+      result = result && (getNodeNotifiedCount()
+          == other.getNodeNotifiedCount());
+      result = result && getNid()
+          .equals(other.getNid());
       return result;
     }
 
@@ -2913,6 +3144,12 @@ public final class P22P {
       }
       hash = (37 * hash) + OP_FIELD_NUMBER;
       hash = (53 * hash) + op_;
+      hash = (37 * hash) + NODE_COUNT_FIELD_NUMBER;
+      hash = (53 * hash) + getNodeCount();
+      hash = (37 * hash) + NODE_NOTIFIED_COUNT_FIELD_NUMBER;
+      hash = (53 * hash) + getNodeNotifiedCount();
+      hash = (37 * hash) + NID_FIELD_NUMBER;
+      hash = (53 * hash) + getNid().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3043,6 +3280,12 @@ public final class P22P {
         }
         op_ = 0;
 
+        nodeCount_ = 0;
+
+        nodeNotifiedCount_ = 0;
+
+        nid_ = "";
+
         return this;
       }
 
@@ -3071,6 +3314,9 @@ public final class P22P {
           result.myInfo_ = myInfoBuilder_.build();
         }
         result.op_ = op_;
+        result.nodeCount_ = nodeCount_;
+        result.nodeNotifiedCount_ = nodeNotifiedCount_;
+        result.nid_ = nid_;
         onBuilt();
         return result;
       }
@@ -3117,6 +3363,16 @@ public final class P22P {
         }
         if (other.op_ != 0) {
           setOpValue(other.getOpValue());
+        }
+        if (other.getNodeCount() != 0) {
+          setNodeCount(other.getNodeCount());
+        }
+        if (other.getNodeNotifiedCount() != 0) {
+          setNodeNotifiedCount(other.getNodeNotifiedCount());
+        }
+        if (!other.getNid().isEmpty()) {
+          nid_ = other.nid_;
+          onChanged();
         }
         onChanged();
         return this;
@@ -3321,6 +3577,171 @@ public final class P22P {
       public Builder clearOp() {
         
         op_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int nodeCount_ ;
+      /**
+       * <pre>
+       *network counter
+       * </pre>
+       *
+       * <code>int32 node_count = 3;</code>
+       */
+      public int getNodeCount() {
+        return nodeCount_;
+      }
+      /**
+       * <pre>
+       *network counter
+       * </pre>
+       *
+       * <code>int32 node_count = 3;</code>
+       */
+      public Builder setNodeCount(int value) {
+        
+        nodeCount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *network counter
+       * </pre>
+       *
+       * <code>int32 node_count = 3;</code>
+       */
+      public Builder clearNodeCount() {
+        
+        nodeCount_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int nodeNotifiedCount_ ;
+      /**
+       * <pre>
+       *already notified nodes
+       * </pre>
+       *
+       * <code>int32 node_notified_count = 4;</code>
+       */
+      public int getNodeNotifiedCount() {
+        return nodeNotifiedCount_;
+      }
+      /**
+       * <pre>
+       *already notified nodes
+       * </pre>
+       *
+       * <code>int32 node_notified_count = 4;</code>
+       */
+      public Builder setNodeNotifiedCount(int value) {
+        
+        nodeNotifiedCount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *already notified nodes
+       * </pre>
+       *
+       * <code>int32 node_notified_count = 4;</code>
+       */
+      public Builder clearNodeNotifiedCount() {
+        
+        nodeNotifiedCount_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object nid_ = "";
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public java.lang.String getNid() {
+        java.lang.Object ref = nid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNidBytes() {
+        java.lang.Object ref = nid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder clearNid() {
+        
+        nid_ = getDefaultInstance().getNid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nid_ = value;
         onChanged();
         return this;
       }
@@ -4935,6 +5356,37 @@ public final class P22P {
      */
     com.google.protobuf.ByteString
         getReqTokenBytes();
+
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+     */
+    boolean hasNode();
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getNode();
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getNodeOrBuilder();
+
+    /**
+     * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    java.lang.String getNid();
+    /**
+     * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getNidBytes();
   }
   /**
    * <pre>
@@ -4953,6 +5405,7 @@ public final class P22P {
     }
     private PSNodeInfo() {
       reqToken_ = "";
+      nid_ = "";
     }
 
     @java.lang.Override
@@ -4984,6 +5437,25 @@ public final class P22P {
               java.lang.String s = input.readStringRequireUtf8();
 
               reqToken_ = s;
+              break;
+            }
+            case 18: {
+              org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder subBuilder = null;
+              if (node_ != null) {
+                subBuilder = node_.toBuilder();
+              }
+              node_ = input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(node_);
+                node_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 402: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              nid_ = s;
               break;
             }
           }
@@ -5051,6 +5523,69 @@ public final class P22P {
       }
     }
 
+    public static final int NODE_FIELD_NUMBER = 2;
+    private org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo node_;
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+     */
+    public boolean hasNode() {
+      return node_ != null;
+    }
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getNode() {
+      return node_ == null ? org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance() : node_;
+    }
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getNodeOrBuilder() {
+      return getNode();
+    }
+
+    public static final int NID_FIELD_NUMBER = 50;
+    private volatile java.lang.Object nid_;
+    /**
+     * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public java.lang.String getNid() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNidBytes() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -5066,6 +5601,12 @@ public final class P22P {
       if (!getReqTokenBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, reqToken_);
       }
+      if (node_ != null) {
+        output.writeMessage(2, getNode());
+      }
+      if (!getNidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 50, nid_);
+      }
     }
 
     public int getSerializedSize() {
@@ -5075,6 +5616,13 @@ public final class P22P {
       size = 0;
       if (!getReqTokenBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, reqToken_);
+      }
+      if (node_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getNode());
+      }
+      if (!getNidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(50, nid_);
       }
       memoizedSize = size;
       return size;
@@ -5094,6 +5642,13 @@ public final class P22P {
       boolean result = true;
       result = result && getReqToken()
           .equals(other.getReqToken());
+      result = result && (hasNode() == other.hasNode());
+      if (hasNode()) {
+        result = result && getNode()
+            .equals(other.getNode());
+      }
+      result = result && getNid()
+          .equals(other.getNid());
       return result;
     }
 
@@ -5106,6 +5661,12 @@ public final class P22P {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + REQ_TOKEN_FIELD_NUMBER;
       hash = (53 * hash) + getReqToken().hashCode();
+      if (hasNode()) {
+        hash = (37 * hash) + NODE_FIELD_NUMBER;
+        hash = (53 * hash) + getNode().hashCode();
+      }
+      hash = (37 * hash) + NID_FIELD_NUMBER;
+      hash = (53 * hash) + getNid().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -5230,6 +5791,14 @@ public final class P22P {
         super.clear();
         reqToken_ = "";
 
+        if (nodeBuilder_ == null) {
+          node_ = null;
+        } else {
+          node_ = null;
+          nodeBuilder_ = null;
+        }
+        nid_ = "";
+
         return this;
       }
 
@@ -5253,6 +5822,12 @@ public final class P22P {
       public org.fc.brewchain.p22p.pbgens.P22P.PSNodeInfo buildPartial() {
         org.fc.brewchain.p22p.pbgens.P22P.PSNodeInfo result = new org.fc.brewchain.p22p.pbgens.P22P.PSNodeInfo(this);
         result.reqToken_ = reqToken_;
+        if (nodeBuilder_ == null) {
+          result.node_ = node_;
+        } else {
+          result.node_ = nodeBuilder_.build();
+        }
+        result.nid_ = nid_;
         onBuilt();
         return result;
       }
@@ -5296,6 +5871,13 @@ public final class P22P {
         if (other == org.fc.brewchain.p22p.pbgens.P22P.PSNodeInfo.getDefaultInstance()) return this;
         if (!other.getReqToken().isEmpty()) {
           reqToken_ = other.reqToken_;
+          onChanged();
+        }
+        if (other.hasNode()) {
+          mergeNode(other.getNode());
+        }
+        if (!other.getNid().isEmpty()) {
+          nid_ = other.nid_;
           onChanged();
         }
         onChanged();
@@ -5412,6 +5994,212 @@ public final class P22P {
         onChanged();
         return this;
       }
+
+      private org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo node_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> nodeBuilder_;
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+       */
+      public boolean hasNode() {
+        return nodeBuilder_ != null || node_ != null;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getNode() {
+        if (nodeBuilder_ == null) {
+          return node_ == null ? org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance() : node_;
+        } else {
+          return nodeBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+       */
+      public Builder setNode(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
+        if (nodeBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          node_ = value;
+          onChanged();
+        } else {
+          nodeBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+       */
+      public Builder setNode(
+          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
+        if (nodeBuilder_ == null) {
+          node_ = builderForValue.build();
+          onChanged();
+        } else {
+          nodeBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+       */
+      public Builder mergeNode(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
+        if (nodeBuilder_ == null) {
+          if (node_ != null) {
+            node_ =
+              org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.newBuilder(node_).mergeFrom(value).buildPartial();
+          } else {
+            node_ = value;
+          }
+          onChanged();
+        } else {
+          nodeBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+       */
+      public Builder clearNode() {
+        if (nodeBuilder_ == null) {
+          node_ = null;
+          onChanged();
+        } else {
+          node_ = null;
+          nodeBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder getNodeBuilder() {
+        
+        onChanged();
+        return getNodeFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getNodeOrBuilder() {
+        if (nodeBuilder_ != null) {
+          return nodeBuilder_.getMessageOrBuilder();
+        } else {
+          return node_ == null ?
+              org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance() : node_;
+        }
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PMNodeInfo node = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
+          getNodeFieldBuilder() {
+        if (nodeBuilder_ == null) {
+          nodeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder>(
+                  getNode(),
+                  getParentForChildren(),
+                  isClean());
+          node_ = null;
+        }
+        return nodeBuilder_;
+      }
+
+      private java.lang.Object nid_ = "";
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public java.lang.String getNid() {
+        java.lang.Object ref = nid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNidBytes() {
+        java.lang.Object ref = nid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder clearNid() {
+        
+        nid_ = getDefaultInstance().getNid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nid_ = value;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -5519,46 +6307,64 @@ public final class P22P {
 
     /**
      * <pre>
+     * for pending
+     * </pre>
+     *
+     * <code>string bit_encs = 5;</code>
+     */
+    java.lang.String getBitEncs();
+    /**
+     * <pre>
+     * for pending
+     * </pre>
+     *
+     * <code>string bit_encs = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getBitEncsBytes();
+
+    /**
+     * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
      */
     java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> 
-        getPendingsList();
+        getPnodesList();
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
      */
-    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getPendings(int index);
+    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getPnodes(int index);
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
      */
-    int getPendingsCount();
+    int getPnodesCount();
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
      */
     java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-        getPendingsOrBuilderList();
+        getPnodesOrBuilderList();
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
      */
-    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getPendingsOrBuilder(
+    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getPnodesOrBuilder(
         int index);
 
     /**
@@ -5566,43 +6372,43 @@ public final class P22P {
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
      */
     java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> 
-        getNodesList();
+        getDnodesList();
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
      */
-    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getNodes(int index);
+    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getDnodes(int index);
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
      */
-    int getNodesCount();
+    int getDnodesCount();
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
      */
     java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-        getNodesOrBuilderList();
+        getDnodesOrBuilderList();
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
      */
-    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getNodesOrBuilder(
+    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getDnodesOrBuilder(
         int index);
 
     /**
@@ -5641,8 +6447,9 @@ public final class P22P {
     private PRetNodeInfo() {
       retCode_ = 0;
       retMessage_ = "";
-      pendings_ = java.util.Collections.emptyList();
-      nodes_ = java.util.Collections.emptyList();
+      bitEncs_ = "";
+      pnodes_ = java.util.Collections.emptyList();
+      dnodes_ = java.util.Collections.emptyList();
       sign_ = "";
     }
 
@@ -5696,20 +6503,26 @@ public final class P22P {
               break;
             }
             case 42: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-                pendings_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>();
-                mutable_bitField0_ |= 0x00000008;
-              }
-              pendings_.add(
-                  input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.parser(), extensionRegistry));
+              java.lang.String s = input.readStringRequireUtf8();
+
+              bitEncs_ = s;
               break;
             }
             case 50: {
               if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-                nodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>();
+                pnodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>();
                 mutable_bitField0_ |= 0x00000010;
               }
-              nodes_.add(
+              pnodes_.add(
+                  input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.parser(), extensionRegistry));
+              break;
+            }
+            case 58: {
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+                dnodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>();
+                mutable_bitField0_ |= 0x00000020;
+              }
+              dnodes_.add(
                   input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.parser(), extensionRegistry));
               break;
             }
@@ -5727,11 +6540,11 @@ public final class P22P {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-          pendings_ = java.util.Collections.unmodifiableList(pendings_);
-        }
         if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-          nodes_ = java.util.Collections.unmodifiableList(nodes_);
+          pnodes_ = java.util.Collections.unmodifiableList(pnodes_);
+        }
+        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+          dnodes_ = java.util.Collections.unmodifiableList(dnodes_);
         }
         makeExtensionsImmutable();
       }
@@ -5837,114 +6650,156 @@ public final class P22P {
       return getCurrent();
     }
 
-    public static final int PENDINGS_FIELD_NUMBER = 5;
-    private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> pendings_;
+    public static final int BIT_ENCS_FIELD_NUMBER = 5;
+    private volatile java.lang.Object bitEncs_;
     /**
      * <pre>
-     *交换一下我知道的节点信息
+     * for pending
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
+     * <code>string bit_encs = 5;</code>
      */
-    public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getPendingsList() {
-      return pendings_;
+    public java.lang.String getBitEncs() {
+      java.lang.Object ref = bitEncs_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        bitEncs_ = s;
+        return s;
+      }
     }
     /**
      * <pre>
-     *交换一下我知道的节点信息
+     * for pending
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
+     * <code>string bit_encs = 5;</code>
      */
-    public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-        getPendingsOrBuilderList() {
-      return pendings_;
-    }
-    /**
-     * <pre>
-     *交换一下我知道的节点信息
-     * </pre>
-     *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-     */
-    public int getPendingsCount() {
-      return pendings_.size();
-    }
-    /**
-     * <pre>
-     *交换一下我知道的节点信息
-     * </pre>
-     *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-     */
-    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getPendings(int index) {
-      return pendings_.get(index);
-    }
-    /**
-     * <pre>
-     *交换一下我知道的节点信息
-     * </pre>
-     *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-     */
-    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getPendingsOrBuilder(
-        int index) {
-      return pendings_.get(index);
+    public com.google.protobuf.ByteString
+        getBitEncsBytes() {
+      java.lang.Object ref = bitEncs_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        bitEncs_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
-    public static final int NODES_FIELD_NUMBER = 6;
-    private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> nodes_;
+    public static final int PNODES_FIELD_NUMBER = 6;
+    private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> pnodes_;
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
      */
-    public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getNodesList() {
-      return nodes_;
+    public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getPnodesList() {
+      return pnodes_;
     }
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
      */
     public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-        getNodesOrBuilderList() {
-      return nodes_;
+        getPnodesOrBuilderList() {
+      return pnodes_;
     }
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
      */
-    public int getNodesCount() {
-      return nodes_.size();
+    public int getPnodesCount() {
+      return pnodes_.size();
     }
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
      */
-    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getNodes(int index) {
-      return nodes_.get(index);
+    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getPnodes(int index) {
+      return pnodes_.get(index);
     }
     /**
      * <pre>
      *交换一下我知道的节点信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
      */
-    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getNodesOrBuilder(
+    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getPnodesOrBuilder(
         int index) {
-      return nodes_.get(index);
+      return pnodes_.get(index);
+    }
+
+    public static final int DNODES_FIELD_NUMBER = 7;
+    private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> dnodes_;
+    /**
+     * <pre>
+     *交换一下我知道的节点信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+     */
+    public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getDnodesList() {
+      return dnodes_;
+    }
+    /**
+     * <pre>
+     *交换一下我知道的节点信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+     */
+    public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
+        getDnodesOrBuilderList() {
+      return dnodes_;
+    }
+    /**
+     * <pre>
+     *交换一下我知道的节点信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+     */
+    public int getDnodesCount() {
+      return dnodes_.size();
+    }
+    /**
+     * <pre>
+     *交换一下我知道的节点信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getDnodes(int index) {
+      return dnodes_.get(index);
+    }
+    /**
+     * <pre>
+     *交换一下我知道的节点信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getDnodesOrBuilder(
+        int index) {
+      return dnodes_.get(index);
     }
 
     public static final int SIGN_FIELD_NUMBER = 100;
@@ -6010,11 +6865,14 @@ public final class P22P {
       if (current_ != null) {
         output.writeMessage(4, getCurrent());
       }
-      for (int i = 0; i < pendings_.size(); i++) {
-        output.writeMessage(5, pendings_.get(i));
+      if (!getBitEncsBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, bitEncs_);
       }
-      for (int i = 0; i < nodes_.size(); i++) {
-        output.writeMessage(6, nodes_.get(i));
+      for (int i = 0; i < pnodes_.size(); i++) {
+        output.writeMessage(6, pnodes_.get(i));
+      }
+      for (int i = 0; i < dnodes_.size(); i++) {
+        output.writeMessage(7, dnodes_.get(i));
       }
       if (!getSignBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 100, sign_);
@@ -6037,13 +6895,16 @@ public final class P22P {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, getCurrent());
       }
-      for (int i = 0; i < pendings_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, pendings_.get(i));
+      if (!getBitEncsBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, bitEncs_);
       }
-      for (int i = 0; i < nodes_.size(); i++) {
+      for (int i = 0; i < pnodes_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, nodes_.get(i));
+          .computeMessageSize(6, pnodes_.get(i));
+      }
+      for (int i = 0; i < dnodes_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, dnodes_.get(i));
       }
       if (!getSignBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(100, sign_);
@@ -6073,10 +6934,12 @@ public final class P22P {
         result = result && getCurrent()
             .equals(other.getCurrent());
       }
-      result = result && getPendingsList()
-          .equals(other.getPendingsList());
-      result = result && getNodesList()
-          .equals(other.getNodesList());
+      result = result && getBitEncs()
+          .equals(other.getBitEncs());
+      result = result && getPnodesList()
+          .equals(other.getPnodesList());
+      result = result && getDnodesList()
+          .equals(other.getDnodesList());
       result = result && getSign()
           .equals(other.getSign());
       return result;
@@ -6097,13 +6960,15 @@ public final class P22P {
         hash = (37 * hash) + CURRENT_FIELD_NUMBER;
         hash = (53 * hash) + getCurrent().hashCode();
       }
-      if (getPendingsCount() > 0) {
-        hash = (37 * hash) + PENDINGS_FIELD_NUMBER;
-        hash = (53 * hash) + getPendingsList().hashCode();
+      hash = (37 * hash) + BIT_ENCS_FIELD_NUMBER;
+      hash = (53 * hash) + getBitEncs().hashCode();
+      if (getPnodesCount() > 0) {
+        hash = (37 * hash) + PNODES_FIELD_NUMBER;
+        hash = (53 * hash) + getPnodesList().hashCode();
       }
-      if (getNodesCount() > 0) {
-        hash = (37 * hash) + NODES_FIELD_NUMBER;
-        hash = (53 * hash) + getNodesList().hashCode();
+      if (getDnodesCount() > 0) {
+        hash = (37 * hash) + DNODES_FIELD_NUMBER;
+        hash = (53 * hash) + getDnodesList().hashCode();
       }
       hash = (37 * hash) + SIGN_FIELD_NUMBER;
       hash = (53 * hash) + getSign().hashCode();
@@ -6225,8 +7090,8 @@ public final class P22P {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getPendingsFieldBuilder();
-          getNodesFieldBuilder();
+          getPnodesFieldBuilder();
+          getDnodesFieldBuilder();
         }
       }
       public Builder clear() {
@@ -6241,17 +7106,19 @@ public final class P22P {
           current_ = null;
           currentBuilder_ = null;
         }
-        if (pendingsBuilder_ == null) {
-          pendings_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
-        } else {
-          pendingsBuilder_.clear();
-        }
-        if (nodesBuilder_ == null) {
-          nodes_ = java.util.Collections.emptyList();
+        bitEncs_ = "";
+
+        if (pnodesBuilder_ == null) {
+          pnodes_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000010);
         } else {
-          nodesBuilder_.clear();
+          pnodesBuilder_.clear();
+        }
+        if (dnodesBuilder_ == null) {
+          dnodes_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000020);
+        } else {
+          dnodesBuilder_.clear();
         }
         sign_ = "";
 
@@ -6286,23 +7153,24 @@ public final class P22P {
         } else {
           result.current_ = currentBuilder_.build();
         }
-        if (pendingsBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008)) {
-            pendings_ = java.util.Collections.unmodifiableList(pendings_);
-            bitField0_ = (bitField0_ & ~0x00000008);
-          }
-          result.pendings_ = pendings_;
-        } else {
-          result.pendings_ = pendingsBuilder_.build();
-        }
-        if (nodesBuilder_ == null) {
+        result.bitEncs_ = bitEncs_;
+        if (pnodesBuilder_ == null) {
           if (((bitField0_ & 0x00000010) == 0x00000010)) {
-            nodes_ = java.util.Collections.unmodifiableList(nodes_);
+            pnodes_ = java.util.Collections.unmodifiableList(pnodes_);
             bitField0_ = (bitField0_ & ~0x00000010);
           }
-          result.nodes_ = nodes_;
+          result.pnodes_ = pnodes_;
         } else {
-          result.nodes_ = nodesBuilder_.build();
+          result.pnodes_ = pnodesBuilder_.build();
+        }
+        if (dnodesBuilder_ == null) {
+          if (((bitField0_ & 0x00000020) == 0x00000020)) {
+            dnodes_ = java.util.Collections.unmodifiableList(dnodes_);
+            bitField0_ = (bitField0_ & ~0x00000020);
+          }
+          result.dnodes_ = dnodes_;
+        } else {
+          result.dnodes_ = dnodesBuilder_.build();
         }
         result.sign_ = sign_;
         result.bitField0_ = to_bitField0_;
@@ -6357,55 +7225,59 @@ public final class P22P {
         if (other.hasCurrent()) {
           mergeCurrent(other.getCurrent());
         }
-        if (pendingsBuilder_ == null) {
-          if (!other.pendings_.isEmpty()) {
-            if (pendings_.isEmpty()) {
-              pendings_ = other.pendings_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+        if (!other.getBitEncs().isEmpty()) {
+          bitEncs_ = other.bitEncs_;
+          onChanged();
+        }
+        if (pnodesBuilder_ == null) {
+          if (!other.pnodes_.isEmpty()) {
+            if (pnodes_.isEmpty()) {
+              pnodes_ = other.pnodes_;
+              bitField0_ = (bitField0_ & ~0x00000010);
             } else {
-              ensurePendingsIsMutable();
-              pendings_.addAll(other.pendings_);
+              ensurePnodesIsMutable();
+              pnodes_.addAll(other.pnodes_);
             }
             onChanged();
           }
         } else {
-          if (!other.pendings_.isEmpty()) {
-            if (pendingsBuilder_.isEmpty()) {
-              pendingsBuilder_.dispose();
-              pendingsBuilder_ = null;
-              pendings_ = other.pendings_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-              pendingsBuilder_ = 
+          if (!other.pnodes_.isEmpty()) {
+            if (pnodesBuilder_.isEmpty()) {
+              pnodesBuilder_.dispose();
+              pnodesBuilder_ = null;
+              pnodes_ = other.pnodes_;
+              bitField0_ = (bitField0_ & ~0x00000010);
+              pnodesBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getPendingsFieldBuilder() : null;
+                   getPnodesFieldBuilder() : null;
             } else {
-              pendingsBuilder_.addAllMessages(other.pendings_);
+              pnodesBuilder_.addAllMessages(other.pnodes_);
             }
           }
         }
-        if (nodesBuilder_ == null) {
-          if (!other.nodes_.isEmpty()) {
-            if (nodes_.isEmpty()) {
-              nodes_ = other.nodes_;
-              bitField0_ = (bitField0_ & ~0x00000010);
+        if (dnodesBuilder_ == null) {
+          if (!other.dnodes_.isEmpty()) {
+            if (dnodes_.isEmpty()) {
+              dnodes_ = other.dnodes_;
+              bitField0_ = (bitField0_ & ~0x00000020);
             } else {
-              ensureNodesIsMutable();
-              nodes_.addAll(other.nodes_);
+              ensureDnodesIsMutable();
+              dnodes_.addAll(other.dnodes_);
             }
             onChanged();
           }
         } else {
-          if (!other.nodes_.isEmpty()) {
-            if (nodesBuilder_.isEmpty()) {
-              nodesBuilder_.dispose();
-              nodesBuilder_ = null;
-              nodes_ = other.nodes_;
-              bitField0_ = (bitField0_ & ~0x00000010);
-              nodesBuilder_ = 
+          if (!other.dnodes_.isEmpty()) {
+            if (dnodesBuilder_.isEmpty()) {
+              dnodesBuilder_.dispose();
+              dnodesBuilder_ = null;
+              dnodes_ = other.dnodes_;
+              bitField0_ = (bitField0_ & ~0x00000020);
+              dnodesBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getNodesFieldBuilder() : null;
+                   getDnodesFieldBuilder() : null;
             } else {
-              nodesBuilder_.addAllMessages(other.nodes_);
+              dnodesBuilder_.addAllMessages(other.dnodes_);
             }
           }
         }
@@ -6720,342 +7592,119 @@ public final class P22P {
         return currentBuilder_;
       }
 
-      private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> pendings_ =
+      private java.lang.Object bitEncs_ = "";
+      /**
+       * <pre>
+       * for pending
+       * </pre>
+       *
+       * <code>string bit_encs = 5;</code>
+       */
+      public java.lang.String getBitEncs() {
+        java.lang.Object ref = bitEncs_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          bitEncs_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * for pending
+       * </pre>
+       *
+       * <code>string bit_encs = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getBitEncsBytes() {
+        java.lang.Object ref = bitEncs_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          bitEncs_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * for pending
+       * </pre>
+       *
+       * <code>string bit_encs = 5;</code>
+       */
+      public Builder setBitEncs(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        bitEncs_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * for pending
+       * </pre>
+       *
+       * <code>string bit_encs = 5;</code>
+       */
+      public Builder clearBitEncs() {
+        
+        bitEncs_ = getDefaultInstance().getBitEncs();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * for pending
+       * </pre>
+       *
+       * <code>string bit_encs = 5;</code>
+       */
+      public Builder setBitEncsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        bitEncs_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> pnodes_ =
         java.util.Collections.emptyList();
-      private void ensurePendingsIsMutable() {
-        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
-          pendings_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>(pendings_);
-          bitField0_ |= 0x00000008;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> pendingsBuilder_;
-
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getPendingsList() {
-        if (pendingsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(pendings_);
-        } else {
-          return pendingsBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public int getPendingsCount() {
-        if (pendingsBuilder_ == null) {
-          return pendings_.size();
-        } else {
-          return pendingsBuilder_.getCount();
-        }
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getPendings(int index) {
-        if (pendingsBuilder_ == null) {
-          return pendings_.get(index);
-        } else {
-          return pendingsBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public Builder setPendings(
-          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
-        if (pendingsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePendingsIsMutable();
-          pendings_.set(index, value);
-          onChanged();
-        } else {
-          pendingsBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public Builder setPendings(
-          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
-        if (pendingsBuilder_ == null) {
-          ensurePendingsIsMutable();
-          pendings_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          pendingsBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public Builder addPendings(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
-        if (pendingsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePendingsIsMutable();
-          pendings_.add(value);
-          onChanged();
-        } else {
-          pendingsBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public Builder addPendings(
-          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
-        if (pendingsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensurePendingsIsMutable();
-          pendings_.add(index, value);
-          onChanged();
-        } else {
-          pendingsBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public Builder addPendings(
-          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
-        if (pendingsBuilder_ == null) {
-          ensurePendingsIsMutable();
-          pendings_.add(builderForValue.build());
-          onChanged();
-        } else {
-          pendingsBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public Builder addPendings(
-          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
-        if (pendingsBuilder_ == null) {
-          ensurePendingsIsMutable();
-          pendings_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          pendingsBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public Builder addAllPendings(
-          java.lang.Iterable<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> values) {
-        if (pendingsBuilder_ == null) {
-          ensurePendingsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, pendings_);
-          onChanged();
-        } else {
-          pendingsBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public Builder clearPendings() {
-        if (pendingsBuilder_ == null) {
-          pendings_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
-          onChanged();
-        } else {
-          pendingsBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public Builder removePendings(int index) {
-        if (pendingsBuilder_ == null) {
-          ensurePendingsIsMutable();
-          pendings_.remove(index);
-          onChanged();
-        } else {
-          pendingsBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder getPendingsBuilder(
-          int index) {
-        return getPendingsFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getPendingsOrBuilder(
-          int index) {
-        if (pendingsBuilder_ == null) {
-          return pendings_.get(index);  } else {
-          return pendingsBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-           getPendingsOrBuilderList() {
-        if (pendingsBuilder_ != null) {
-          return pendingsBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(pendings_);
-        }
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addPendingsBuilder() {
-        return getPendingsFieldBuilder().addBuilder(
-            org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addPendingsBuilder(
-          int index) {
-        return getPendingsFieldBuilder().addBuilder(
-            index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       *交换一下我知道的节点信息
-       * </pre>
-       *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pendings = 5;</code>
-       */
-      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder> 
-           getPendingsBuilderList() {
-        return getPendingsFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-          getPendingsFieldBuilder() {
-        if (pendingsBuilder_ == null) {
-          pendingsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder>(
-                  pendings_,
-                  ((bitField0_ & 0x00000008) == 0x00000008),
-                  getParentForChildren(),
-                  isClean());
-          pendings_ = null;
-        }
-        return pendingsBuilder_;
-      }
-
-      private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> nodes_ =
-        java.util.Collections.emptyList();
-      private void ensureNodesIsMutable() {
+      private void ensurePnodesIsMutable() {
         if (!((bitField0_ & 0x00000010) == 0x00000010)) {
-          nodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>(nodes_);
+          pnodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>(pnodes_);
           bitField0_ |= 0x00000010;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> nodesBuilder_;
+          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> pnodesBuilder_;
 
       /**
        * <pre>
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getNodesList() {
-        if (nodesBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(nodes_);
+      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getPnodesList() {
+        if (pnodesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(pnodes_);
         } else {
-          return nodesBuilder_.getMessageList();
+          return pnodesBuilder_.getMessageList();
         }
       }
       /**
@@ -7063,13 +7712,13 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public int getNodesCount() {
-        if (nodesBuilder_ == null) {
-          return nodes_.size();
+      public int getPnodesCount() {
+        if (pnodesBuilder_ == null) {
+          return pnodes_.size();
         } else {
-          return nodesBuilder_.getCount();
+          return pnodesBuilder_.getCount();
         }
       }
       /**
@@ -7077,13 +7726,13 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getNodes(int index) {
-        if (nodesBuilder_ == null) {
-          return nodes_.get(index);
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getPnodes(int index) {
+        if (pnodesBuilder_ == null) {
+          return pnodes_.get(index);
         } else {
-          return nodesBuilder_.getMessage(index);
+          return pnodesBuilder_.getMessage(index);
         }
       }
       /**
@@ -7091,19 +7740,19 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public Builder setNodes(
+      public Builder setPnodes(
           int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
-        if (nodesBuilder_ == null) {
+        if (pnodesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureNodesIsMutable();
-          nodes_.set(index, value);
+          ensurePnodesIsMutable();
+          pnodes_.set(index, value);
           onChanged();
         } else {
-          nodesBuilder_.setMessage(index, value);
+          pnodesBuilder_.setMessage(index, value);
         }
         return this;
       }
@@ -7112,16 +7761,16 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public Builder setNodes(
+      public Builder setPnodes(
           int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
-        if (nodesBuilder_ == null) {
-          ensureNodesIsMutable();
-          nodes_.set(index, builderForValue.build());
+        if (pnodesBuilder_ == null) {
+          ensurePnodesIsMutable();
+          pnodes_.set(index, builderForValue.build());
           onChanged();
         } else {
-          nodesBuilder_.setMessage(index, builderForValue.build());
+          pnodesBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
@@ -7130,18 +7779,18 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public Builder addNodes(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
-        if (nodesBuilder_ == null) {
+      public Builder addPnodes(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
+        if (pnodesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureNodesIsMutable();
-          nodes_.add(value);
+          ensurePnodesIsMutable();
+          pnodes_.add(value);
           onChanged();
         } else {
-          nodesBuilder_.addMessage(value);
+          pnodesBuilder_.addMessage(value);
         }
         return this;
       }
@@ -7150,19 +7799,19 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public Builder addNodes(
+      public Builder addPnodes(
           int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
-        if (nodesBuilder_ == null) {
+        if (pnodesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureNodesIsMutable();
-          nodes_.add(index, value);
+          ensurePnodesIsMutable();
+          pnodes_.add(index, value);
           onChanged();
         } else {
-          nodesBuilder_.addMessage(index, value);
+          pnodesBuilder_.addMessage(index, value);
         }
         return this;
       }
@@ -7171,16 +7820,16 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public Builder addNodes(
+      public Builder addPnodes(
           org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
-        if (nodesBuilder_ == null) {
-          ensureNodesIsMutable();
-          nodes_.add(builderForValue.build());
+        if (pnodesBuilder_ == null) {
+          ensurePnodesIsMutable();
+          pnodes_.add(builderForValue.build());
           onChanged();
         } else {
-          nodesBuilder_.addMessage(builderForValue.build());
+          pnodesBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
@@ -7189,16 +7838,16 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public Builder addNodes(
+      public Builder addPnodes(
           int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
-        if (nodesBuilder_ == null) {
-          ensureNodesIsMutable();
-          nodes_.add(index, builderForValue.build());
+        if (pnodesBuilder_ == null) {
+          ensurePnodesIsMutable();
+          pnodes_.add(index, builderForValue.build());
           onChanged();
         } else {
-          nodesBuilder_.addMessage(index, builderForValue.build());
+          pnodesBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
@@ -7207,17 +7856,17 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public Builder addAllNodes(
+      public Builder addAllPnodes(
           java.lang.Iterable<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> values) {
-        if (nodesBuilder_ == null) {
-          ensureNodesIsMutable();
+        if (pnodesBuilder_ == null) {
+          ensurePnodesIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, nodes_);
+              values, pnodes_);
           onChanged();
         } else {
-          nodesBuilder_.addAllMessages(values);
+          pnodesBuilder_.addAllMessages(values);
         }
         return this;
       }
@@ -7226,15 +7875,15 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public Builder clearNodes() {
-        if (nodesBuilder_ == null) {
-          nodes_ = java.util.Collections.emptyList();
+      public Builder clearPnodes() {
+        if (pnodesBuilder_ == null) {
+          pnodes_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000010);
           onChanged();
         } else {
-          nodesBuilder_.clear();
+          pnodesBuilder_.clear();
         }
         return this;
       }
@@ -7243,15 +7892,15 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public Builder removeNodes(int index) {
-        if (nodesBuilder_ == null) {
-          ensureNodesIsMutable();
-          nodes_.remove(index);
+      public Builder removePnodes(int index) {
+        if (pnodesBuilder_ == null) {
+          ensurePnodesIsMutable();
+          pnodes_.remove(index);
           onChanged();
         } else {
-          nodesBuilder_.remove(index);
+          pnodesBuilder_.remove(index);
         }
         return this;
       }
@@ -7260,24 +7909,24 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder getNodesBuilder(
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder getPnodesBuilder(
           int index) {
-        return getNodesFieldBuilder().getBuilder(index);
+        return getPnodesFieldBuilder().getBuilder(index);
       }
       /**
        * <pre>
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getNodesOrBuilder(
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getPnodesOrBuilder(
           int index) {
-        if (nodesBuilder_ == null) {
-          return nodes_.get(index);  } else {
-          return nodesBuilder_.getMessageOrBuilder(index);
+        if (pnodesBuilder_ == null) {
+          return pnodes_.get(index);  } else {
+          return pnodesBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
@@ -7285,14 +7934,14 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
       public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-           getNodesOrBuilderList() {
-        if (nodesBuilder_ != null) {
-          return nodesBuilder_.getMessageOrBuilderList();
+           getPnodesOrBuilderList() {
+        if (pnodesBuilder_ != null) {
+          return pnodesBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(nodes_);
+          return java.util.Collections.unmodifiableList(pnodes_);
         }
       }
       /**
@@ -7300,10 +7949,10 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addNodesBuilder() {
-        return getNodesFieldBuilder().addBuilder(
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addPnodesBuilder() {
+        return getPnodesFieldBuilder().addBuilder(
             org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance());
       }
       /**
@@ -7311,11 +7960,11 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addNodesBuilder(
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addPnodesBuilder(
           int index) {
-        return getNodesFieldBuilder().addBuilder(
+        return getPnodesFieldBuilder().addBuilder(
             index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance());
       }
       /**
@@ -7323,25 +7972,337 @@ public final class P22P {
        *交换一下我知道的节点信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 6;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pnodes = 6;</code>
        */
       public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder> 
-           getNodesBuilderList() {
-        return getNodesFieldBuilder().getBuilderList();
+           getPnodesBuilderList() {
+        return getPnodesFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
           org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-          getNodesFieldBuilder() {
-        if (nodesBuilder_ == null) {
-          nodesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          getPnodesFieldBuilder() {
+        if (pnodesBuilder_ == null) {
+          pnodesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder>(
-                  nodes_,
+                  pnodes_,
                   ((bitField0_ & 0x00000010) == 0x00000010),
                   getParentForChildren(),
                   isClean());
-          nodes_ = null;
+          pnodes_ = null;
         }
-        return nodesBuilder_;
+        return pnodesBuilder_;
+      }
+
+      private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> dnodes_ =
+        java.util.Collections.emptyList();
+      private void ensureDnodesIsMutable() {
+        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
+          dnodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>(dnodes_);
+          bitField0_ |= 0x00000020;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> dnodesBuilder_;
+
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getDnodesList() {
+        if (dnodesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(dnodes_);
+        } else {
+          return dnodesBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public int getDnodesCount() {
+        if (dnodesBuilder_ == null) {
+          return dnodes_.size();
+        } else {
+          return dnodesBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getDnodes(int index) {
+        if (dnodesBuilder_ == null) {
+          return dnodes_.get(index);
+        } else {
+          return dnodesBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public Builder setDnodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
+        if (dnodesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDnodesIsMutable();
+          dnodes_.set(index, value);
+          onChanged();
+        } else {
+          dnodesBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public Builder setDnodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
+        if (dnodesBuilder_ == null) {
+          ensureDnodesIsMutable();
+          dnodes_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          dnodesBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public Builder addDnodes(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
+        if (dnodesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDnodesIsMutable();
+          dnodes_.add(value);
+          onChanged();
+        } else {
+          dnodesBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public Builder addDnodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
+        if (dnodesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDnodesIsMutable();
+          dnodes_.add(index, value);
+          onChanged();
+        } else {
+          dnodesBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public Builder addDnodes(
+          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
+        if (dnodesBuilder_ == null) {
+          ensureDnodesIsMutable();
+          dnodes_.add(builderForValue.build());
+          onChanged();
+        } else {
+          dnodesBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public Builder addDnodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
+        if (dnodesBuilder_ == null) {
+          ensureDnodesIsMutable();
+          dnodes_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          dnodesBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public Builder addAllDnodes(
+          java.lang.Iterable<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> values) {
+        if (dnodesBuilder_ == null) {
+          ensureDnodesIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, dnodes_);
+          onChanged();
+        } else {
+          dnodesBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public Builder clearDnodes() {
+        if (dnodesBuilder_ == null) {
+          dnodes_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000020);
+          onChanged();
+        } else {
+          dnodesBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public Builder removeDnodes(int index) {
+        if (dnodesBuilder_ == null) {
+          ensureDnodesIsMutable();
+          dnodes_.remove(index);
+          onChanged();
+        } else {
+          dnodesBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder getDnodesBuilder(
+          int index) {
+        return getDnodesFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getDnodesOrBuilder(
+          int index) {
+        if (dnodesBuilder_ == null) {
+          return dnodes_.get(index);  } else {
+          return dnodesBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
+           getDnodesOrBuilderList() {
+        if (dnodesBuilder_ != null) {
+          return dnodesBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(dnodes_);
+        }
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addDnodesBuilder() {
+        return getDnodesFieldBuilder().addBuilder(
+            org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addDnodesBuilder(
+          int index) {
+        return getDnodesFieldBuilder().addBuilder(
+            index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *交换一下我知道的节点信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo dnodes = 7;</code>
+       */
+      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder> 
+           getDnodesBuilderList() {
+        return getDnodesFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
+          getDnodesFieldBuilder() {
+        if (dnodesBuilder_ == null) {
+          dnodesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder>(
+                  dnodes_,
+                  ((bitField0_ & 0x00000020) == 0x00000020),
+                  getParentForChildren(),
+                  isClean());
+          dnodes_ = null;
+        }
+        return dnodesBuilder_;
       }
 
       private java.lang.Object sign_ = "";
@@ -7544,6 +8505,24 @@ public final class P22P {
 
     /**
      * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    java.lang.String getNid();
+    /**
+     * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getNidBytes();
+
+    /**
+     * <pre>
      *对上述数据的签名结果
      * </pre>
      *
@@ -7577,6 +8556,7 @@ public final class P22P {
     }
     private PBSwitchNodes() {
       nodes_ = java.util.Collections.emptyList();
+      nid_ = "";
       sign_ = "";
     }
 
@@ -7625,6 +8605,12 @@ public final class P22P {
                 myInfo_ = subBuilder.buildPartial();
               }
 
+              break;
+            }
+            case 402: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              nid_ = s;
               break;
             }
             case 802: {
@@ -7736,6 +8722,48 @@ public final class P22P {
       return getMyInfo();
     }
 
+    public static final int NID_FIELD_NUMBER = 50;
+    private volatile java.lang.Object nid_;
+    /**
+     * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public java.lang.String getNid() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *网络ID	
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNidBytes() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     public static final int SIGN_FIELD_NUMBER = 100;
     private volatile java.lang.Object sign_;
     /**
@@ -7796,6 +8824,9 @@ public final class P22P {
       if (myInfo_ != null) {
         output.writeMessage(2, getMyInfo());
       }
+      if (!getNidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 50, nid_);
+      }
       if (!getSignBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 100, sign_);
       }
@@ -7813,6 +8844,9 @@ public final class P22P {
       if (myInfo_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getMyInfo());
+      }
+      if (!getNidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(50, nid_);
       }
       if (!getSignBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(100, sign_);
@@ -7840,6 +8874,8 @@ public final class P22P {
         result = result && getMyInfo()
             .equals(other.getMyInfo());
       }
+      result = result && getNid()
+          .equals(other.getNid());
       result = result && getSign()
           .equals(other.getSign());
       return result;
@@ -7860,6 +8896,8 @@ public final class P22P {
         hash = (37 * hash) + MY_INFO_FIELD_NUMBER;
         hash = (53 * hash) + getMyInfo().hashCode();
       }
+      hash = (37 * hash) + NID_FIELD_NUMBER;
+      hash = (53 * hash) + getNid().hashCode();
       hash = (37 * hash) + SIGN_FIELD_NUMBER;
       hash = (53 * hash) + getSign().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -7997,6 +9035,8 @@ public final class P22P {
           myInfo_ = null;
           myInfoBuilder_ = null;
         }
+        nid_ = "";
+
         sign_ = "";
 
         return this;
@@ -8037,6 +9077,7 @@ public final class P22P {
         } else {
           result.myInfo_ = myInfoBuilder_.build();
         }
+        result.nid_ = nid_;
         result.sign_ = sign_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -8108,6 +9149,10 @@ public final class P22P {
         }
         if (other.hasMyInfo()) {
           mergeMyInfo(other.getMyInfo());
+        }
+        if (!other.getNid().isEmpty()) {
+          nid_ = other.nid_;
+          onChanged();
         }
         if (!other.getSign().isEmpty()) {
           sign_ = other.sign_;
@@ -8569,6 +9614,95 @@ public final class P22P {
         return myInfoBuilder_;
       }
 
+      private java.lang.Object nid_ = "";
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public java.lang.String getNid() {
+        java.lang.Object ref = nid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNidBytes() {
+        java.lang.Object ref = nid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder clearNid() {
+        
+        nid_ = getDefaultInstance().getNid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID	
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+
       private java.lang.Object sign_ = "";
       /**
        * <pre>
@@ -8732,9 +9866,17 @@ public final class P22P {
      *消息类型
      * </pre>
      *
-     * <code>uint32 m_type = 2;</code>
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 2;</code>
      */
-    int getMType();
+    int getMTypeValue();
+    /**
+     * <pre>
+     *消息类型
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 2;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PVType getMType();
 
     /**
      * <pre>
@@ -8756,7 +9898,7 @@ public final class P22P {
 
     /**
      * <pre>
-     * number
+     * 参与投票的节点数
      * </pre>
      *
      * <code>uint32 n = 5;</code>
@@ -8764,9 +9906,93 @@ public final class P22P {
     int getN();
 
     /**
+     * <code>uint64 create_time = 6;</code>
+     */
+    long getCreateTime();
+
+    /**
+     * <code>uint64 last_update_time = 7;</code>
+     */
+    long getLastUpdateTime();
+
+    /**
+     * <pre>
+     *上次状态
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage old_state = 8;</code>
+     */
+    int getOldStateValue();
+    /**
+     * <pre>
+     *上次状态
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage old_state = 8;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PBFTStage getOldState();
+
+    /**
+     * <pre>
+     *上次状态
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage reject_state = 9;</code>
+     */
+    int getRejectStateValue();
+    /**
+     * <pre>
+     *上次状态
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage reject_state = 9;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PBFTStage getRejectState();
+
+    /**
+     * <pre>
+     *具体的内容
+     * </pre>
+     *
      * <code>bytes contents = 10;</code>
      */
     com.google.protobuf.ByteString getContents();
+
+    /**
+     * <pre>
+     * 为了支持快照定义的版本
+     * </pre>
+     *
+     * <code>uint32 store_num = 11;</code>
+     */
+    int getStoreNum();
+
+    /**
+     * <pre>
+     *计数器,为快照准备
+     * </pre>
+     *
+     * <code>uint32 view_counter = 12;</code>
+     */
+    int getViewCounter();
+
+    /**
+     * <pre>
+     *从哪个节点名称来的
+     * </pre>
+     *
+     * <code>string origin_bcuid = 20;</code>
+     */
+    java.lang.String getOriginBcuid();
+    /**
+     * <pre>
+     *从哪个节点名称来的
+     * </pre>
+     *
+     * <code>string origin_bcuid = 20;</code>
+     */
+    com.google.protobuf.ByteString
+        getOriginBcuidBytes();
 
     /**
      * <pre>
@@ -8806,6 +10032,24 @@ public final class P22P {
 
     /**
      * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    java.lang.String getNid();
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getNidBytes();
+
+    /**
+     * <pre>
      *对上述数据的签名结果
      * </pre>
      *
@@ -8839,9 +10083,17 @@ public final class P22P {
       v_ = 0;
       maxVid_ = 0;
       n_ = 0;
+      createTime_ = 0L;
+      lastUpdateTime_ = 0L;
+      oldState_ = 0;
+      rejectState_ = 0;
       contents_ = com.google.protobuf.ByteString.EMPTY;
+      storeNum_ = 0;
+      viewCounter_ = 0;
+      originBcuid_ = "";
       messageUid_ = "";
       fromBcuid_ = "";
+      nid_ = "";
       sign_ = "";
     }
 
@@ -8877,8 +10129,9 @@ public final class P22P {
               break;
             }
             case 16: {
+              int rawValue = input.readEnum();
 
-              mType_ = input.readUInt32();
+              mType_ = rawValue;
               break;
             }
             case 24: {
@@ -8896,9 +10149,47 @@ public final class P22P {
               n_ = input.readUInt32();
               break;
             }
+            case 48: {
+
+              createTime_ = input.readUInt64();
+              break;
+            }
+            case 56: {
+
+              lastUpdateTime_ = input.readUInt64();
+              break;
+            }
+            case 64: {
+              int rawValue = input.readEnum();
+
+              oldState_ = rawValue;
+              break;
+            }
+            case 72: {
+              int rawValue = input.readEnum();
+
+              rejectState_ = rawValue;
+              break;
+            }
             case 82: {
 
               contents_ = input.readBytes();
+              break;
+            }
+            case 88: {
+
+              storeNum_ = input.readUInt32();
+              break;
+            }
+            case 96: {
+
+              viewCounter_ = input.readUInt32();
+              break;
+            }
+            case 162: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              originBcuid_ = s;
               break;
             }
             case 242: {
@@ -8911,6 +10202,12 @@ public final class P22P {
               java.lang.String s = input.readStringRequireUtf8();
 
               fromBcuid_ = s;
+              break;
+            }
+            case 402: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              nid_ = s;
               break;
             }
             case 802: {
@@ -8973,10 +10270,21 @@ public final class P22P {
      *消息类型
      * </pre>
      *
-     * <code>uint32 m_type = 2;</code>
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 2;</code>
      */
-    public int getMType() {
+    public int getMTypeValue() {
       return mType_;
+    }
+    /**
+     * <pre>
+     *消息类型
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 2;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PVType getMType() {
+      org.fc.brewchain.p22p.pbgens.P22P.PVType result = org.fc.brewchain.p22p.pbgens.P22P.PVType.valueOf(mType_);
+      return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PVType.UNRECOGNIZED : result;
     }
 
     public static final int V_FIELD_NUMBER = 3;
@@ -9009,7 +10317,7 @@ public final class P22P {
     private int n_;
     /**
      * <pre>
-     * number
+     * 参与投票的节点数
      * </pre>
      *
      * <code>uint32 n = 5;</code>
@@ -9018,13 +10326,151 @@ public final class P22P {
       return n_;
     }
 
+    public static final int CREATE_TIME_FIELD_NUMBER = 6;
+    private long createTime_;
+    /**
+     * <code>uint64 create_time = 6;</code>
+     */
+    public long getCreateTime() {
+      return createTime_;
+    }
+
+    public static final int LAST_UPDATE_TIME_FIELD_NUMBER = 7;
+    private long lastUpdateTime_;
+    /**
+     * <code>uint64 last_update_time = 7;</code>
+     */
+    public long getLastUpdateTime() {
+      return lastUpdateTime_;
+    }
+
+    public static final int OLD_STATE_FIELD_NUMBER = 8;
+    private int oldState_;
+    /**
+     * <pre>
+     *上次状态
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage old_state = 8;</code>
+     */
+    public int getOldStateValue() {
+      return oldState_;
+    }
+    /**
+     * <pre>
+     *上次状态
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage old_state = 8;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PBFTStage getOldState() {
+      org.fc.brewchain.p22p.pbgens.P22P.PBFTStage result = org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.valueOf(oldState_);
+      return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.UNRECOGNIZED : result;
+    }
+
+    public static final int REJECT_STATE_FIELD_NUMBER = 9;
+    private int rejectState_;
+    /**
+     * <pre>
+     *上次状态
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage reject_state = 9;</code>
+     */
+    public int getRejectStateValue() {
+      return rejectState_;
+    }
+    /**
+     * <pre>
+     *上次状态
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage reject_state = 9;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PBFTStage getRejectState() {
+      org.fc.brewchain.p22p.pbgens.P22P.PBFTStage result = org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.valueOf(rejectState_);
+      return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.UNRECOGNIZED : result;
+    }
+
     public static final int CONTENTS_FIELD_NUMBER = 10;
     private com.google.protobuf.ByteString contents_;
     /**
+     * <pre>
+     *具体的内容
+     * </pre>
+     *
      * <code>bytes contents = 10;</code>
      */
     public com.google.protobuf.ByteString getContents() {
       return contents_;
+    }
+
+    public static final int STORE_NUM_FIELD_NUMBER = 11;
+    private int storeNum_;
+    /**
+     * <pre>
+     * 为了支持快照定义的版本
+     * </pre>
+     *
+     * <code>uint32 store_num = 11;</code>
+     */
+    public int getStoreNum() {
+      return storeNum_;
+    }
+
+    public static final int VIEW_COUNTER_FIELD_NUMBER = 12;
+    private int viewCounter_;
+    /**
+     * <pre>
+     *计数器,为快照准备
+     * </pre>
+     *
+     * <code>uint32 view_counter = 12;</code>
+     */
+    public int getViewCounter() {
+      return viewCounter_;
+    }
+
+    public static final int ORIGIN_BCUID_FIELD_NUMBER = 20;
+    private volatile java.lang.Object originBcuid_;
+    /**
+     * <pre>
+     *从哪个节点名称来的
+     * </pre>
+     *
+     * <code>string origin_bcuid = 20;</code>
+     */
+    public java.lang.String getOriginBcuid() {
+      java.lang.Object ref = originBcuid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        originBcuid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *从哪个节点名称来的
+     * </pre>
+     *
+     * <code>string origin_bcuid = 20;</code>
+     */
+    public com.google.protobuf.ByteString
+        getOriginBcuidBytes() {
+      java.lang.Object ref = originBcuid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        originBcuid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     public static final int MESSAGE_UID_FIELD_NUMBER = 30;
@@ -9111,6 +10557,48 @@ public final class P22P {
       }
     }
 
+    public static final int NID_FIELD_NUMBER = 50;
+    private volatile java.lang.Object nid_;
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public java.lang.String getNid() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNidBytes() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     public static final int SIGN_FIELD_NUMBER = 100;
     private volatile java.lang.Object sign_;
     /**
@@ -9165,11 +10653,11 @@ public final class P22P {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (state_ != org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.PRE_PREPARE.getNumber()) {
+      if (state_ != org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.INIT.getNumber()) {
         output.writeEnum(1, state_);
       }
-      if (mType_ != 0) {
-        output.writeUInt32(2, mType_);
+      if (mType_ != org.fc.brewchain.p22p.pbgens.P22P.PVType.NETWORK_IDX.getNumber()) {
+        output.writeEnum(2, mType_);
       }
       if (v_ != 0) {
         output.writeUInt32(3, v_);
@@ -9180,14 +10668,38 @@ public final class P22P {
       if (n_ != 0) {
         output.writeUInt32(5, n_);
       }
+      if (createTime_ != 0L) {
+        output.writeUInt64(6, createTime_);
+      }
+      if (lastUpdateTime_ != 0L) {
+        output.writeUInt64(7, lastUpdateTime_);
+      }
+      if (oldState_ != org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.INIT.getNumber()) {
+        output.writeEnum(8, oldState_);
+      }
+      if (rejectState_ != org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.INIT.getNumber()) {
+        output.writeEnum(9, rejectState_);
+      }
       if (!contents_.isEmpty()) {
         output.writeBytes(10, contents_);
+      }
+      if (storeNum_ != 0) {
+        output.writeUInt32(11, storeNum_);
+      }
+      if (viewCounter_ != 0) {
+        output.writeUInt32(12, viewCounter_);
+      }
+      if (!getOriginBcuidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 20, originBcuid_);
       }
       if (!getMessageUidBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 30, messageUid_);
       }
       if (!getFromBcuidBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 31, fromBcuid_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 50, nid_);
       }
       if (!getSignBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 100, sign_);
@@ -9199,13 +10711,13 @@ public final class P22P {
       if (size != -1) return size;
 
       size = 0;
-      if (state_ != org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.PRE_PREPARE.getNumber()) {
+      if (state_ != org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.INIT.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, state_);
       }
-      if (mType_ != 0) {
+      if (mType_ != org.fc.brewchain.p22p.pbgens.P22P.PVType.NETWORK_IDX.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(2, mType_);
+          .computeEnumSize(2, mType_);
       }
       if (v_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -9219,15 +10731,45 @@ public final class P22P {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(5, n_);
       }
+      if (createTime_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(6, createTime_);
+      }
+      if (lastUpdateTime_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(7, lastUpdateTime_);
+      }
+      if (oldState_ != org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.INIT.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(8, oldState_);
+      }
+      if (rejectState_ != org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.INIT.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(9, rejectState_);
+      }
       if (!contents_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(10, contents_);
+      }
+      if (storeNum_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(11, storeNum_);
+      }
+      if (viewCounter_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(12, viewCounter_);
+      }
+      if (!getOriginBcuidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(20, originBcuid_);
       }
       if (!getMessageUidBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(30, messageUid_);
       }
       if (!getFromBcuidBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(31, fromBcuid_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(50, nid_);
       }
       if (!getSignBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(100, sign_);
@@ -9249,20 +10791,33 @@ public final class P22P {
 
       boolean result = true;
       result = result && state_ == other.state_;
-      result = result && (getMType()
-          == other.getMType());
+      result = result && mType_ == other.mType_;
       result = result && (getV()
           == other.getV());
       result = result && (getMaxVid()
           == other.getMaxVid());
       result = result && (getN()
           == other.getN());
+      result = result && (getCreateTime()
+          == other.getCreateTime());
+      result = result && (getLastUpdateTime()
+          == other.getLastUpdateTime());
+      result = result && oldState_ == other.oldState_;
+      result = result && rejectState_ == other.rejectState_;
       result = result && getContents()
           .equals(other.getContents());
+      result = result && (getStoreNum()
+          == other.getStoreNum());
+      result = result && (getViewCounter()
+          == other.getViewCounter());
+      result = result && getOriginBcuid()
+          .equals(other.getOriginBcuid());
       result = result && getMessageUid()
           .equals(other.getMessageUid());
       result = result && getFromBcuid()
           .equals(other.getFromBcuid());
+      result = result && getNid()
+          .equals(other.getNid());
       result = result && getSign()
           .equals(other.getSign());
       return result;
@@ -9278,19 +10833,37 @@ public final class P22P {
       hash = (37 * hash) + STATE_FIELD_NUMBER;
       hash = (53 * hash) + state_;
       hash = (37 * hash) + M_TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + getMType();
+      hash = (53 * hash) + mType_;
       hash = (37 * hash) + V_FIELD_NUMBER;
       hash = (53 * hash) + getV();
       hash = (37 * hash) + MAX_VID_FIELD_NUMBER;
       hash = (53 * hash) + getMaxVid();
       hash = (37 * hash) + N_FIELD_NUMBER;
       hash = (53 * hash) + getN();
+      hash = (37 * hash) + CREATE_TIME_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getCreateTime());
+      hash = (37 * hash) + LAST_UPDATE_TIME_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getLastUpdateTime());
+      hash = (37 * hash) + OLD_STATE_FIELD_NUMBER;
+      hash = (53 * hash) + oldState_;
+      hash = (37 * hash) + REJECT_STATE_FIELD_NUMBER;
+      hash = (53 * hash) + rejectState_;
       hash = (37 * hash) + CONTENTS_FIELD_NUMBER;
       hash = (53 * hash) + getContents().hashCode();
+      hash = (37 * hash) + STORE_NUM_FIELD_NUMBER;
+      hash = (53 * hash) + getStoreNum();
+      hash = (37 * hash) + VIEW_COUNTER_FIELD_NUMBER;
+      hash = (53 * hash) + getViewCounter();
+      hash = (37 * hash) + ORIGIN_BCUID_FIELD_NUMBER;
+      hash = (53 * hash) + getOriginBcuid().hashCode();
       hash = (37 * hash) + MESSAGE_UID_FIELD_NUMBER;
       hash = (53 * hash) + getMessageUid().hashCode();
       hash = (37 * hash) + FROM_BCUID_FIELD_NUMBER;
       hash = (53 * hash) + getFromBcuid().hashCode();
+      hash = (37 * hash) + NID_FIELD_NUMBER;
+      hash = (53 * hash) + getNid().hashCode();
       hash = (37 * hash) + SIGN_FIELD_NUMBER;
       hash = (53 * hash) + getSign().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -9421,11 +10994,27 @@ public final class P22P {
 
         n_ = 0;
 
+        createTime_ = 0L;
+
+        lastUpdateTime_ = 0L;
+
+        oldState_ = 0;
+
+        rejectState_ = 0;
+
         contents_ = com.google.protobuf.ByteString.EMPTY;
+
+        storeNum_ = 0;
+
+        viewCounter_ = 0;
+
+        originBcuid_ = "";
 
         messageUid_ = "";
 
         fromBcuid_ = "";
+
+        nid_ = "";
 
         sign_ = "";
 
@@ -9456,9 +11045,17 @@ public final class P22P {
         result.v_ = v_;
         result.maxVid_ = maxVid_;
         result.n_ = n_;
+        result.createTime_ = createTime_;
+        result.lastUpdateTime_ = lastUpdateTime_;
+        result.oldState_ = oldState_;
+        result.rejectState_ = rejectState_;
         result.contents_ = contents_;
+        result.storeNum_ = storeNum_;
+        result.viewCounter_ = viewCounter_;
+        result.originBcuid_ = originBcuid_;
         result.messageUid_ = messageUid_;
         result.fromBcuid_ = fromBcuid_;
+        result.nid_ = nid_;
         result.sign_ = sign_;
         onBuilt();
         return result;
@@ -9504,8 +11101,8 @@ public final class P22P {
         if (other.state_ != 0) {
           setStateValue(other.getStateValue());
         }
-        if (other.getMType() != 0) {
-          setMType(other.getMType());
+        if (other.mType_ != 0) {
+          setMTypeValue(other.getMTypeValue());
         }
         if (other.getV() != 0) {
           setV(other.getV());
@@ -9516,8 +11113,30 @@ public final class P22P {
         if (other.getN() != 0) {
           setN(other.getN());
         }
+        if (other.getCreateTime() != 0L) {
+          setCreateTime(other.getCreateTime());
+        }
+        if (other.getLastUpdateTime() != 0L) {
+          setLastUpdateTime(other.getLastUpdateTime());
+        }
+        if (other.oldState_ != 0) {
+          setOldStateValue(other.getOldStateValue());
+        }
+        if (other.rejectState_ != 0) {
+          setRejectStateValue(other.getRejectStateValue());
+        }
         if (other.getContents() != com.google.protobuf.ByteString.EMPTY) {
           setContents(other.getContents());
+        }
+        if (other.getStoreNum() != 0) {
+          setStoreNum(other.getStoreNum());
+        }
+        if (other.getViewCounter() != 0) {
+          setViewCounter(other.getViewCounter());
+        }
+        if (!other.getOriginBcuid().isEmpty()) {
+          originBcuid_ = other.originBcuid_;
+          onChanged();
         }
         if (!other.getMessageUid().isEmpty()) {
           messageUid_ = other.messageUid_;
@@ -9525,6 +11144,10 @@ public final class P22P {
         }
         if (!other.getFromBcuid().isEmpty()) {
           fromBcuid_ = other.fromBcuid_;
+          onChanged();
+        }
+        if (!other.getNid().isEmpty()) {
+          nid_ = other.nid_;
           onChanged();
         }
         if (!other.getSign().isEmpty()) {
@@ -9621,15 +11244,15 @@ public final class P22P {
         return this;
       }
 
-      private int mType_ ;
+      private int mType_ = 0;
       /**
        * <pre>
        *消息类型
        * </pre>
        *
-       * <code>uint32 m_type = 2;</code>
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 2;</code>
        */
-      public int getMType() {
+      public int getMTypeValue() {
         return mType_;
       }
       /**
@@ -9637,10 +11260,9 @@ public final class P22P {
        *消息类型
        * </pre>
        *
-       * <code>uint32 m_type = 2;</code>
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 2;</code>
        */
-      public Builder setMType(int value) {
-        
+      public Builder setMTypeValue(int value) {
         mType_ = value;
         onChanged();
         return this;
@@ -9650,7 +11272,34 @@ public final class P22P {
        *消息类型
        * </pre>
        *
-       * <code>uint32 m_type = 2;</code>
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 2;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PVType getMType() {
+        org.fc.brewchain.p22p.pbgens.P22P.PVType result = org.fc.brewchain.p22p.pbgens.P22P.PVType.valueOf(mType_);
+        return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PVType.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 2;</code>
+       */
+      public Builder setMType(org.fc.brewchain.p22p.pbgens.P22P.PVType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        mType_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 2;</code>
        */
       public Builder clearMType() {
         
@@ -9738,7 +11387,7 @@ public final class P22P {
       private int n_ ;
       /**
        * <pre>
-       * number
+       * 参与投票的节点数
        * </pre>
        *
        * <code>uint32 n = 5;</code>
@@ -9748,7 +11397,7 @@ public final class P22P {
       }
       /**
        * <pre>
-       * number
+       * 参与投票的节点数
        * </pre>
        *
        * <code>uint32 n = 5;</code>
@@ -9761,7 +11410,7 @@ public final class P22P {
       }
       /**
        * <pre>
-       * number
+       * 参与投票的节点数
        * </pre>
        *
        * <code>uint32 n = 5;</code>
@@ -9773,14 +11422,202 @@ public final class P22P {
         return this;
       }
 
+      private long createTime_ ;
+      /**
+       * <code>uint64 create_time = 6;</code>
+       */
+      public long getCreateTime() {
+        return createTime_;
+      }
+      /**
+       * <code>uint64 create_time = 6;</code>
+       */
+      public Builder setCreateTime(long value) {
+        
+        createTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint64 create_time = 6;</code>
+       */
+      public Builder clearCreateTime() {
+        
+        createTime_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long lastUpdateTime_ ;
+      /**
+       * <code>uint64 last_update_time = 7;</code>
+       */
+      public long getLastUpdateTime() {
+        return lastUpdateTime_;
+      }
+      /**
+       * <code>uint64 last_update_time = 7;</code>
+       */
+      public Builder setLastUpdateTime(long value) {
+        
+        lastUpdateTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint64 last_update_time = 7;</code>
+       */
+      public Builder clearLastUpdateTime() {
+        
+        lastUpdateTime_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private int oldState_ = 0;
+      /**
+       * <pre>
+       *上次状态
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage old_state = 8;</code>
+       */
+      public int getOldStateValue() {
+        return oldState_;
+      }
+      /**
+       * <pre>
+       *上次状态
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage old_state = 8;</code>
+       */
+      public Builder setOldStateValue(int value) {
+        oldState_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *上次状态
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage old_state = 8;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PBFTStage getOldState() {
+        org.fc.brewchain.p22p.pbgens.P22P.PBFTStage result = org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.valueOf(oldState_);
+        return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       *上次状态
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage old_state = 8;</code>
+       */
+      public Builder setOldState(org.fc.brewchain.p22p.pbgens.P22P.PBFTStage value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        oldState_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *上次状态
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage old_state = 8;</code>
+       */
+      public Builder clearOldState() {
+        
+        oldState_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int rejectState_ = 0;
+      /**
+       * <pre>
+       *上次状态
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage reject_state = 9;</code>
+       */
+      public int getRejectStateValue() {
+        return rejectState_;
+      }
+      /**
+       * <pre>
+       *上次状态
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage reject_state = 9;</code>
+       */
+      public Builder setRejectStateValue(int value) {
+        rejectState_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *上次状态
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage reject_state = 9;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PBFTStage getRejectState() {
+        org.fc.brewchain.p22p.pbgens.P22P.PBFTStage result = org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.valueOf(rejectState_);
+        return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PBFTStage.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       *上次状态
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage reject_state = 9;</code>
+       */
+      public Builder setRejectState(org.fc.brewchain.p22p.pbgens.P22P.PBFTStage value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        rejectState_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *上次状态
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PBFTStage reject_state = 9;</code>
+       */
+      public Builder clearRejectState() {
+        
+        rejectState_ = 0;
+        onChanged();
+        return this;
+      }
+
       private com.google.protobuf.ByteString contents_ = com.google.protobuf.ByteString.EMPTY;
       /**
+       * <pre>
+       *具体的内容
+       * </pre>
+       *
        * <code>bytes contents = 10;</code>
        */
       public com.google.protobuf.ByteString getContents() {
         return contents_;
       }
       /**
+       * <pre>
+       *具体的内容
+       * </pre>
+       *
        * <code>bytes contents = 10;</code>
        */
       public Builder setContents(com.google.protobuf.ByteString value) {
@@ -9793,11 +11630,180 @@ public final class P22P {
         return this;
       }
       /**
+       * <pre>
+       *具体的内容
+       * </pre>
+       *
        * <code>bytes contents = 10;</code>
        */
       public Builder clearContents() {
         
         contents_ = getDefaultInstance().getContents();
+        onChanged();
+        return this;
+      }
+
+      private int storeNum_ ;
+      /**
+       * <pre>
+       * 为了支持快照定义的版本
+       * </pre>
+       *
+       * <code>uint32 store_num = 11;</code>
+       */
+      public int getStoreNum() {
+        return storeNum_;
+      }
+      /**
+       * <pre>
+       * 为了支持快照定义的版本
+       * </pre>
+       *
+       * <code>uint32 store_num = 11;</code>
+       */
+      public Builder setStoreNum(int value) {
+        
+        storeNum_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 为了支持快照定义的版本
+       * </pre>
+       *
+       * <code>uint32 store_num = 11;</code>
+       */
+      public Builder clearStoreNum() {
+        
+        storeNum_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int viewCounter_ ;
+      /**
+       * <pre>
+       *计数器,为快照准备
+       * </pre>
+       *
+       * <code>uint32 view_counter = 12;</code>
+       */
+      public int getViewCounter() {
+        return viewCounter_;
+      }
+      /**
+       * <pre>
+       *计数器,为快照准备
+       * </pre>
+       *
+       * <code>uint32 view_counter = 12;</code>
+       */
+      public Builder setViewCounter(int value) {
+        
+        viewCounter_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *计数器,为快照准备
+       * </pre>
+       *
+       * <code>uint32 view_counter = 12;</code>
+       */
+      public Builder clearViewCounter() {
+        
+        viewCounter_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object originBcuid_ = "";
+      /**
+       * <pre>
+       *从哪个节点名称来的
+       * </pre>
+       *
+       * <code>string origin_bcuid = 20;</code>
+       */
+      public java.lang.String getOriginBcuid() {
+        java.lang.Object ref = originBcuid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          originBcuid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *从哪个节点名称来的
+       * </pre>
+       *
+       * <code>string origin_bcuid = 20;</code>
+       */
+      public com.google.protobuf.ByteString
+          getOriginBcuidBytes() {
+        java.lang.Object ref = originBcuid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          originBcuid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *从哪个节点名称来的
+       * </pre>
+       *
+       * <code>string origin_bcuid = 20;</code>
+       */
+      public Builder setOriginBcuid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        originBcuid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *从哪个节点名称来的
+       * </pre>
+       *
+       * <code>string origin_bcuid = 20;</code>
+       */
+      public Builder clearOriginBcuid() {
+        
+        originBcuid_ = getDefaultInstance().getOriginBcuid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *从哪个节点名称来的
+       * </pre>
+       *
+       * <code>string origin_bcuid = 20;</code>
+       */
+      public Builder setOriginBcuidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        originBcuid_ = value;
         onChanged();
         return this;
       }
@@ -9980,6 +11986,95 @@ public final class P22P {
         return this;
       }
 
+      private java.lang.Object nid_ = "";
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public java.lang.String getNid() {
+        java.lang.Object ref = nid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNidBytes() {
+        java.lang.Object ref = nid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder clearNid() {
+        
+        nid_ = getDefaultInstance().getNid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+
       private java.lang.Object sign_ = "";
       /**
        * <pre>
@@ -10126,43 +12221,43 @@ public final class P22P {
      *所有节点的信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
      */
     java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> 
-        getNodesList();
+        getPendingNodesList();
     /**
      * <pre>
      *所有节点的信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
      */
-    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getNodes(int index);
+    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getPendingNodes(int index);
     /**
      * <pre>
      *所有节点的信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
      */
-    int getNodesCount();
+    int getPendingNodesCount();
     /**
      * <pre>
      *所有节点的信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
      */
     java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-        getNodesOrBuilderList();
+        getPendingNodesOrBuilderList();
     /**
      * <pre>
      *所有节点的信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
      */
-    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getNodesOrBuilder(
+    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getPendingNodesOrBuilder(
         int index);
 
     /**
@@ -10182,6 +12277,84 @@ public final class P22P {
      */
     com.google.protobuf.ByteString
         getNodeBitsEncBytes();
+
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string pending_bits_enc = 3;</code>
+     */
+    java.lang.String getPendingBitsEnc();
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string pending_bits_enc = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getPendingBitsEncBytes();
+
+    /**
+     * <pre>
+     *所有直连信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+     */
+    java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> 
+        getDNodesList();
+    /**
+     * <pre>
+     *所有直连信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getDNodes(int index);
+    /**
+     * <pre>
+     *所有直连信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+     */
+    int getDNodesCount();
+    /**
+     * <pre>
+     *所有直连信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+     */
+    java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
+        getDNodesOrBuilderList();
+    /**
+     * <pre>
+     *所有直连信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getDNodesOrBuilder(
+        int index);
+
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    java.lang.String getNid();
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getNidBytes();
   }
   /**
    * <pre>
@@ -10199,8 +12372,11 @@ public final class P22P {
       super(builder);
     }
     private PBVoteNodeIdx() {
-      nodes_ = java.util.Collections.emptyList();
+      pendingNodes_ = java.util.Collections.emptyList();
       nodeBitsEnc_ = "";
+      pendingBitsEnc_ = "";
+      dNodes_ = java.util.Collections.emptyList();
+      nid_ = "";
     }
 
     @java.lang.Override
@@ -10230,10 +12406,10 @@ public final class P22P {
             }
             case 10: {
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                nodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>();
+                pendingNodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              nodes_.add(
+              pendingNodes_.add(
                   input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.parser(), extensionRegistry));
               break;
             }
@@ -10241,6 +12417,27 @@ public final class P22P {
               java.lang.String s = input.readStringRequireUtf8();
 
               nodeBitsEnc_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              pendingBitsEnc_ = s;
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                dNodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              dNodes_.add(
+                  input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.parser(), extensionRegistry));
+              break;
+            }
+            case 402: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              nid_ = s;
               break;
             }
           }
@@ -10252,7 +12449,10 @@ public final class P22P {
             e).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          nodes_ = java.util.Collections.unmodifiableList(nodes_);
+          pendingNodes_ = java.util.Collections.unmodifiableList(pendingNodes_);
+        }
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          dNodes_ = java.util.Collections.unmodifiableList(dNodes_);
         }
         makeExtensionsImmutable();
       }
@@ -10270,59 +12470,59 @@ public final class P22P {
     }
 
     private int bitField0_;
-    public static final int NODES_FIELD_NUMBER = 1;
-    private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> nodes_;
+    public static final int PENDING_NODES_FIELD_NUMBER = 1;
+    private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> pendingNodes_;
     /**
      * <pre>
      *所有节点的信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
      */
-    public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getNodesList() {
-      return nodes_;
+    public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getPendingNodesList() {
+      return pendingNodes_;
     }
     /**
      * <pre>
      *所有节点的信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
      */
     public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-        getNodesOrBuilderList() {
-      return nodes_;
+        getPendingNodesOrBuilderList() {
+      return pendingNodes_;
     }
     /**
      * <pre>
      *所有节点的信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
      */
-    public int getNodesCount() {
-      return nodes_.size();
+    public int getPendingNodesCount() {
+      return pendingNodes_.size();
     }
     /**
      * <pre>
      *所有节点的信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
      */
-    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getNodes(int index) {
-      return nodes_.get(index);
+    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getPendingNodes(int index) {
+      return pendingNodes_.get(index);
     }
     /**
      * <pre>
      *所有节点的信息
      * </pre>
      *
-     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
      */
-    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getNodesOrBuilder(
+    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getPendingNodesOrBuilder(
         int index) {
-      return nodes_.get(index);
+      return pendingNodes_.get(index);
     }
 
     public static final int NODE_BITS_ENC_FIELD_NUMBER = 2;
@@ -10367,6 +12567,143 @@ public final class P22P {
       }
     }
 
+    public static final int PENDING_BITS_ENC_FIELD_NUMBER = 3;
+    private volatile java.lang.Object pendingBitsEnc_;
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string pending_bits_enc = 3;</code>
+     */
+    public java.lang.String getPendingBitsEnc() {
+      java.lang.Object ref = pendingBitsEnc_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        pendingBitsEnc_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string pending_bits_enc = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPendingBitsEncBytes() {
+      java.lang.Object ref = pendingBitsEnc_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        pendingBitsEnc_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int D_NODES_FIELD_NUMBER = 4;
+    private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> dNodes_;
+    /**
+     * <pre>
+     *所有直连信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+     */
+    public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getDNodesList() {
+      return dNodes_;
+    }
+    /**
+     * <pre>
+     *所有直连信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+     */
+    public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
+        getDNodesOrBuilderList() {
+      return dNodes_;
+    }
+    /**
+     * <pre>
+     *所有直连信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+     */
+    public int getDNodesCount() {
+      return dNodes_.size();
+    }
+    /**
+     * <pre>
+     *所有直连信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getDNodes(int index) {
+      return dNodes_.get(index);
+    }
+    /**
+     * <pre>
+     *所有直连信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getDNodesOrBuilder(
+        int index) {
+      return dNodes_.get(index);
+    }
+
+    public static final int NID_FIELD_NUMBER = 50;
+    private volatile java.lang.Object nid_;
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public java.lang.String getNid() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNidBytes() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -10379,11 +12716,20 @@ public final class P22P {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      for (int i = 0; i < nodes_.size(); i++) {
-        output.writeMessage(1, nodes_.get(i));
+      for (int i = 0; i < pendingNodes_.size(); i++) {
+        output.writeMessage(1, pendingNodes_.get(i));
       }
       if (!getNodeBitsEncBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, nodeBitsEnc_);
+      }
+      if (!getPendingBitsEncBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, pendingBitsEnc_);
+      }
+      for (int i = 0; i < dNodes_.size(); i++) {
+        output.writeMessage(4, dNodes_.get(i));
+      }
+      if (!getNidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 50, nid_);
       }
     }
 
@@ -10392,12 +12738,22 @@ public final class P22P {
       if (size != -1) return size;
 
       size = 0;
-      for (int i = 0; i < nodes_.size(); i++) {
+      for (int i = 0; i < pendingNodes_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, nodes_.get(i));
+          .computeMessageSize(1, pendingNodes_.get(i));
       }
       if (!getNodeBitsEncBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, nodeBitsEnc_);
+      }
+      if (!getPendingBitsEncBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, pendingBitsEnc_);
+      }
+      for (int i = 0; i < dNodes_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, dNodes_.get(i));
+      }
+      if (!getNidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(50, nid_);
       }
       memoizedSize = size;
       return size;
@@ -10415,10 +12771,16 @@ public final class P22P {
       org.fc.brewchain.p22p.pbgens.P22P.PBVoteNodeIdx other = (org.fc.brewchain.p22p.pbgens.P22P.PBVoteNodeIdx) obj;
 
       boolean result = true;
-      result = result && getNodesList()
-          .equals(other.getNodesList());
+      result = result && getPendingNodesList()
+          .equals(other.getPendingNodesList());
       result = result && getNodeBitsEnc()
           .equals(other.getNodeBitsEnc());
+      result = result && getPendingBitsEnc()
+          .equals(other.getPendingBitsEnc());
+      result = result && getDNodesList()
+          .equals(other.getDNodesList());
+      result = result && getNid()
+          .equals(other.getNid());
       return result;
     }
 
@@ -10429,12 +12791,20 @@ public final class P22P {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (getNodesCount() > 0) {
-        hash = (37 * hash) + NODES_FIELD_NUMBER;
-        hash = (53 * hash) + getNodesList().hashCode();
+      if (getPendingNodesCount() > 0) {
+        hash = (37 * hash) + PENDING_NODES_FIELD_NUMBER;
+        hash = (53 * hash) + getPendingNodesList().hashCode();
       }
       hash = (37 * hash) + NODE_BITS_ENC_FIELD_NUMBER;
       hash = (53 * hash) + getNodeBitsEnc().hashCode();
+      hash = (37 * hash) + PENDING_BITS_ENC_FIELD_NUMBER;
+      hash = (53 * hash) + getPendingBitsEnc().hashCode();
+      if (getDNodesCount() > 0) {
+        hash = (37 * hash) + D_NODES_FIELD_NUMBER;
+        hash = (53 * hash) + getDNodesList().hashCode();
+      }
+      hash = (37 * hash) + NID_FIELD_NUMBER;
+      hash = (53 * hash) + getNid().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -10553,18 +12923,29 @@ public final class P22P {
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
-          getNodesFieldBuilder();
+          getPendingNodesFieldBuilder();
+          getDNodesFieldBuilder();
         }
       }
       public Builder clear() {
         super.clear();
-        if (nodesBuilder_ == null) {
-          nodes_ = java.util.Collections.emptyList();
+        if (pendingNodesBuilder_ == null) {
+          pendingNodes_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000001);
         } else {
-          nodesBuilder_.clear();
+          pendingNodesBuilder_.clear();
         }
         nodeBitsEnc_ = "";
+
+        pendingBitsEnc_ = "";
+
+        if (dNodesBuilder_ == null) {
+          dNodes_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          dNodesBuilder_.clear();
+        }
+        nid_ = "";
 
         return this;
       }
@@ -10590,16 +12971,27 @@ public final class P22P {
         org.fc.brewchain.p22p.pbgens.P22P.PBVoteNodeIdx result = new org.fc.brewchain.p22p.pbgens.P22P.PBVoteNodeIdx(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (nodesBuilder_ == null) {
+        if (pendingNodesBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001)) {
-            nodes_ = java.util.Collections.unmodifiableList(nodes_);
+            pendingNodes_ = java.util.Collections.unmodifiableList(pendingNodes_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
-          result.nodes_ = nodes_;
+          result.pendingNodes_ = pendingNodes_;
         } else {
-          result.nodes_ = nodesBuilder_.build();
+          result.pendingNodes_ = pendingNodesBuilder_.build();
         }
         result.nodeBitsEnc_ = nodeBitsEnc_;
+        result.pendingBitsEnc_ = pendingBitsEnc_;
+        if (dNodesBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+            dNodes_ = java.util.Collections.unmodifiableList(dNodes_);
+            bitField0_ = (bitField0_ & ~0x00000008);
+          }
+          result.dNodes_ = dNodes_;
+        } else {
+          result.dNodes_ = dNodesBuilder_.build();
+        }
+        result.nid_ = nid_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -10642,34 +13034,68 @@ public final class P22P {
 
       public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PBVoteNodeIdx other) {
         if (other == org.fc.brewchain.p22p.pbgens.P22P.PBVoteNodeIdx.getDefaultInstance()) return this;
-        if (nodesBuilder_ == null) {
-          if (!other.nodes_.isEmpty()) {
-            if (nodes_.isEmpty()) {
-              nodes_ = other.nodes_;
+        if (pendingNodesBuilder_ == null) {
+          if (!other.pendingNodes_.isEmpty()) {
+            if (pendingNodes_.isEmpty()) {
+              pendingNodes_ = other.pendingNodes_;
               bitField0_ = (bitField0_ & ~0x00000001);
             } else {
-              ensureNodesIsMutable();
-              nodes_.addAll(other.nodes_);
+              ensurePendingNodesIsMutable();
+              pendingNodes_.addAll(other.pendingNodes_);
             }
             onChanged();
           }
         } else {
-          if (!other.nodes_.isEmpty()) {
-            if (nodesBuilder_.isEmpty()) {
-              nodesBuilder_.dispose();
-              nodesBuilder_ = null;
-              nodes_ = other.nodes_;
+          if (!other.pendingNodes_.isEmpty()) {
+            if (pendingNodesBuilder_.isEmpty()) {
+              pendingNodesBuilder_.dispose();
+              pendingNodesBuilder_ = null;
+              pendingNodes_ = other.pendingNodes_;
               bitField0_ = (bitField0_ & ~0x00000001);
-              nodesBuilder_ = 
+              pendingNodesBuilder_ = 
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getNodesFieldBuilder() : null;
+                   getPendingNodesFieldBuilder() : null;
             } else {
-              nodesBuilder_.addAllMessages(other.nodes_);
+              pendingNodesBuilder_.addAllMessages(other.pendingNodes_);
             }
           }
         }
         if (!other.getNodeBitsEnc().isEmpty()) {
           nodeBitsEnc_ = other.nodeBitsEnc_;
+          onChanged();
+        }
+        if (!other.getPendingBitsEnc().isEmpty()) {
+          pendingBitsEnc_ = other.pendingBitsEnc_;
+          onChanged();
+        }
+        if (dNodesBuilder_ == null) {
+          if (!other.dNodes_.isEmpty()) {
+            if (dNodes_.isEmpty()) {
+              dNodes_ = other.dNodes_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+            } else {
+              ensureDNodesIsMutable();
+              dNodes_.addAll(other.dNodes_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.dNodes_.isEmpty()) {
+            if (dNodesBuilder_.isEmpty()) {
+              dNodesBuilder_.dispose();
+              dNodesBuilder_ = null;
+              dNodes_ = other.dNodes_;
+              bitField0_ = (bitField0_ & ~0x00000008);
+              dNodesBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getDNodesFieldBuilder() : null;
+            } else {
+              dNodesBuilder_.addAllMessages(other.dNodes_);
+            }
+          }
+        }
+        if (!other.getNid().isEmpty()) {
+          nid_ = other.nid_;
           onChanged();
         }
         onChanged();
@@ -10699,30 +13125,30 @@ public final class P22P {
       }
       private int bitField0_;
 
-      private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> nodes_ =
+      private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> pendingNodes_ =
         java.util.Collections.emptyList();
-      private void ensureNodesIsMutable() {
+      private void ensurePendingNodesIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          nodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>(nodes_);
+          pendingNodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>(pendingNodes_);
           bitField0_ |= 0x00000001;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> nodesBuilder_;
+          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> pendingNodesBuilder_;
 
       /**
        * <pre>
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getNodesList() {
-        if (nodesBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(nodes_);
+      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getPendingNodesList() {
+        if (pendingNodesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(pendingNodes_);
         } else {
-          return nodesBuilder_.getMessageList();
+          return pendingNodesBuilder_.getMessageList();
         }
       }
       /**
@@ -10730,13 +13156,13 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public int getNodesCount() {
-        if (nodesBuilder_ == null) {
-          return nodes_.size();
+      public int getPendingNodesCount() {
+        if (pendingNodesBuilder_ == null) {
+          return pendingNodes_.size();
         } else {
-          return nodesBuilder_.getCount();
+          return pendingNodesBuilder_.getCount();
         }
       }
       /**
@@ -10744,13 +13170,13 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getNodes(int index) {
-        if (nodesBuilder_ == null) {
-          return nodes_.get(index);
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getPendingNodes(int index) {
+        if (pendingNodesBuilder_ == null) {
+          return pendingNodes_.get(index);
         } else {
-          return nodesBuilder_.getMessage(index);
+          return pendingNodesBuilder_.getMessage(index);
         }
       }
       /**
@@ -10758,19 +13184,19 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public Builder setNodes(
+      public Builder setPendingNodes(
           int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
-        if (nodesBuilder_ == null) {
+        if (pendingNodesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureNodesIsMutable();
-          nodes_.set(index, value);
+          ensurePendingNodesIsMutable();
+          pendingNodes_.set(index, value);
           onChanged();
         } else {
-          nodesBuilder_.setMessage(index, value);
+          pendingNodesBuilder_.setMessage(index, value);
         }
         return this;
       }
@@ -10779,16 +13205,16 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public Builder setNodes(
+      public Builder setPendingNodes(
           int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
-        if (nodesBuilder_ == null) {
-          ensureNodesIsMutable();
-          nodes_.set(index, builderForValue.build());
+        if (pendingNodesBuilder_ == null) {
+          ensurePendingNodesIsMutable();
+          pendingNodes_.set(index, builderForValue.build());
           onChanged();
         } else {
-          nodesBuilder_.setMessage(index, builderForValue.build());
+          pendingNodesBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
@@ -10797,18 +13223,18 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public Builder addNodes(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
-        if (nodesBuilder_ == null) {
+      public Builder addPendingNodes(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
+        if (pendingNodesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureNodesIsMutable();
-          nodes_.add(value);
+          ensurePendingNodesIsMutable();
+          pendingNodes_.add(value);
           onChanged();
         } else {
-          nodesBuilder_.addMessage(value);
+          pendingNodesBuilder_.addMessage(value);
         }
         return this;
       }
@@ -10817,19 +13243,19 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public Builder addNodes(
+      public Builder addPendingNodes(
           int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
-        if (nodesBuilder_ == null) {
+        if (pendingNodesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureNodesIsMutable();
-          nodes_.add(index, value);
+          ensurePendingNodesIsMutable();
+          pendingNodes_.add(index, value);
           onChanged();
         } else {
-          nodesBuilder_.addMessage(index, value);
+          pendingNodesBuilder_.addMessage(index, value);
         }
         return this;
       }
@@ -10838,16 +13264,16 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public Builder addNodes(
+      public Builder addPendingNodes(
           org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
-        if (nodesBuilder_ == null) {
-          ensureNodesIsMutable();
-          nodes_.add(builderForValue.build());
+        if (pendingNodesBuilder_ == null) {
+          ensurePendingNodesIsMutable();
+          pendingNodes_.add(builderForValue.build());
           onChanged();
         } else {
-          nodesBuilder_.addMessage(builderForValue.build());
+          pendingNodesBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
@@ -10856,16 +13282,16 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public Builder addNodes(
+      public Builder addPendingNodes(
           int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
-        if (nodesBuilder_ == null) {
-          ensureNodesIsMutable();
-          nodes_.add(index, builderForValue.build());
+        if (pendingNodesBuilder_ == null) {
+          ensurePendingNodesIsMutable();
+          pendingNodes_.add(index, builderForValue.build());
           onChanged();
         } else {
-          nodesBuilder_.addMessage(index, builderForValue.build());
+          pendingNodesBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
@@ -10874,17 +13300,17 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public Builder addAllNodes(
+      public Builder addAllPendingNodes(
           java.lang.Iterable<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> values) {
-        if (nodesBuilder_ == null) {
-          ensureNodesIsMutable();
+        if (pendingNodesBuilder_ == null) {
+          ensurePendingNodesIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, nodes_);
+              values, pendingNodes_);
           onChanged();
         } else {
-          nodesBuilder_.addAllMessages(values);
+          pendingNodesBuilder_.addAllMessages(values);
         }
         return this;
       }
@@ -10893,15 +13319,15 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public Builder clearNodes() {
-        if (nodesBuilder_ == null) {
-          nodes_ = java.util.Collections.emptyList();
+      public Builder clearPendingNodes() {
+        if (pendingNodesBuilder_ == null) {
+          pendingNodes_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
-          nodesBuilder_.clear();
+          pendingNodesBuilder_.clear();
         }
         return this;
       }
@@ -10910,15 +13336,15 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public Builder removeNodes(int index) {
-        if (nodesBuilder_ == null) {
-          ensureNodesIsMutable();
-          nodes_.remove(index);
+      public Builder removePendingNodes(int index) {
+        if (pendingNodesBuilder_ == null) {
+          ensurePendingNodesIsMutable();
+          pendingNodes_.remove(index);
           onChanged();
         } else {
-          nodesBuilder_.remove(index);
+          pendingNodesBuilder_.remove(index);
         }
         return this;
       }
@@ -10927,24 +13353,24 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder getNodesBuilder(
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder getPendingNodesBuilder(
           int index) {
-        return getNodesFieldBuilder().getBuilder(index);
+        return getPendingNodesFieldBuilder().getBuilder(index);
       }
       /**
        * <pre>
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getNodesOrBuilder(
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getPendingNodesOrBuilder(
           int index) {
-        if (nodesBuilder_ == null) {
-          return nodes_.get(index);  } else {
-          return nodesBuilder_.getMessageOrBuilder(index);
+        if (pendingNodesBuilder_ == null) {
+          return pendingNodes_.get(index);  } else {
+          return pendingNodesBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
@@ -10952,14 +13378,14 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
       public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-           getNodesOrBuilderList() {
-        if (nodesBuilder_ != null) {
-          return nodesBuilder_.getMessageOrBuilderList();
+           getPendingNodesOrBuilderList() {
+        if (pendingNodesBuilder_ != null) {
+          return pendingNodesBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(nodes_);
+          return java.util.Collections.unmodifiableList(pendingNodes_);
         }
       }
       /**
@@ -10967,10 +13393,10 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addNodesBuilder() {
-        return getNodesFieldBuilder().addBuilder(
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addPendingNodesBuilder() {
+        return getPendingNodesFieldBuilder().addBuilder(
             org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance());
       }
       /**
@@ -10978,11 +13404,11 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
-      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addNodesBuilder(
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addPendingNodesBuilder(
           int index) {
-        return getNodesFieldBuilder().addBuilder(
+        return getPendingNodesFieldBuilder().addBuilder(
             index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance());
       }
       /**
@@ -10990,25 +13416,25 @@ public final class P22P {
        *所有节点的信息
        * </pre>
        *
-       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo nodes = 1;</code>
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo pending_nodes = 1;</code>
        */
       public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder> 
-           getNodesBuilderList() {
-        return getNodesFieldBuilder().getBuilderList();
+           getPendingNodesBuilderList() {
+        return getPendingNodesFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
           org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
-          getNodesFieldBuilder() {
-        if (nodesBuilder_ == null) {
-          nodesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          getPendingNodesFieldBuilder() {
+        if (pendingNodesBuilder_ == null) {
+          pendingNodesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
               org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder>(
-                  nodes_,
+                  pendingNodes_,
                   ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
-          nodes_ = null;
+          pendingNodes_ = null;
         }
-        return nodesBuilder_;
+        return pendingNodesBuilder_;
       }
 
       private java.lang.Object nodeBitsEnc_ = "";
@@ -11099,6 +13525,491 @@ public final class P22P {
         onChanged();
         return this;
       }
+
+      private java.lang.Object pendingBitsEnc_ = "";
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string pending_bits_enc = 3;</code>
+       */
+      public java.lang.String getPendingBitsEnc() {
+        java.lang.Object ref = pendingBitsEnc_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          pendingBitsEnc_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string pending_bits_enc = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPendingBitsEncBytes() {
+        java.lang.Object ref = pendingBitsEnc_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          pendingBitsEnc_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string pending_bits_enc = 3;</code>
+       */
+      public Builder setPendingBitsEnc(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        pendingBitsEnc_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string pending_bits_enc = 3;</code>
+       */
+      public Builder clearPendingBitsEnc() {
+        
+        pendingBitsEnc_ = getDefaultInstance().getPendingBitsEnc();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string pending_bits_enc = 3;</code>
+       */
+      public Builder setPendingBitsEncBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        pendingBitsEnc_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> dNodes_ =
+        java.util.Collections.emptyList();
+      private void ensureDNodesIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          dNodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo>(dNodes_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> dNodesBuilder_;
+
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> getDNodesList() {
+        if (dNodesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(dNodes_);
+        } else {
+          return dNodesBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public int getDNodesCount() {
+        if (dNodesBuilder_ == null) {
+          return dNodes_.size();
+        } else {
+          return dNodesBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo getDNodes(int index) {
+        if (dNodesBuilder_ == null) {
+          return dNodes_.get(index);
+        } else {
+          return dNodesBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public Builder setDNodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
+        if (dNodesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDNodesIsMutable();
+          dNodes_.set(index, value);
+          onChanged();
+        } else {
+          dNodesBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public Builder setDNodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
+        if (dNodesBuilder_ == null) {
+          ensureDNodesIsMutable();
+          dNodes_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          dNodesBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public Builder addDNodes(org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
+        if (dNodesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDNodesIsMutable();
+          dNodes_.add(value);
+          onChanged();
+        } else {
+          dNodesBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public Builder addDNodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo value) {
+        if (dNodesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDNodesIsMutable();
+          dNodes_.add(index, value);
+          onChanged();
+        } else {
+          dNodesBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public Builder addDNodes(
+          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
+        if (dNodesBuilder_ == null) {
+          ensureDNodesIsMutable();
+          dNodes_.add(builderForValue.build());
+          onChanged();
+        } else {
+          dNodesBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public Builder addDNodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder builderForValue) {
+        if (dNodesBuilder_ == null) {
+          ensureDNodesIsMutable();
+          dNodes_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          dNodesBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public Builder addAllDNodes(
+          java.lang.Iterable<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo> values) {
+        if (dNodesBuilder_ == null) {
+          ensureDNodesIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, dNodes_);
+          onChanged();
+        } else {
+          dNodesBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public Builder clearDNodes() {
+        if (dNodesBuilder_ == null) {
+          dNodes_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000008);
+          onChanged();
+        } else {
+          dNodesBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public Builder removeDNodes(int index) {
+        if (dNodesBuilder_ == null) {
+          ensureDNodesIsMutable();
+          dNodes_.remove(index);
+          onChanged();
+        } else {
+          dNodesBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder getDNodesBuilder(
+          int index) {
+        return getDNodesFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder getDNodesOrBuilder(
+          int index) {
+        if (dNodesBuilder_ == null) {
+          return dNodes_.get(index);  } else {
+          return dNodesBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
+           getDNodesOrBuilderList() {
+        if (dNodesBuilder_ != null) {
+          return dNodesBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(dNodes_);
+        }
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addDNodesBuilder() {
+        return getDNodesFieldBuilder().addBuilder(
+            org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder addDNodesBuilder(
+          int index) {
+        return getDNodesFieldBuilder().addBuilder(
+            index, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *所有直连信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PMNodeInfo d_nodes = 4;</code>
+       */
+      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder> 
+           getDNodesBuilderList() {
+        return getDNodesFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder> 
+          getDNodesFieldBuilder() {
+        if (dNodesBuilder_ == null) {
+          dNodesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.PMNodeInfoOrBuilder>(
+                  dNodes_,
+                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  getParentForChildren(),
+                  isClean());
+          dNodes_ = null;
+        }
+        return dNodesBuilder_;
+      }
+
+      private java.lang.Object nid_ = "";
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public java.lang.String getNid() {
+        java.lang.Object ref = nid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNidBytes() {
+        java.lang.Object ref = nid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder clearNid() {
+        
+        nid_ = getDefaultInstance().getNid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nid_ = value;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -11148,6 +14059,11675 @@ public final class P22P {
 
   }
 
+  public interface PBVoteViewChangeOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PBVoteViewChange)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     *当前的v
+     * </pre>
+     *
+     * <code>uint32 v = 1;</code>
+     */
+    int getV();
+
+    /**
+     * <pre>
+     *counter必须匹配才行
+     * </pre>
+     *
+     * <code>uint32 view_counter = 2;</code>
+     */
+    int getViewCounter();
+
+    /**
+     * <pre>
+     * 为了支持快照定义的版本
+     * </pre>
+     *
+     * <code>uint32 store_num = 3;</code>
+     */
+    int getStoreNum();
+
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    java.lang.String getNid();
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getNidBytes();
+  }
+  /**
+   * <pre>
+   *投票决定节点的idx,80%通过才行
+   * </pre>
+   *
+   * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PBVoteViewChange}
+   */
+  public  static final class PBVoteViewChange extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.PBVoteViewChange)
+      PBVoteViewChangeOrBuilder {
+    // Use PBVoteViewChange.newBuilder() to construct.
+    private PBVoteViewChange(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PBVoteViewChange() {
+      v_ = 0;
+      viewCounter_ = 0;
+      storeNum_ = 0;
+      nid_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private PBVoteViewChange(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              v_ = input.readUInt32();
+              break;
+            }
+            case 16: {
+
+              viewCounter_ = input.readUInt32();
+              break;
+            }
+            case 24: {
+
+              storeNum_ = input.readUInt32();
+              break;
+            }
+            case 402: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              nid_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PBVoteViewChange_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PBVoteViewChange_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange.class, org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange.Builder.class);
+    }
+
+    public static final int V_FIELD_NUMBER = 1;
+    private int v_;
+    /**
+     * <pre>
+     *当前的v
+     * </pre>
+     *
+     * <code>uint32 v = 1;</code>
+     */
+    public int getV() {
+      return v_;
+    }
+
+    public static final int VIEW_COUNTER_FIELD_NUMBER = 2;
+    private int viewCounter_;
+    /**
+     * <pre>
+     *counter必须匹配才行
+     * </pre>
+     *
+     * <code>uint32 view_counter = 2;</code>
+     */
+    public int getViewCounter() {
+      return viewCounter_;
+    }
+
+    public static final int STORE_NUM_FIELD_NUMBER = 3;
+    private int storeNum_;
+    /**
+     * <pre>
+     * 为了支持快照定义的版本
+     * </pre>
+     *
+     * <code>uint32 store_num = 3;</code>
+     */
+    public int getStoreNum() {
+      return storeNum_;
+    }
+
+    public static final int NID_FIELD_NUMBER = 50;
+    private volatile java.lang.Object nid_;
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public java.lang.String getNid() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNidBytes() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (v_ != 0) {
+        output.writeUInt32(1, v_);
+      }
+      if (viewCounter_ != 0) {
+        output.writeUInt32(2, viewCounter_);
+      }
+      if (storeNum_ != 0) {
+        output.writeUInt32(3, storeNum_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 50, nid_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (v_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, v_);
+      }
+      if (viewCounter_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(2, viewCounter_);
+      }
+      if (storeNum_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, storeNum_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(50, nid_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange)) {
+        return super.equals(obj);
+      }
+      org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange other = (org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange) obj;
+
+      boolean result = true;
+      result = result && (getV()
+          == other.getV());
+      result = result && (getViewCounter()
+          == other.getViewCounter());
+      result = result && (getStoreNum()
+          == other.getStoreNum());
+      result = result && getNid()
+          .equals(other.getNid());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + V_FIELD_NUMBER;
+      hash = (53 * hash) + getV();
+      hash = (37 * hash) + VIEW_COUNTER_FIELD_NUMBER;
+      hash = (53 * hash) + getViewCounter();
+      hash = (37 * hash) + STORE_NUM_FIELD_NUMBER;
+      hash = (53 * hash) + getStoreNum();
+      hash = (37 * hash) + NID_FIELD_NUMBER;
+      hash = (53 * hash) + getNid().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     *投票决定节点的idx,80%通过才行
+     * </pre>
+     *
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PBVoteViewChange}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.PBVoteViewChange)
+        org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChangeOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PBVoteViewChange_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PBVoteViewChange_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange.class, org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange.Builder.class);
+      }
+
+      // Construct using org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        v_ = 0;
+
+        viewCounter_ = 0;
+
+        storeNum_ = 0;
+
+        nid_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PBVoteViewChange_descriptor;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange getDefaultInstanceForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange.getDefaultInstance();
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange build() {
+        org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange buildPartial() {
+        org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange result = new org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange(this);
+        result.v_ = v_;
+        result.viewCounter_ = viewCounter_;
+        result.storeNum_ = storeNum_;
+        result.nid_ = nid_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange) {
+          return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange other) {
+        if (other == org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange.getDefaultInstance()) return this;
+        if (other.getV() != 0) {
+          setV(other.getV());
+        }
+        if (other.getViewCounter() != 0) {
+          setViewCounter(other.getViewCounter());
+        }
+        if (other.getStoreNum() != 0) {
+          setStoreNum(other.getStoreNum());
+        }
+        if (!other.getNid().isEmpty()) {
+          nid_ = other.nid_;
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int v_ ;
+      /**
+       * <pre>
+       *当前的v
+       * </pre>
+       *
+       * <code>uint32 v = 1;</code>
+       */
+      public int getV() {
+        return v_;
+      }
+      /**
+       * <pre>
+       *当前的v
+       * </pre>
+       *
+       * <code>uint32 v = 1;</code>
+       */
+      public Builder setV(int value) {
+        
+        v_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *当前的v
+       * </pre>
+       *
+       * <code>uint32 v = 1;</code>
+       */
+      public Builder clearV() {
+        
+        v_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int viewCounter_ ;
+      /**
+       * <pre>
+       *counter必须匹配才行
+       * </pre>
+       *
+       * <code>uint32 view_counter = 2;</code>
+       */
+      public int getViewCounter() {
+        return viewCounter_;
+      }
+      /**
+       * <pre>
+       *counter必须匹配才行
+       * </pre>
+       *
+       * <code>uint32 view_counter = 2;</code>
+       */
+      public Builder setViewCounter(int value) {
+        
+        viewCounter_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *counter必须匹配才行
+       * </pre>
+       *
+       * <code>uint32 view_counter = 2;</code>
+       */
+      public Builder clearViewCounter() {
+        
+        viewCounter_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int storeNum_ ;
+      /**
+       * <pre>
+       * 为了支持快照定义的版本
+       * </pre>
+       *
+       * <code>uint32 store_num = 3;</code>
+       */
+      public int getStoreNum() {
+        return storeNum_;
+      }
+      /**
+       * <pre>
+       * 为了支持快照定义的版本
+       * </pre>
+       *
+       * <code>uint32 store_num = 3;</code>
+       */
+      public Builder setStoreNum(int value) {
+        
+        storeNum_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * 为了支持快照定义的版本
+       * </pre>
+       *
+       * <code>uint32 store_num = 3;</code>
+       */
+      public Builder clearStoreNum() {
+        
+        storeNum_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object nid_ = "";
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public java.lang.String getNid() {
+        java.lang.Object ref = nid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNidBytes() {
+        java.lang.Object ref = nid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder clearNid() {
+        
+        nid_ = getDefaultInstance().getNid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.PBVoteViewChange)
+    }
+
+    // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.PBVoteViewChange)
+    private static final org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange();
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PBVoteViewChange>
+        PARSER = new com.google.protobuf.AbstractParser<PBVoteViewChange>() {
+      public PBVoteViewChange parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new PBVoteViewChange(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PBVoteViewChange> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PBVoteViewChange> getParserForType() {
+      return PARSER;
+    }
+
+    public org.fc.brewchain.p22p.pbgens.P22P.PBVoteViewChange getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PSVoteStateOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PSVoteState)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     *消息类型
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType t = 1;</code>
+     */
+    int getTValue();
+    /**
+     * <pre>
+     *消息类型
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType t = 1;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PVType getT();
+
+    /**
+     * <pre>
+     *状态计数器
+     * </pre>
+     *
+     * <code>int32 v = 2;</code>
+     */
+    int getV();
+
+    /**
+     * <pre>
+     *网络ID	 
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    java.lang.String getNid();
+    /**
+     * <pre>
+     *网络ID	 
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getNidBytes();
+  }
+  /**
+   * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSVoteState}
+   */
+  public  static final class PSVoteState extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.PSVoteState)
+      PSVoteStateOrBuilder {
+    // Use PSVoteState.newBuilder() to construct.
+    private PSVoteState(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PSVoteState() {
+      t_ = 0;
+      v_ = 0;
+      nid_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private PSVoteState(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              int rawValue = input.readEnum();
+
+              t_ = rawValue;
+              break;
+            }
+            case 16: {
+
+              v_ = input.readInt32();
+              break;
+            }
+            case 402: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              nid_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSVoteState_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSVoteState_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.fc.brewchain.p22p.pbgens.P22P.PSVoteState.class, org.fc.brewchain.p22p.pbgens.P22P.PSVoteState.Builder.class);
+    }
+
+    public static final int T_FIELD_NUMBER = 1;
+    private int t_;
+    /**
+     * <pre>
+     *消息类型
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType t = 1;</code>
+     */
+    public int getTValue() {
+      return t_;
+    }
+    /**
+     * <pre>
+     *消息类型
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType t = 1;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PVType getT() {
+      org.fc.brewchain.p22p.pbgens.P22P.PVType result = org.fc.brewchain.p22p.pbgens.P22P.PVType.valueOf(t_);
+      return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PVType.UNRECOGNIZED : result;
+    }
+
+    public static final int V_FIELD_NUMBER = 2;
+    private int v_;
+    /**
+     * <pre>
+     *状态计数器
+     * </pre>
+     *
+     * <code>int32 v = 2;</code>
+     */
+    public int getV() {
+      return v_;
+    }
+
+    public static final int NID_FIELD_NUMBER = 50;
+    private volatile java.lang.Object nid_;
+    /**
+     * <pre>
+     *网络ID	 
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public java.lang.String getNid() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *网络ID	 
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNidBytes() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (t_ != org.fc.brewchain.p22p.pbgens.P22P.PVType.NETWORK_IDX.getNumber()) {
+        output.writeEnum(1, t_);
+      }
+      if (v_ != 0) {
+        output.writeInt32(2, v_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 50, nid_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (t_ != org.fc.brewchain.p22p.pbgens.P22P.PVType.NETWORK_IDX.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, t_);
+      }
+      if (v_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, v_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(50, nid_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.PSVoteState)) {
+        return super.equals(obj);
+      }
+      org.fc.brewchain.p22p.pbgens.P22P.PSVoteState other = (org.fc.brewchain.p22p.pbgens.P22P.PSVoteState) obj;
+
+      boolean result = true;
+      result = result && t_ == other.t_;
+      result = result && (getV()
+          == other.getV());
+      result = result && getNid()
+          .equals(other.getNid());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + T_FIELD_NUMBER;
+      hash = (53 * hash) + t_;
+      hash = (37 * hash) + V_FIELD_NUMBER;
+      hash = (53 * hash) + getV();
+      hash = (37 * hash) + NID_FIELD_NUMBER;
+      hash = (53 * hash) + getNid().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSVoteState parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSVoteState parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSVoteState parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSVoteState parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSVoteState parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSVoteState parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSVoteState parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSVoteState parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSVoteState parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSVoteState parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.PSVoteState prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSVoteState}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.PSVoteState)
+        org.fc.brewchain.p22p.pbgens.P22P.PSVoteStateOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSVoteState_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSVoteState_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.PSVoteState.class, org.fc.brewchain.p22p.pbgens.P22P.PSVoteState.Builder.class);
+      }
+
+      // Construct using org.fc.brewchain.p22p.pbgens.P22P.PSVoteState.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        t_ = 0;
+
+        v_ = 0;
+
+        nid_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSVoteState_descriptor;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSVoteState getDefaultInstanceForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.PSVoteState.getDefaultInstance();
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSVoteState build() {
+        org.fc.brewchain.p22p.pbgens.P22P.PSVoteState result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSVoteState buildPartial() {
+        org.fc.brewchain.p22p.pbgens.P22P.PSVoteState result = new org.fc.brewchain.p22p.pbgens.P22P.PSVoteState(this);
+        result.t_ = t_;
+        result.v_ = v_;
+        result.nid_ = nid_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.PSVoteState) {
+          return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.PSVoteState)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PSVoteState other) {
+        if (other == org.fc.brewchain.p22p.pbgens.P22P.PSVoteState.getDefaultInstance()) return this;
+        if (other.t_ != 0) {
+          setTValue(other.getTValue());
+        }
+        if (other.getV() != 0) {
+          setV(other.getV());
+        }
+        if (!other.getNid().isEmpty()) {
+          nid_ = other.nid_;
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.fc.brewchain.p22p.pbgens.P22P.PSVoteState parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.PSVoteState) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int t_ = 0;
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType t = 1;</code>
+       */
+      public int getTValue() {
+        return t_;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType t = 1;</code>
+       */
+      public Builder setTValue(int value) {
+        t_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType t = 1;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PVType getT() {
+        org.fc.brewchain.p22p.pbgens.P22P.PVType result = org.fc.brewchain.p22p.pbgens.P22P.PVType.valueOf(t_);
+        return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PVType.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType t = 1;</code>
+       */
+      public Builder setT(org.fc.brewchain.p22p.pbgens.P22P.PVType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        t_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType t = 1;</code>
+       */
+      public Builder clearT() {
+        
+        t_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int v_ ;
+      /**
+       * <pre>
+       *状态计数器
+       * </pre>
+       *
+       * <code>int32 v = 2;</code>
+       */
+      public int getV() {
+        return v_;
+      }
+      /**
+       * <pre>
+       *状态计数器
+       * </pre>
+       *
+       * <code>int32 v = 2;</code>
+       */
+      public Builder setV(int value) {
+        
+        v_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *状态计数器
+       * </pre>
+       *
+       * <code>int32 v = 2;</code>
+       */
+      public Builder clearV() {
+        
+        v_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object nid_ = "";
+      /**
+       * <pre>
+       *网络ID	 
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public java.lang.String getNid() {
+        java.lang.Object ref = nid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID	 
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNidBytes() {
+        java.lang.Object ref = nid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID	 
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID	 
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder clearNid() {
+        
+        nid_ = getDefaultInstance().getNid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID	 
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.PSVoteState)
+    }
+
+    // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.PSVoteState)
+    private static final org.fc.brewchain.p22p.pbgens.P22P.PSVoteState DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.PSVoteState();
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSVoteState getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PSVoteState>
+        PARSER = new com.google.protobuf.AbstractParser<PSVoteState>() {
+      public PSVoteState parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new PSVoteState(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PSVoteState> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PSVoteState> getParserForType() {
+      return PARSER;
+    }
+
+    public org.fc.brewchain.p22p.pbgens.P22P.PSVoteState getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface NodeStateInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.NodeStateInfo)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string k = 1;</code>
+     */
+    java.lang.String getK();
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string k = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getKBytes();
+
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+     */
+    boolean hasV();
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PVBase getV();
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PVBaseOrBuilder getVOrBuilder();
+  }
+  /**
+   * Protobuf type {@code org.fc.brewchain.p22p.pbgens.NodeStateInfo}
+   */
+  public  static final class NodeStateInfo extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.NodeStateInfo)
+      NodeStateInfoOrBuilder {
+    // Use NodeStateInfo.newBuilder() to construct.
+    private NodeStateInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private NodeStateInfo() {
+      k_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private NodeStateInfo(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              k_ = s;
+              break;
+            }
+            case 18: {
+              org.fc.brewchain.p22p.pbgens.P22P.PVBase.Builder subBuilder = null;
+              if (v_ != null) {
+                subBuilder = v_.toBuilder();
+              }
+              v_ = input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.PVBase.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(v_);
+                v_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_NodeStateInfo_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_NodeStateInfo_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.class, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder.class);
+    }
+
+    public static final int K_FIELD_NUMBER = 1;
+    private volatile java.lang.Object k_;
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string k = 1;</code>
+     */
+    public java.lang.String getK() {
+      java.lang.Object ref = k_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        k_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>string k = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getKBytes() {
+      java.lang.Object ref = k_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        k_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int V_FIELD_NUMBER = 2;
+    private org.fc.brewchain.p22p.pbgens.P22P.PVBase v_;
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+     */
+    public boolean hasV() {
+      return v_ != null;
+    }
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PVBase getV() {
+      return v_ == null ? org.fc.brewchain.p22p.pbgens.P22P.PVBase.getDefaultInstance() : v_;
+    }
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PVBaseOrBuilder getVOrBuilder() {
+      return getV();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getKBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, k_);
+      }
+      if (v_ != null) {
+        output.writeMessage(2, getV());
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getKBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, k_);
+      }
+      if (v_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getV());
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo)) {
+        return super.equals(obj);
+      }
+      org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo other = (org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo) obj;
+
+      boolean result = true;
+      result = result && getK()
+          .equals(other.getK());
+      result = result && (hasV() == other.hasV());
+      if (hasV()) {
+        result = result && getV()
+            .equals(other.getV());
+      }
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + K_FIELD_NUMBER;
+      hash = (53 * hash) + getK().hashCode();
+      if (hasV()) {
+        hash = (37 * hash) + V_FIELD_NUMBER;
+        hash = (53 * hash) + getV().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.NodeStateInfo}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.NodeStateInfo)
+        org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_NodeStateInfo_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_NodeStateInfo_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.class, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder.class);
+      }
+
+      // Construct using org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        k_ = "";
+
+        if (vBuilder_ == null) {
+          v_ = null;
+        } else {
+          v_ = null;
+          vBuilder_ = null;
+        }
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_NodeStateInfo_descriptor;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo getDefaultInstanceForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.getDefaultInstance();
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo build() {
+        org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo buildPartial() {
+        org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo result = new org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo(this);
+        result.k_ = k_;
+        if (vBuilder_ == null) {
+          result.v_ = v_;
+        } else {
+          result.v_ = vBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo) {
+          return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo other) {
+        if (other == org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.getDefaultInstance()) return this;
+        if (!other.getK().isEmpty()) {
+          k_ = other.k_;
+          onChanged();
+        }
+        if (other.hasV()) {
+          mergeV(other.getV());
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object k_ = "";
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string k = 1;</code>
+       */
+      public java.lang.String getK() {
+        java.lang.Object ref = k_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          k_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string k = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getKBytes() {
+        java.lang.Object ref = k_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          k_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string k = 1;</code>
+       */
+      public Builder setK(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        k_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string k = 1;</code>
+       */
+      public Builder clearK() {
+        
+        k_ = getDefaultInstance().getK();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>string k = 1;</code>
+       */
+      public Builder setKBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        k_ = value;
+        onChanged();
+        return this;
+      }
+
+      private org.fc.brewchain.p22p.pbgens.P22P.PVBase v_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.PVBase, org.fc.brewchain.p22p.pbgens.P22P.PVBase.Builder, org.fc.brewchain.p22p.pbgens.P22P.PVBaseOrBuilder> vBuilder_;
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+       */
+      public boolean hasV() {
+        return vBuilder_ != null || v_ != null;
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PVBase getV() {
+        if (vBuilder_ == null) {
+          return v_ == null ? org.fc.brewchain.p22p.pbgens.P22P.PVBase.getDefaultInstance() : v_;
+        } else {
+          return vBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+       */
+      public Builder setV(org.fc.brewchain.p22p.pbgens.P22P.PVBase value) {
+        if (vBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          v_ = value;
+          onChanged();
+        } else {
+          vBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+       */
+      public Builder setV(
+          org.fc.brewchain.p22p.pbgens.P22P.PVBase.Builder builderForValue) {
+        if (vBuilder_ == null) {
+          v_ = builderForValue.build();
+          onChanged();
+        } else {
+          vBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+       */
+      public Builder mergeV(org.fc.brewchain.p22p.pbgens.P22P.PVBase value) {
+        if (vBuilder_ == null) {
+          if (v_ != null) {
+            v_ =
+              org.fc.brewchain.p22p.pbgens.P22P.PVBase.newBuilder(v_).mergeFrom(value).buildPartial();
+          } else {
+            v_ = value;
+          }
+          onChanged();
+        } else {
+          vBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+       */
+      public Builder clearV() {
+        if (vBuilder_ == null) {
+          v_ = null;
+          onChanged();
+        } else {
+          v_ = null;
+          vBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PVBase.Builder getVBuilder() {
+        
+        onChanged();
+        return getVFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PVBaseOrBuilder getVOrBuilder() {
+        if (vBuilder_ != null) {
+          return vBuilder_.getMessageOrBuilder();
+        } else {
+          return v_ == null ?
+              org.fc.brewchain.p22p.pbgens.P22P.PVBase.getDefaultInstance() : v_;
+        }
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVBase v = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.PVBase, org.fc.brewchain.p22p.pbgens.P22P.PVBase.Builder, org.fc.brewchain.p22p.pbgens.P22P.PVBaseOrBuilder> 
+          getVFieldBuilder() {
+        if (vBuilder_ == null) {
+          vBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              org.fc.brewchain.p22p.pbgens.P22P.PVBase, org.fc.brewchain.p22p.pbgens.P22P.PVBase.Builder, org.fc.brewchain.p22p.pbgens.P22P.PVBaseOrBuilder>(
+                  getV(),
+                  getParentForChildren(),
+                  isClean());
+          v_ = null;
+        }
+        return vBuilder_;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.NodeStateInfo)
+    }
+
+    // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.NodeStateInfo)
+    private static final org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo();
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<NodeStateInfo>
+        PARSER = new com.google.protobuf.AbstractParser<NodeStateInfo>() {
+      public NodeStateInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new NodeStateInfo(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<NodeStateInfo> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<NodeStateInfo> getParserForType() {
+      return PARSER;
+    }
+
+    public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PRetVoteStateOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PRetVoteState)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     *返回
+     * </pre>
+     *
+     * <code>int32 ret_code = 1;</code>
+     */
+    int getRetCode();
+
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    java.lang.String getRetMessage();
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getRetMessageBytes();
+
+    /**
+     * <pre>
+     *消息类型
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 3;</code>
+     */
+    int getMTypeValue();
+    /**
+     * <pre>
+     *消息类型
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 3;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PVType getMType();
+
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+     */
+    boolean hasCur();
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo getCur();
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder getCurOrBuilder();
+
+    /**
+     * <pre>
+     *所有节点的信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+     */
+    java.util.List<org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo> 
+        getNodesList();
+    /**
+     * <pre>
+     *所有节点的信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo getNodes(int index);
+    /**
+     * <pre>
+     *所有节点的信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+     */
+    int getNodesCount();
+    /**
+     * <pre>
+     *所有节点的信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+     */
+    java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder> 
+        getNodesOrBuilderList();
+    /**
+     * <pre>
+     *所有节点的信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder getNodesOrBuilder(
+        int index);
+
+    /**
+     * <pre>
+     *网络ID	 
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    java.lang.String getNid();
+    /**
+     * <pre>
+     *网络ID	 
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getNidBytes();
+  }
+  /**
+   * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PRetVoteState}
+   */
+  public  static final class PRetVoteState extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.PRetVoteState)
+      PRetVoteStateOrBuilder {
+    // Use PRetVoteState.newBuilder() to construct.
+    private PRetVoteState(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PRetVoteState() {
+      retCode_ = 0;
+      retMessage_ = "";
+      mType_ = 0;
+      nodes_ = java.util.Collections.emptyList();
+      nid_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private PRetVoteState(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              retCode_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              retMessage_ = s;
+              break;
+            }
+            case 24: {
+              int rawValue = input.readEnum();
+
+              mType_ = rawValue;
+              break;
+            }
+            case 34: {
+              org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder subBuilder = null;
+              if (cur_ != null) {
+                subBuilder = cur_.toBuilder();
+              }
+              cur_ = input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(cur_);
+                cur_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 42: {
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+                nodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo>();
+                mutable_bitField0_ |= 0x00000010;
+              }
+              nodes_.add(
+                  input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.parser(), extensionRegistry));
+              break;
+            }
+            case 402: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              nid_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+          nodes_ = java.util.Collections.unmodifiableList(nodes_);
+        }
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetVoteState_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetVoteState_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState.class, org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int RET_CODE_FIELD_NUMBER = 1;
+    private int retCode_;
+    /**
+     * <pre>
+     *返回
+     * </pre>
+     *
+     * <code>int32 ret_code = 1;</code>
+     */
+    public int getRetCode() {
+      return retCode_;
+    }
+
+    public static final int RET_MESSAGE_FIELD_NUMBER = 2;
+    private volatile java.lang.Object retMessage_;
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    public java.lang.String getRetMessage() {
+      java.lang.Object ref = retMessage_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        retMessage_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRetMessageBytes() {
+      java.lang.Object ref = retMessage_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        retMessage_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int M_TYPE_FIELD_NUMBER = 3;
+    private int mType_;
+    /**
+     * <pre>
+     *消息类型
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 3;</code>
+     */
+    public int getMTypeValue() {
+      return mType_;
+    }
+    /**
+     * <pre>
+     *消息类型
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 3;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PVType getMType() {
+      org.fc.brewchain.p22p.pbgens.P22P.PVType result = org.fc.brewchain.p22p.pbgens.P22P.PVType.valueOf(mType_);
+      return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PVType.UNRECOGNIZED : result;
+    }
+
+    public static final int CUR_FIELD_NUMBER = 4;
+    private org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo cur_;
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+     */
+    public boolean hasCur() {
+      return cur_ != null;
+    }
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo getCur() {
+      return cur_ == null ? org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.getDefaultInstance() : cur_;
+    }
+    /**
+     * <pre>
+     *当前信息
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder getCurOrBuilder() {
+      return getCur();
+    }
+
+    public static final int NODES_FIELD_NUMBER = 5;
+    private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo> nodes_;
+    /**
+     * <pre>
+     *所有节点的信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+     */
+    public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo> getNodesList() {
+      return nodes_;
+    }
+    /**
+     * <pre>
+     *所有节点的信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+     */
+    public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder> 
+        getNodesOrBuilderList() {
+      return nodes_;
+    }
+    /**
+     * <pre>
+     *所有节点的信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+     */
+    public int getNodesCount() {
+      return nodes_.size();
+    }
+    /**
+     * <pre>
+     *所有节点的信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo getNodes(int index) {
+      return nodes_.get(index);
+    }
+    /**
+     * <pre>
+     *所有节点的信息
+     * </pre>
+     *
+     * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder getNodesOrBuilder(
+        int index) {
+      return nodes_.get(index);
+    }
+
+    public static final int NID_FIELD_NUMBER = 50;
+    private volatile java.lang.Object nid_;
+    /**
+     * <pre>
+     *网络ID	 
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public java.lang.String getNid() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *网络ID	 
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNidBytes() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (retCode_ != 0) {
+        output.writeInt32(1, retCode_);
+      }
+      if (!getRetMessageBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, retMessage_);
+      }
+      if (mType_ != org.fc.brewchain.p22p.pbgens.P22P.PVType.NETWORK_IDX.getNumber()) {
+        output.writeEnum(3, mType_);
+      }
+      if (cur_ != null) {
+        output.writeMessage(4, getCur());
+      }
+      for (int i = 0; i < nodes_.size(); i++) {
+        output.writeMessage(5, nodes_.get(i));
+      }
+      if (!getNidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 50, nid_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (retCode_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, retCode_);
+      }
+      if (!getRetMessageBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, retMessage_);
+      }
+      if (mType_ != org.fc.brewchain.p22p.pbgens.P22P.PVType.NETWORK_IDX.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(3, mType_);
+      }
+      if (cur_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, getCur());
+      }
+      for (int i = 0; i < nodes_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, nodes_.get(i));
+      }
+      if (!getNidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(50, nid_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState)) {
+        return super.equals(obj);
+      }
+      org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState other = (org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState) obj;
+
+      boolean result = true;
+      result = result && (getRetCode()
+          == other.getRetCode());
+      result = result && getRetMessage()
+          .equals(other.getRetMessage());
+      result = result && mType_ == other.mType_;
+      result = result && (hasCur() == other.hasCur());
+      if (hasCur()) {
+        result = result && getCur()
+            .equals(other.getCur());
+      }
+      result = result && getNodesList()
+          .equals(other.getNodesList());
+      result = result && getNid()
+          .equals(other.getNid());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + RET_CODE_FIELD_NUMBER;
+      hash = (53 * hash) + getRetCode();
+      hash = (37 * hash) + RET_MESSAGE_FIELD_NUMBER;
+      hash = (53 * hash) + getRetMessage().hashCode();
+      hash = (37 * hash) + M_TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + mType_;
+      if (hasCur()) {
+        hash = (37 * hash) + CUR_FIELD_NUMBER;
+        hash = (53 * hash) + getCur().hashCode();
+      }
+      if (getNodesCount() > 0) {
+        hash = (37 * hash) + NODES_FIELD_NUMBER;
+        hash = (53 * hash) + getNodesList().hashCode();
+      }
+      hash = (37 * hash) + NID_FIELD_NUMBER;
+      hash = (53 * hash) + getNid().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PRetVoteState}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.PRetVoteState)
+        org.fc.brewchain.p22p.pbgens.P22P.PRetVoteStateOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetVoteState_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetVoteState_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState.class, org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState.Builder.class);
+      }
+
+      // Construct using org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getNodesFieldBuilder();
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        retCode_ = 0;
+
+        retMessage_ = "";
+
+        mType_ = 0;
+
+        if (curBuilder_ == null) {
+          cur_ = null;
+        } else {
+          cur_ = null;
+          curBuilder_ = null;
+        }
+        if (nodesBuilder_ == null) {
+          nodes_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000010);
+        } else {
+          nodesBuilder_.clear();
+        }
+        nid_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetVoteState_descriptor;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState getDefaultInstanceForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState.getDefaultInstance();
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState build() {
+        org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState buildPartial() {
+        org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState result = new org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.retCode_ = retCode_;
+        result.retMessage_ = retMessage_;
+        result.mType_ = mType_;
+        if (curBuilder_ == null) {
+          result.cur_ = cur_;
+        } else {
+          result.cur_ = curBuilder_.build();
+        }
+        if (nodesBuilder_ == null) {
+          if (((bitField0_ & 0x00000010) == 0x00000010)) {
+            nodes_ = java.util.Collections.unmodifiableList(nodes_);
+            bitField0_ = (bitField0_ & ~0x00000010);
+          }
+          result.nodes_ = nodes_;
+        } else {
+          result.nodes_ = nodesBuilder_.build();
+        }
+        result.nid_ = nid_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState) {
+          return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState other) {
+        if (other == org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState.getDefaultInstance()) return this;
+        if (other.getRetCode() != 0) {
+          setRetCode(other.getRetCode());
+        }
+        if (!other.getRetMessage().isEmpty()) {
+          retMessage_ = other.retMessage_;
+          onChanged();
+        }
+        if (other.mType_ != 0) {
+          setMTypeValue(other.getMTypeValue());
+        }
+        if (other.hasCur()) {
+          mergeCur(other.getCur());
+        }
+        if (nodesBuilder_ == null) {
+          if (!other.nodes_.isEmpty()) {
+            if (nodes_.isEmpty()) {
+              nodes_ = other.nodes_;
+              bitField0_ = (bitField0_ & ~0x00000010);
+            } else {
+              ensureNodesIsMutable();
+              nodes_.addAll(other.nodes_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.nodes_.isEmpty()) {
+            if (nodesBuilder_.isEmpty()) {
+              nodesBuilder_.dispose();
+              nodesBuilder_ = null;
+              nodes_ = other.nodes_;
+              bitField0_ = (bitField0_ & ~0x00000010);
+              nodesBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getNodesFieldBuilder() : null;
+            } else {
+              nodesBuilder_.addAllMessages(other.nodes_);
+            }
+          }
+        }
+        if (!other.getNid().isEmpty()) {
+          nid_ = other.nid_;
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int retCode_ ;
+      /**
+       * <pre>
+       *返回
+       * </pre>
+       *
+       * <code>int32 ret_code = 1;</code>
+       */
+      public int getRetCode() {
+        return retCode_;
+      }
+      /**
+       * <pre>
+       *返回
+       * </pre>
+       *
+       * <code>int32 ret_code = 1;</code>
+       */
+      public Builder setRetCode(int value) {
+        
+        retCode_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *返回
+       * </pre>
+       *
+       * <code>int32 ret_code = 1;</code>
+       */
+      public Builder clearRetCode() {
+        
+        retCode_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object retMessage_ = "";
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public java.lang.String getRetMessage() {
+        java.lang.Object ref = retMessage_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          retMessage_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRetMessageBytes() {
+        java.lang.Object ref = retMessage_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          retMessage_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public Builder setRetMessage(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        retMessage_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public Builder clearRetMessage() {
+        
+        retMessage_ = getDefaultInstance().getRetMessage();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public Builder setRetMessageBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        retMessage_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int mType_ = 0;
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 3;</code>
+       */
+      public int getMTypeValue() {
+        return mType_;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 3;</code>
+       */
+      public Builder setMTypeValue(int value) {
+        mType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 3;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PVType getMType() {
+        org.fc.brewchain.p22p.pbgens.P22P.PVType result = org.fc.brewchain.p22p.pbgens.P22P.PVType.valueOf(mType_);
+        return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PVType.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 3;</code>
+       */
+      public Builder setMType(org.fc.brewchain.p22p.pbgens.P22P.PVType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        mType_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息类型
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.PVType m_type = 3;</code>
+       */
+      public Builder clearMType() {
+        
+        mType_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo cur_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder> curBuilder_;
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+       */
+      public boolean hasCur() {
+        return curBuilder_ != null || cur_ != null;
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo getCur() {
+        if (curBuilder_ == null) {
+          return cur_ == null ? org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.getDefaultInstance() : cur_;
+        } else {
+          return curBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+       */
+      public Builder setCur(org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo value) {
+        if (curBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          cur_ = value;
+          onChanged();
+        } else {
+          curBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+       */
+      public Builder setCur(
+          org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder builderForValue) {
+        if (curBuilder_ == null) {
+          cur_ = builderForValue.build();
+          onChanged();
+        } else {
+          curBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+       */
+      public Builder mergeCur(org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo value) {
+        if (curBuilder_ == null) {
+          if (cur_ != null) {
+            cur_ =
+              org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.newBuilder(cur_).mergeFrom(value).buildPartial();
+          } else {
+            cur_ = value;
+          }
+          onChanged();
+        } else {
+          curBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+       */
+      public Builder clearCur() {
+        if (curBuilder_ == null) {
+          cur_ = null;
+          onChanged();
+        } else {
+          cur_ = null;
+          curBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder getCurBuilder() {
+        
+        onChanged();
+        return getCurFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder getCurOrBuilder() {
+        if (curBuilder_ != null) {
+          return curBuilder_.getMessageOrBuilder();
+        } else {
+          return cur_ == null ?
+              org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.getDefaultInstance() : cur_;
+        }
+      }
+      /**
+       * <pre>
+       *当前信息
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.NodeStateInfo cur = 4;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder> 
+          getCurFieldBuilder() {
+        if (curBuilder_ == null) {
+          curBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder>(
+                  getCur(),
+                  getParentForChildren(),
+                  isClean());
+          cur_ = null;
+        }
+        return curBuilder_;
+      }
+
+      private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo> nodes_ =
+        java.util.Collections.emptyList();
+      private void ensureNodesIsMutable() {
+        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
+          nodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo>(nodes_);
+          bitField0_ |= 0x00000010;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder> nodesBuilder_;
+
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo> getNodesList() {
+        if (nodesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(nodes_);
+        } else {
+          return nodesBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public int getNodesCount() {
+        if (nodesBuilder_ == null) {
+          return nodes_.size();
+        } else {
+          return nodesBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo getNodes(int index) {
+        if (nodesBuilder_ == null) {
+          return nodes_.get(index);
+        } else {
+          return nodesBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public Builder setNodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo value) {
+        if (nodesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNodesIsMutable();
+          nodes_.set(index, value);
+          onChanged();
+        } else {
+          nodesBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public Builder setNodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder builderForValue) {
+        if (nodesBuilder_ == null) {
+          ensureNodesIsMutable();
+          nodes_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          nodesBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public Builder addNodes(org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo value) {
+        if (nodesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNodesIsMutable();
+          nodes_.add(value);
+          onChanged();
+        } else {
+          nodesBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public Builder addNodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo value) {
+        if (nodesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureNodesIsMutable();
+          nodes_.add(index, value);
+          onChanged();
+        } else {
+          nodesBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public Builder addNodes(
+          org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder builderForValue) {
+        if (nodesBuilder_ == null) {
+          ensureNodesIsMutable();
+          nodes_.add(builderForValue.build());
+          onChanged();
+        } else {
+          nodesBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public Builder addNodes(
+          int index, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder builderForValue) {
+        if (nodesBuilder_ == null) {
+          ensureNodesIsMutable();
+          nodes_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          nodesBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public Builder addAllNodes(
+          java.lang.Iterable<? extends org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo> values) {
+        if (nodesBuilder_ == null) {
+          ensureNodesIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, nodes_);
+          onChanged();
+        } else {
+          nodesBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public Builder clearNodes() {
+        if (nodesBuilder_ == null) {
+          nodes_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000010);
+          onChanged();
+        } else {
+          nodesBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public Builder removeNodes(int index) {
+        if (nodesBuilder_ == null) {
+          ensureNodesIsMutable();
+          nodes_.remove(index);
+          onChanged();
+        } else {
+          nodesBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder getNodesBuilder(
+          int index) {
+        return getNodesFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder getNodesOrBuilder(
+          int index) {
+        if (nodesBuilder_ == null) {
+          return nodes_.get(index);  } else {
+          return nodesBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder> 
+           getNodesOrBuilderList() {
+        if (nodesBuilder_ != null) {
+          return nodesBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(nodes_);
+        }
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder addNodesBuilder() {
+        return getNodesFieldBuilder().addBuilder(
+            org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder addNodesBuilder(
+          int index) {
+        return getNodesFieldBuilder().addBuilder(
+            index, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       *所有节点的信息
+       * </pre>
+       *
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.NodeStateInfo nodes = 5;</code>
+       */
+      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder> 
+           getNodesBuilderList() {
+        return getNodesFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder> 
+          getNodesFieldBuilder() {
+        if (nodesBuilder_ == null) {
+          nodesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfo.Builder, org.fc.brewchain.p22p.pbgens.P22P.NodeStateInfoOrBuilder>(
+                  nodes_,
+                  ((bitField0_ & 0x00000010) == 0x00000010),
+                  getParentForChildren(),
+                  isClean());
+          nodes_ = null;
+        }
+        return nodesBuilder_;
+      }
+
+      private java.lang.Object nid_ = "";
+      /**
+       * <pre>
+       *网络ID	 
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public java.lang.String getNid() {
+        java.lang.Object ref = nid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID	 
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNidBytes() {
+        java.lang.Object ref = nid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID	 
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID	 
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder clearNid() {
+        
+        nid_ = getDefaultInstance().getNid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID	 
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.PRetVoteState)
+    }
+
+    // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.PRetVoteState)
+    private static final org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState();
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PRetVoteState>
+        PARSER = new com.google.protobuf.AbstractParser<PRetVoteState>() {
+      public PRetVoteState parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new PRetVoteState(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PRetVoteState> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PRetVoteState> getParserForType() {
+      return PARSER;
+    }
+
+    public org.fc.brewchain.p22p.pbgens.P22P.PRetVoteState getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PSTestMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PSTestMessage)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     *消息字段
+     * </pre>
+     *
+     * <code>string content = 1;</code>
+     */
+    java.lang.String getContent();
+    /**
+     * <pre>
+     *消息字段
+     * </pre>
+     *
+     * <code>string content = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getContentBytes();
+
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.TestMessageType type = 2;</code>
+     */
+    int getTypeValue();
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.TestMessageType type = 2;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.TestMessageType getType();
+
+    /**
+     * <code>int64 wall_time = 3;</code>
+     */
+    long getWallTime();
+
+    /**
+     * <code>int64 recv_time = 4;</code>
+     */
+    long getRecvTime();
+
+    /**
+     * <code>string messageid = 5;</code>
+     */
+    java.lang.String getMessageid();
+    /**
+     * <code>string messageid = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getMessageidBytes();
+
+    /**
+     * <code>string org_bcuid = 6;</code>
+     */
+    java.lang.String getOrgBcuid();
+    /**
+     * <code>string org_bcuid = 6;</code>
+     */
+    com.google.protobuf.ByteString
+        getOrgBcuidBytes();
+
+    /**
+     * <code>string from_bcuid = 7;</code>
+     */
+    java.lang.String getFromBcuid();
+    /**
+     * <code>string from_bcuid = 7;</code>
+     */
+    com.google.protobuf.ByteString
+        getFromBcuidBytes();
+
+    /**
+     * <code>bool dwall = 8;</code>
+     */
+    boolean getDwall();
+
+    /**
+     * <code>bool block = 10;</code>
+     */
+    boolean getBlock();
+
+    /**
+     * <code>int64 ps = 9;</code>
+     */
+    long getPs();
+
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    java.lang.String getNid();
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getNidBytes();
+  }
+  /**
+   * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSTestMessage}
+   */
+  public  static final class PSTestMessage extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.PSTestMessage)
+      PSTestMessageOrBuilder {
+    // Use PSTestMessage.newBuilder() to construct.
+    private PSTestMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PSTestMessage() {
+      content_ = "";
+      type_ = 0;
+      wallTime_ = 0L;
+      recvTime_ = 0L;
+      messageid_ = "";
+      orgBcuid_ = "";
+      fromBcuid_ = "";
+      dwall_ = false;
+      block_ = false;
+      ps_ = 0L;
+      nid_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private PSTestMessage(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              content_ = s;
+              break;
+            }
+            case 16: {
+              int rawValue = input.readEnum();
+
+              type_ = rawValue;
+              break;
+            }
+            case 24: {
+
+              wallTime_ = input.readInt64();
+              break;
+            }
+            case 32: {
+
+              recvTime_ = input.readInt64();
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              messageid_ = s;
+              break;
+            }
+            case 50: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              orgBcuid_ = s;
+              break;
+            }
+            case 58: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              fromBcuid_ = s;
+              break;
+            }
+            case 64: {
+
+              dwall_ = input.readBool();
+              break;
+            }
+            case 72: {
+
+              ps_ = input.readInt64();
+              break;
+            }
+            case 80: {
+
+              block_ = input.readBool();
+              break;
+            }
+            case 402: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              nid_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSTestMessage_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSTestMessage_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage.class, org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage.Builder.class);
+    }
+
+    public static final int CONTENT_FIELD_NUMBER = 1;
+    private volatile java.lang.Object content_;
+    /**
+     * <pre>
+     *消息字段
+     * </pre>
+     *
+     * <code>string content = 1;</code>
+     */
+    public java.lang.String getContent() {
+      java.lang.Object ref = content_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        content_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *消息字段
+     * </pre>
+     *
+     * <code>string content = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getContentBytes() {
+      java.lang.Object ref = content_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        content_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TYPE_FIELD_NUMBER = 2;
+    private int type_;
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.TestMessageType type = 2;</code>
+     */
+    public int getTypeValue() {
+      return type_;
+    }
+    /**
+     * <pre>
+     * </pre>
+     *
+     * <code>.org.fc.brewchain.p22p.pbgens.TestMessageType type = 2;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.TestMessageType getType() {
+      org.fc.brewchain.p22p.pbgens.P22P.TestMessageType result = org.fc.brewchain.p22p.pbgens.P22P.TestMessageType.valueOf(type_);
+      return result == null ? org.fc.brewchain.p22p.pbgens.P22P.TestMessageType.UNRECOGNIZED : result;
+    }
+
+    public static final int WALL_TIME_FIELD_NUMBER = 3;
+    private long wallTime_;
+    /**
+     * <code>int64 wall_time = 3;</code>
+     */
+    public long getWallTime() {
+      return wallTime_;
+    }
+
+    public static final int RECV_TIME_FIELD_NUMBER = 4;
+    private long recvTime_;
+    /**
+     * <code>int64 recv_time = 4;</code>
+     */
+    public long getRecvTime() {
+      return recvTime_;
+    }
+
+    public static final int MESSAGEID_FIELD_NUMBER = 5;
+    private volatile java.lang.Object messageid_;
+    /**
+     * <code>string messageid = 5;</code>
+     */
+    public java.lang.String getMessageid() {
+      java.lang.Object ref = messageid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        messageid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string messageid = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMessageidBytes() {
+      java.lang.Object ref = messageid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        messageid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ORG_BCUID_FIELD_NUMBER = 6;
+    private volatile java.lang.Object orgBcuid_;
+    /**
+     * <code>string org_bcuid = 6;</code>
+     */
+    public java.lang.String getOrgBcuid() {
+      java.lang.Object ref = orgBcuid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        orgBcuid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string org_bcuid = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getOrgBcuidBytes() {
+      java.lang.Object ref = orgBcuid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        orgBcuid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int FROM_BCUID_FIELD_NUMBER = 7;
+    private volatile java.lang.Object fromBcuid_;
+    /**
+     * <code>string from_bcuid = 7;</code>
+     */
+    public java.lang.String getFromBcuid() {
+      java.lang.Object ref = fromBcuid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        fromBcuid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string from_bcuid = 7;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFromBcuidBytes() {
+      java.lang.Object ref = fromBcuid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fromBcuid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int DWALL_FIELD_NUMBER = 8;
+    private boolean dwall_;
+    /**
+     * <code>bool dwall = 8;</code>
+     */
+    public boolean getDwall() {
+      return dwall_;
+    }
+
+    public static final int BLOCK_FIELD_NUMBER = 10;
+    private boolean block_;
+    /**
+     * <code>bool block = 10;</code>
+     */
+    public boolean getBlock() {
+      return block_;
+    }
+
+    public static final int PS_FIELD_NUMBER = 9;
+    private long ps_;
+    /**
+     * <code>int64 ps = 9;</code>
+     */
+    public long getPs() {
+      return ps_;
+    }
+
+    public static final int NID_FIELD_NUMBER = 50;
+    private volatile java.lang.Object nid_;
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public java.lang.String getNid() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNidBytes() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getContentBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, content_);
+      }
+      if (type_ != org.fc.brewchain.p22p.pbgens.P22P.TestMessageType.WALL.getNumber()) {
+        output.writeEnum(2, type_);
+      }
+      if (wallTime_ != 0L) {
+        output.writeInt64(3, wallTime_);
+      }
+      if (recvTime_ != 0L) {
+        output.writeInt64(4, recvTime_);
+      }
+      if (!getMessageidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, messageid_);
+      }
+      if (!getOrgBcuidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, orgBcuid_);
+      }
+      if (!getFromBcuidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, fromBcuid_);
+      }
+      if (dwall_ != false) {
+        output.writeBool(8, dwall_);
+      }
+      if (ps_ != 0L) {
+        output.writeInt64(9, ps_);
+      }
+      if (block_ != false) {
+        output.writeBool(10, block_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 50, nid_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getContentBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, content_);
+      }
+      if (type_ != org.fc.brewchain.p22p.pbgens.P22P.TestMessageType.WALL.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(2, type_);
+      }
+      if (wallTime_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, wallTime_);
+      }
+      if (recvTime_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(4, recvTime_);
+      }
+      if (!getMessageidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, messageid_);
+      }
+      if (!getOrgBcuidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, orgBcuid_);
+      }
+      if (!getFromBcuidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, fromBcuid_);
+      }
+      if (dwall_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(8, dwall_);
+      }
+      if (ps_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(9, ps_);
+      }
+      if (block_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(10, block_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(50, nid_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage)) {
+        return super.equals(obj);
+      }
+      org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage other = (org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage) obj;
+
+      boolean result = true;
+      result = result && getContent()
+          .equals(other.getContent());
+      result = result && type_ == other.type_;
+      result = result && (getWallTime()
+          == other.getWallTime());
+      result = result && (getRecvTime()
+          == other.getRecvTime());
+      result = result && getMessageid()
+          .equals(other.getMessageid());
+      result = result && getOrgBcuid()
+          .equals(other.getOrgBcuid());
+      result = result && getFromBcuid()
+          .equals(other.getFromBcuid());
+      result = result && (getDwall()
+          == other.getDwall());
+      result = result && (getBlock()
+          == other.getBlock());
+      result = result && (getPs()
+          == other.getPs());
+      result = result && getNid()
+          .equals(other.getNid());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + CONTENT_FIELD_NUMBER;
+      hash = (53 * hash) + getContent().hashCode();
+      hash = (37 * hash) + TYPE_FIELD_NUMBER;
+      hash = (53 * hash) + type_;
+      hash = (37 * hash) + WALL_TIME_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getWallTime());
+      hash = (37 * hash) + RECV_TIME_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getRecvTime());
+      hash = (37 * hash) + MESSAGEID_FIELD_NUMBER;
+      hash = (53 * hash) + getMessageid().hashCode();
+      hash = (37 * hash) + ORG_BCUID_FIELD_NUMBER;
+      hash = (53 * hash) + getOrgBcuid().hashCode();
+      hash = (37 * hash) + FROM_BCUID_FIELD_NUMBER;
+      hash = (53 * hash) + getFromBcuid().hashCode();
+      hash = (37 * hash) + DWALL_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getDwall());
+      hash = (37 * hash) + BLOCK_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getBlock());
+      hash = (37 * hash) + PS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getPs());
+      hash = (37 * hash) + NID_FIELD_NUMBER;
+      hash = (53 * hash) + getNid().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSTestMessage}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.PSTestMessage)
+        org.fc.brewchain.p22p.pbgens.P22P.PSTestMessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSTestMessage_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSTestMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage.class, org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage.Builder.class);
+      }
+
+      // Construct using org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        content_ = "";
+
+        type_ = 0;
+
+        wallTime_ = 0L;
+
+        recvTime_ = 0L;
+
+        messageid_ = "";
+
+        orgBcuid_ = "";
+
+        fromBcuid_ = "";
+
+        dwall_ = false;
+
+        block_ = false;
+
+        ps_ = 0L;
+
+        nid_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSTestMessage_descriptor;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage getDefaultInstanceForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage.getDefaultInstance();
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage build() {
+        org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage buildPartial() {
+        org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage result = new org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage(this);
+        result.content_ = content_;
+        result.type_ = type_;
+        result.wallTime_ = wallTime_;
+        result.recvTime_ = recvTime_;
+        result.messageid_ = messageid_;
+        result.orgBcuid_ = orgBcuid_;
+        result.fromBcuid_ = fromBcuid_;
+        result.dwall_ = dwall_;
+        result.block_ = block_;
+        result.ps_ = ps_;
+        result.nid_ = nid_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage) {
+          return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage other) {
+        if (other == org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage.getDefaultInstance()) return this;
+        if (!other.getContent().isEmpty()) {
+          content_ = other.content_;
+          onChanged();
+        }
+        if (other.type_ != 0) {
+          setTypeValue(other.getTypeValue());
+        }
+        if (other.getWallTime() != 0L) {
+          setWallTime(other.getWallTime());
+        }
+        if (other.getRecvTime() != 0L) {
+          setRecvTime(other.getRecvTime());
+        }
+        if (!other.getMessageid().isEmpty()) {
+          messageid_ = other.messageid_;
+          onChanged();
+        }
+        if (!other.getOrgBcuid().isEmpty()) {
+          orgBcuid_ = other.orgBcuid_;
+          onChanged();
+        }
+        if (!other.getFromBcuid().isEmpty()) {
+          fromBcuid_ = other.fromBcuid_;
+          onChanged();
+        }
+        if (other.getDwall() != false) {
+          setDwall(other.getDwall());
+        }
+        if (other.getBlock() != false) {
+          setBlock(other.getBlock());
+        }
+        if (other.getPs() != 0L) {
+          setPs(other.getPs());
+        }
+        if (!other.getNid().isEmpty()) {
+          nid_ = other.nid_;
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object content_ = "";
+      /**
+       * <pre>
+       *消息字段
+       * </pre>
+       *
+       * <code>string content = 1;</code>
+       */
+      public java.lang.String getContent() {
+        java.lang.Object ref = content_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          content_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *消息字段
+       * </pre>
+       *
+       * <code>string content = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getContentBytes() {
+        java.lang.Object ref = content_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          content_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *消息字段
+       * </pre>
+       *
+       * <code>string content = 1;</code>
+       */
+      public Builder setContent(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        content_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息字段
+       * </pre>
+       *
+       * <code>string content = 1;</code>
+       */
+      public Builder clearContent() {
+        
+        content_ = getDefaultInstance().getContent();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *消息字段
+       * </pre>
+       *
+       * <code>string content = 1;</code>
+       */
+      public Builder setContentBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        content_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int type_ = 0;
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.TestMessageType type = 2;</code>
+       */
+      public int getTypeValue() {
+        return type_;
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.TestMessageType type = 2;</code>
+       */
+      public Builder setTypeValue(int value) {
+        type_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.TestMessageType type = 2;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.TestMessageType getType() {
+        org.fc.brewchain.p22p.pbgens.P22P.TestMessageType result = org.fc.brewchain.p22p.pbgens.P22P.TestMessageType.valueOf(type_);
+        return result == null ? org.fc.brewchain.p22p.pbgens.P22P.TestMessageType.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.TestMessageType type = 2;</code>
+       */
+      public Builder setType(org.fc.brewchain.p22p.pbgens.P22P.TestMessageType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        type_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * </pre>
+       *
+       * <code>.org.fc.brewchain.p22p.pbgens.TestMessageType type = 2;</code>
+       */
+      public Builder clearType() {
+        
+        type_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private long wallTime_ ;
+      /**
+       * <code>int64 wall_time = 3;</code>
+       */
+      public long getWallTime() {
+        return wallTime_;
+      }
+      /**
+       * <code>int64 wall_time = 3;</code>
+       */
+      public Builder setWallTime(long value) {
+        
+        wallTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 wall_time = 3;</code>
+       */
+      public Builder clearWallTime() {
+        
+        wallTime_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long recvTime_ ;
+      /**
+       * <code>int64 recv_time = 4;</code>
+       */
+      public long getRecvTime() {
+        return recvTime_;
+      }
+      /**
+       * <code>int64 recv_time = 4;</code>
+       */
+      public Builder setRecvTime(long value) {
+        
+        recvTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 recv_time = 4;</code>
+       */
+      public Builder clearRecvTime() {
+        
+        recvTime_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object messageid_ = "";
+      /**
+       * <code>string messageid = 5;</code>
+       */
+      public java.lang.String getMessageid() {
+        java.lang.Object ref = messageid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          messageid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string messageid = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getMessageidBytes() {
+        java.lang.Object ref = messageid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          messageid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string messageid = 5;</code>
+       */
+      public Builder setMessageid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        messageid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string messageid = 5;</code>
+       */
+      public Builder clearMessageid() {
+        
+        messageid_ = getDefaultInstance().getMessageid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string messageid = 5;</code>
+       */
+      public Builder setMessageidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        messageid_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object orgBcuid_ = "";
+      /**
+       * <code>string org_bcuid = 6;</code>
+       */
+      public java.lang.String getOrgBcuid() {
+        java.lang.Object ref = orgBcuid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          orgBcuid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string org_bcuid = 6;</code>
+       */
+      public com.google.protobuf.ByteString
+          getOrgBcuidBytes() {
+        java.lang.Object ref = orgBcuid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          orgBcuid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string org_bcuid = 6;</code>
+       */
+      public Builder setOrgBcuid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        orgBcuid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string org_bcuid = 6;</code>
+       */
+      public Builder clearOrgBcuid() {
+        
+        orgBcuid_ = getDefaultInstance().getOrgBcuid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string org_bcuid = 6;</code>
+       */
+      public Builder setOrgBcuidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        orgBcuid_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object fromBcuid_ = "";
+      /**
+       * <code>string from_bcuid = 7;</code>
+       */
+      public java.lang.String getFromBcuid() {
+        java.lang.Object ref = fromBcuid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          fromBcuid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string from_bcuid = 7;</code>
+       */
+      public com.google.protobuf.ByteString
+          getFromBcuidBytes() {
+        java.lang.Object ref = fromBcuid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          fromBcuid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string from_bcuid = 7;</code>
+       */
+      public Builder setFromBcuid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        fromBcuid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string from_bcuid = 7;</code>
+       */
+      public Builder clearFromBcuid() {
+        
+        fromBcuid_ = getDefaultInstance().getFromBcuid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string from_bcuid = 7;</code>
+       */
+      public Builder setFromBcuidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        fromBcuid_ = value;
+        onChanged();
+        return this;
+      }
+
+      private boolean dwall_ ;
+      /**
+       * <code>bool dwall = 8;</code>
+       */
+      public boolean getDwall() {
+        return dwall_;
+      }
+      /**
+       * <code>bool dwall = 8;</code>
+       */
+      public Builder setDwall(boolean value) {
+        
+        dwall_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool dwall = 8;</code>
+       */
+      public Builder clearDwall() {
+        
+        dwall_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean block_ ;
+      /**
+       * <code>bool block = 10;</code>
+       */
+      public boolean getBlock() {
+        return block_;
+      }
+      /**
+       * <code>bool block = 10;</code>
+       */
+      public Builder setBlock(boolean value) {
+        
+        block_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool block = 10;</code>
+       */
+      public Builder clearBlock() {
+        
+        block_ = false;
+        onChanged();
+        return this;
+      }
+
+      private long ps_ ;
+      /**
+       * <code>int64 ps = 9;</code>
+       */
+      public long getPs() {
+        return ps_;
+      }
+      /**
+       * <code>int64 ps = 9;</code>
+       */
+      public Builder setPs(long value) {
+        
+        ps_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 ps = 9;</code>
+       */
+      public Builder clearPs() {
+        
+        ps_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object nid_ = "";
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public java.lang.String getNid() {
+        java.lang.Object ref = nid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNidBytes() {
+        java.lang.Object ref = nid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder clearNid() {
+        
+        nid_ = getDefaultInstance().getNid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.PSTestMessage)
+    }
+
+    // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.PSTestMessage)
+    private static final org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage();
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PSTestMessage>
+        PARSER = new com.google.protobuf.AbstractParser<PSTestMessage>() {
+      public PSTestMessage parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new PSTestMessage(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PSTestMessage> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PSTestMessage> getParserForType() {
+      return PARSER;
+    }
+
+    public org.fc.brewchain.p22p.pbgens.P22P.PSTestMessage getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PRetTestMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PRetTestMessage)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     *返回
+     * </pre>
+     *
+     * <code>int32 ret_code = 1;</code>
+     */
+    int getRetCode();
+
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    java.lang.String getRetMessage();
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getRetMessageBytes();
+
+    /**
+     * <code>int32 dnode_count = 3;</code>
+     */
+    int getDnodeCount();
+
+    /**
+     * <code>int32 pending_count = 4;</code>
+     */
+    int getPendingCount();
+
+    /**
+     * <code>string bitencs = 5;</code>
+     */
+    java.lang.String getBitencs();
+    /**
+     * <code>string bitencs = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getBitencsBytes();
+
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    java.lang.String getNid();
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getNidBytes();
+  }
+  /**
+   * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PRetTestMessage}
+   */
+  public  static final class PRetTestMessage extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.PRetTestMessage)
+      PRetTestMessageOrBuilder {
+    // Use PRetTestMessage.newBuilder() to construct.
+    private PRetTestMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PRetTestMessage() {
+      retCode_ = 0;
+      retMessage_ = "";
+      dnodeCount_ = 0;
+      pendingCount_ = 0;
+      bitencs_ = "";
+      nid_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private PRetTestMessage(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              retCode_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              retMessage_ = s;
+              break;
+            }
+            case 24: {
+
+              dnodeCount_ = input.readInt32();
+              break;
+            }
+            case 32: {
+
+              pendingCount_ = input.readInt32();
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              bitencs_ = s;
+              break;
+            }
+            case 402: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              nid_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetTestMessage_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetTestMessage_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage.class, org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage.Builder.class);
+    }
+
+    public static final int RET_CODE_FIELD_NUMBER = 1;
+    private int retCode_;
+    /**
+     * <pre>
+     *返回
+     * </pre>
+     *
+     * <code>int32 ret_code = 1;</code>
+     */
+    public int getRetCode() {
+      return retCode_;
+    }
+
+    public static final int RET_MESSAGE_FIELD_NUMBER = 2;
+    private volatile java.lang.Object retMessage_;
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    public java.lang.String getRetMessage() {
+      java.lang.Object ref = retMessage_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        retMessage_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRetMessageBytes() {
+      java.lang.Object ref = retMessage_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        retMessage_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int DNODE_COUNT_FIELD_NUMBER = 3;
+    private int dnodeCount_;
+    /**
+     * <code>int32 dnode_count = 3;</code>
+     */
+    public int getDnodeCount() {
+      return dnodeCount_;
+    }
+
+    public static final int PENDING_COUNT_FIELD_NUMBER = 4;
+    private int pendingCount_;
+    /**
+     * <code>int32 pending_count = 4;</code>
+     */
+    public int getPendingCount() {
+      return pendingCount_;
+    }
+
+    public static final int BITENCS_FIELD_NUMBER = 5;
+    private volatile java.lang.Object bitencs_;
+    /**
+     * <code>string bitencs = 5;</code>
+     */
+    public java.lang.String getBitencs() {
+      java.lang.Object ref = bitencs_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        bitencs_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string bitencs = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getBitencsBytes() {
+      java.lang.Object ref = bitencs_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        bitencs_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int NID_FIELD_NUMBER = 50;
+    private volatile java.lang.Object nid_;
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public java.lang.String getNid() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNidBytes() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (retCode_ != 0) {
+        output.writeInt32(1, retCode_);
+      }
+      if (!getRetMessageBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, retMessage_);
+      }
+      if (dnodeCount_ != 0) {
+        output.writeInt32(3, dnodeCount_);
+      }
+      if (pendingCount_ != 0) {
+        output.writeInt32(4, pendingCount_);
+      }
+      if (!getBitencsBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, bitencs_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 50, nid_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (retCode_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, retCode_);
+      }
+      if (!getRetMessageBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, retMessage_);
+      }
+      if (dnodeCount_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, dnodeCount_);
+      }
+      if (pendingCount_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, pendingCount_);
+      }
+      if (!getBitencsBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, bitencs_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(50, nid_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage)) {
+        return super.equals(obj);
+      }
+      org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage other = (org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage) obj;
+
+      boolean result = true;
+      result = result && (getRetCode()
+          == other.getRetCode());
+      result = result && getRetMessage()
+          .equals(other.getRetMessage());
+      result = result && (getDnodeCount()
+          == other.getDnodeCount());
+      result = result && (getPendingCount()
+          == other.getPendingCount());
+      result = result && getBitencs()
+          .equals(other.getBitencs());
+      result = result && getNid()
+          .equals(other.getNid());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + RET_CODE_FIELD_NUMBER;
+      hash = (53 * hash) + getRetCode();
+      hash = (37 * hash) + RET_MESSAGE_FIELD_NUMBER;
+      hash = (53 * hash) + getRetMessage().hashCode();
+      hash = (37 * hash) + DNODE_COUNT_FIELD_NUMBER;
+      hash = (53 * hash) + getDnodeCount();
+      hash = (37 * hash) + PENDING_COUNT_FIELD_NUMBER;
+      hash = (53 * hash) + getPendingCount();
+      hash = (37 * hash) + BITENCS_FIELD_NUMBER;
+      hash = (53 * hash) + getBitencs().hashCode();
+      hash = (37 * hash) + NID_FIELD_NUMBER;
+      hash = (53 * hash) + getNid().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PRetTestMessage}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.PRetTestMessage)
+        org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetTestMessage_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetTestMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage.class, org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage.Builder.class);
+      }
+
+      // Construct using org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        retCode_ = 0;
+
+        retMessage_ = "";
+
+        dnodeCount_ = 0;
+
+        pendingCount_ = 0;
+
+        bitencs_ = "";
+
+        nid_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetTestMessage_descriptor;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage getDefaultInstanceForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage.getDefaultInstance();
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage build() {
+        org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage buildPartial() {
+        org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage result = new org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage(this);
+        result.retCode_ = retCode_;
+        result.retMessage_ = retMessage_;
+        result.dnodeCount_ = dnodeCount_;
+        result.pendingCount_ = pendingCount_;
+        result.bitencs_ = bitencs_;
+        result.nid_ = nid_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage) {
+          return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage other) {
+        if (other == org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage.getDefaultInstance()) return this;
+        if (other.getRetCode() != 0) {
+          setRetCode(other.getRetCode());
+        }
+        if (!other.getRetMessage().isEmpty()) {
+          retMessage_ = other.retMessage_;
+          onChanged();
+        }
+        if (other.getDnodeCount() != 0) {
+          setDnodeCount(other.getDnodeCount());
+        }
+        if (other.getPendingCount() != 0) {
+          setPendingCount(other.getPendingCount());
+        }
+        if (!other.getBitencs().isEmpty()) {
+          bitencs_ = other.bitencs_;
+          onChanged();
+        }
+        if (!other.getNid().isEmpty()) {
+          nid_ = other.nid_;
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int retCode_ ;
+      /**
+       * <pre>
+       *返回
+       * </pre>
+       *
+       * <code>int32 ret_code = 1;</code>
+       */
+      public int getRetCode() {
+        return retCode_;
+      }
+      /**
+       * <pre>
+       *返回
+       * </pre>
+       *
+       * <code>int32 ret_code = 1;</code>
+       */
+      public Builder setRetCode(int value) {
+        
+        retCode_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *返回
+       * </pre>
+       *
+       * <code>int32 ret_code = 1;</code>
+       */
+      public Builder clearRetCode() {
+        
+        retCode_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object retMessage_ = "";
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public java.lang.String getRetMessage() {
+        java.lang.Object ref = retMessage_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          retMessage_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRetMessageBytes() {
+        java.lang.Object ref = retMessage_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          retMessage_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public Builder setRetMessage(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        retMessage_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public Builder clearRetMessage() {
+        
+        retMessage_ = getDefaultInstance().getRetMessage();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public Builder setRetMessageBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        retMessage_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int dnodeCount_ ;
+      /**
+       * <code>int32 dnode_count = 3;</code>
+       */
+      public int getDnodeCount() {
+        return dnodeCount_;
+      }
+      /**
+       * <code>int32 dnode_count = 3;</code>
+       */
+      public Builder setDnodeCount(int value) {
+        
+        dnodeCount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 dnode_count = 3;</code>
+       */
+      public Builder clearDnodeCount() {
+        
+        dnodeCount_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int pendingCount_ ;
+      /**
+       * <code>int32 pending_count = 4;</code>
+       */
+      public int getPendingCount() {
+        return pendingCount_;
+      }
+      /**
+       * <code>int32 pending_count = 4;</code>
+       */
+      public Builder setPendingCount(int value) {
+        
+        pendingCount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 pending_count = 4;</code>
+       */
+      public Builder clearPendingCount() {
+        
+        pendingCount_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object bitencs_ = "";
+      /**
+       * <code>string bitencs = 5;</code>
+       */
+      public java.lang.String getBitencs() {
+        java.lang.Object ref = bitencs_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          bitencs_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string bitencs = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getBitencsBytes() {
+        java.lang.Object ref = bitencs_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          bitencs_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string bitencs = 5;</code>
+       */
+      public Builder setBitencs(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        bitencs_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string bitencs = 5;</code>
+       */
+      public Builder clearBitencs() {
+        
+        bitencs_ = getDefaultInstance().getBitencs();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string bitencs = 5;</code>
+       */
+      public Builder setBitencsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        bitencs_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object nid_ = "";
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public java.lang.String getNid() {
+        java.lang.Object ref = nid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNidBytes() {
+        java.lang.Object ref = nid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder clearNid() {
+        
+        nid_ = getDefaultInstance().getNid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.PRetTestMessage)
+    }
+
+    // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.PRetTestMessage)
+    private static final org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage();
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PRetTestMessage>
+        PARSER = new com.google.protobuf.AbstractParser<PRetTestMessage>() {
+      public PRetTestMessage parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new PRetTestMessage(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PRetTestMessage> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PRetTestMessage> getParserForType() {
+      return PARSER;
+    }
+
+    public org.fc.brewchain.p22p.pbgens.P22P.PRetTestMessage getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PSRouteMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PSRouteMessage)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string gcmd = 1;</code>
+     */
+    java.lang.String getGcmd();
+    /**
+     * <code>string gcmd = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getGcmdBytes();
+
+    /**
+     * <code>bytes body = 2;</code>
+     */
+    com.google.protobuf.ByteString getBody();
+
+    /**
+     * <code>int32 fromIdx = 3;</code>
+     */
+    int getFromIdx();
+
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+     */
+    boolean hasNextHops();
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode getNextHops();
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder getNextHopsOrBuilder();
+
+    /**
+     * <code>string network = 5;</code>
+     */
+    java.lang.String getNetwork();
+    /**
+     * <code>string network = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getNetworkBytes();
+
+    /**
+     * <code>string messageid = 6;</code>
+     */
+    java.lang.String getMessageid();
+    /**
+     * <code>string messageid = 6;</code>
+     */
+    com.google.protobuf.ByteString
+        getMessageidBytes();
+
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBRouteMsgType msgtype = 7;</code>
+     */
+    int getMsgtypeValue();
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBRouteMsgType msgtype = 7;</code>
+     */
+    org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType getMsgtype();
+
+    /**
+     * <code>string encbits = 8;</code>
+     */
+    java.lang.String getEncbits();
+    /**
+     * <code>string encbits = 8;</code>
+     */
+    com.google.protobuf.ByteString
+        getEncbitsBytes();
+
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    java.lang.String getNid();
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    com.google.protobuf.ByteString
+        getNidBytes();
+  }
+  /**
+   * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage}
+   */
+  public  static final class PSRouteMessage extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.PSRouteMessage)
+      PSRouteMessageOrBuilder {
+    // Use PSRouteMessage.newBuilder() to construct.
+    private PSRouteMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PSRouteMessage() {
+      gcmd_ = "";
+      body_ = com.google.protobuf.ByteString.EMPTY;
+      fromIdx_ = 0;
+      network_ = "";
+      messageid_ = "";
+      msgtype_ = 0;
+      encbits_ = "";
+      nid_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private PSRouteMessage(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              gcmd_ = s;
+              break;
+            }
+            case 18: {
+
+              body_ = input.readBytes();
+              break;
+            }
+            case 24: {
+
+              fromIdx_ = input.readInt32();
+              break;
+            }
+            case 34: {
+              org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder subBuilder = null;
+              if (nextHops_ != null) {
+                subBuilder = nextHops_.toBuilder();
+              }
+              nextHops_ = input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(nextHops_);
+                nextHops_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              network_ = s;
+              break;
+            }
+            case 50: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              messageid_ = s;
+              break;
+            }
+            case 56: {
+              int rawValue = input.readEnum();
+
+              msgtype_ = rawValue;
+              break;
+            }
+            case 66: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              encbits_ = s;
+              break;
+            }
+            case 402: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              nid_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.class, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.Builder.class);
+    }
+
+    /**
+     * Protobuf enum {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeType}
+     */
+    public enum PBNodeType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>PB_EMPTY = 0;</code>
+       */
+      PB_EMPTY(0),
+      /**
+       * <code>PB_FULLNODE = 1;</code>
+       */
+      PB_FULLNODE(1),
+      /**
+       * <code>PB_FLAT_SET = 2;</code>
+       */
+      PB_FLAT_SET(2),
+      /**
+       * <code>PB_NODE_SET = 3;</code>
+       */
+      PB_NODE_SET(3),
+      /**
+       * <code>PB_DEEP_TREE_SET = 4;</code>
+       */
+      PB_DEEP_TREE_SET(4),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>PB_EMPTY = 0;</code>
+       */
+      public static final int PB_EMPTY_VALUE = 0;
+      /**
+       * <code>PB_FULLNODE = 1;</code>
+       */
+      public static final int PB_FULLNODE_VALUE = 1;
+      /**
+       * <code>PB_FLAT_SET = 2;</code>
+       */
+      public static final int PB_FLAT_SET_VALUE = 2;
+      /**
+       * <code>PB_NODE_SET = 3;</code>
+       */
+      public static final int PB_NODE_SET_VALUE = 3;
+      /**
+       * <code>PB_DEEP_TREE_SET = 4;</code>
+       */
+      public static final int PB_DEEP_TREE_SET_VALUE = 4;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static PBNodeType valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static PBNodeType forNumber(int value) {
+        switch (value) {
+          case 0: return PB_EMPTY;
+          case 1: return PB_FULLNODE;
+          case 2: return PB_FLAT_SET;
+          case 3: return PB_NODE_SET;
+          case 4: return PB_DEEP_TREE_SET;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<PBNodeType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          PBNodeType> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<PBNodeType>() {
+              public PBNodeType findValueByNumber(int number) {
+                return PBNodeType.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final PBNodeType[] VALUES = values();
+
+      public static PBNodeType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private PBNodeType(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeType)
+    }
+
+    /**
+     * Protobuf enum {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBRouteMsgType}
+     */
+    public enum PBRouteMsgType
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>PM_VBASE = 0;</code>
+       */
+      PM_VBASE(0),
+      /**
+       * <code>PM_TEST = 1;</code>
+       */
+      PM_TEST(1),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>PM_VBASE = 0;</code>
+       */
+      public static final int PM_VBASE_VALUE = 0;
+      /**
+       * <code>PM_TEST = 1;</code>
+       */
+      public static final int PM_TEST_VALUE = 1;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new java.lang.IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @java.lang.Deprecated
+      public static PBRouteMsgType valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static PBRouteMsgType forNumber(int value) {
+        switch (value) {
+          case 0: return PM_VBASE;
+          case 1: return PM_TEST;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<PBRouteMsgType>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          PBRouteMsgType> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<PBRouteMsgType>() {
+              public PBRouteMsgType findValueByNumber(int number) {
+                return PBRouteMsgType.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.getDescriptor().getEnumTypes().get(1);
+      }
+
+      private static final PBRouteMsgType[] VALUES = values();
+
+      public static PBRouteMsgType valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private PBRouteMsgType(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBRouteMsgType)
+    }
+
+    public interface PBFlatSetOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBFlatSet)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>int32 fromIdx = 1;</code>
+       */
+      int getFromIdx();
+
+      /**
+       * <code>string nextHops_enc = 2;</code>
+       */
+      java.lang.String getNextHopsEnc();
+      /**
+       * <code>string nextHops_enc = 2;</code>
+       */
+      com.google.protobuf.ByteString
+          getNextHopsEncBytes();
+    }
+    /**
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBFlatSet}
+     */
+    public  static final class PBFlatSet extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBFlatSet)
+        PBFlatSetOrBuilder {
+      // Use PBFlatSet.newBuilder() to construct.
+      private PBFlatSet(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private PBFlatSet() {
+        fromIdx_ = 0;
+        nextHopsEnc_ = "";
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      }
+      private PBFlatSet(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        int mutable_bitField0_ = 0;
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!input.skipField(tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 8: {
+
+                fromIdx_ = input.readInt32();
+                break;
+              }
+              case 18: {
+                java.lang.String s = input.readStringRequireUtf8();
+
+                nextHopsEnc_ = s;
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBFlatSet_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBFlatSet_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet.class, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet.Builder.class);
+      }
+
+      public static final int FROMIDX_FIELD_NUMBER = 1;
+      private int fromIdx_;
+      /**
+       * <code>int32 fromIdx = 1;</code>
+       */
+      public int getFromIdx() {
+        return fromIdx_;
+      }
+
+      public static final int NEXTHOPS_ENC_FIELD_NUMBER = 2;
+      private volatile java.lang.Object nextHopsEnc_;
+      /**
+       * <code>string nextHops_enc = 2;</code>
+       */
+      public java.lang.String getNextHopsEnc() {
+        java.lang.Object ref = nextHopsEnc_;
+        if (ref instanceof java.lang.String) {
+          return (java.lang.String) ref;
+        } else {
+          com.google.protobuf.ByteString bs = 
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nextHopsEnc_ = s;
+          return s;
+        }
+      }
+      /**
+       * <code>string nextHops_enc = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNextHopsEncBytes() {
+        java.lang.Object ref = nextHopsEnc_;
+        if (ref instanceof java.lang.String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nextHopsEnc_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        if (fromIdx_ != 0) {
+          output.writeInt32(1, fromIdx_);
+        }
+        if (!getNextHopsEncBytes().isEmpty()) {
+          com.google.protobuf.GeneratedMessageV3.writeString(output, 2, nextHopsEnc_);
+        }
+      }
+
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (fromIdx_ != 0) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeInt32Size(1, fromIdx_);
+        }
+        if (!getNextHopsEncBytes().isEmpty()) {
+          size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, nextHopsEnc_);
+        }
+        memoizedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet)) {
+          return super.equals(obj);
+        }
+        org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet other = (org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet) obj;
+
+        boolean result = true;
+        result = result && (getFromIdx()
+            == other.getFromIdx());
+        result = result && getNextHopsEnc()
+            .equals(other.getNextHopsEnc());
+        return result;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        hash = (37 * hash) + FROMIDX_FIELD_NUMBER;
+        hash = (53 * hash) + getFromIdx();
+        hash = (37 * hash) + NEXTHOPS_ENC_FIELD_NUMBER;
+        hash = (53 * hash) + getNextHopsEnc().hashCode();
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBFlatSet}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBFlatSet)
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSetOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBFlatSet_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBFlatSet_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet.class, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet.Builder.class);
+        }
+
+        // Construct using org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        public Builder clear() {
+          super.clear();
+          fromIdx_ = 0;
+
+          nextHopsEnc_ = "";
+
+          return this;
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBFlatSet_descriptor;
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet getDefaultInstanceForType() {
+          return org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet.getDefaultInstance();
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet build() {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet buildPartial() {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet result = new org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet(this);
+          result.fromIdx_ = fromIdx_;
+          result.nextHopsEnc_ = nextHopsEnc_;
+          onBuilt();
+          return result;
+        }
+
+        public Builder clone() {
+          return (Builder) super.clone();
+        }
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.setField(field, value);
+        }
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return (Builder) super.clearField(field);
+        }
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return (Builder) super.clearOneof(oneof);
+        }
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, Object value) {
+          return (Builder) super.setRepeatedField(field, index, value);
+        }
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.addRepeatedField(field, value);
+        }
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet) {
+            return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet other) {
+          if (other == org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet.getDefaultInstance()) return this;
+          if (other.getFromIdx() != 0) {
+            setFromIdx(other.getFromIdx());
+          }
+          if (!other.getNextHopsEnc().isEmpty()) {
+            nextHopsEnc_ = other.nextHopsEnc_;
+            onChanged();
+          }
+          onChanged();
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+
+        private int fromIdx_ ;
+        /**
+         * <code>int32 fromIdx = 1;</code>
+         */
+        public int getFromIdx() {
+          return fromIdx_;
+        }
+        /**
+         * <code>int32 fromIdx = 1;</code>
+         */
+        public Builder setFromIdx(int value) {
+          
+          fromIdx_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>int32 fromIdx = 1;</code>
+         */
+        public Builder clearFromIdx() {
+          
+          fromIdx_ = 0;
+          onChanged();
+          return this;
+        }
+
+        private java.lang.Object nextHopsEnc_ = "";
+        /**
+         * <code>string nextHops_enc = 2;</code>
+         */
+        public java.lang.String getNextHopsEnc() {
+          java.lang.Object ref = nextHopsEnc_;
+          if (!(ref instanceof java.lang.String)) {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            nextHopsEnc_ = s;
+            return s;
+          } else {
+            return (java.lang.String) ref;
+          }
+        }
+        /**
+         * <code>string nextHops_enc = 2;</code>
+         */
+        public com.google.protobuf.ByteString
+            getNextHopsEncBytes() {
+          java.lang.Object ref = nextHopsEnc_;
+          if (ref instanceof String) {
+            com.google.protobuf.ByteString b = 
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            nextHopsEnc_ = b;
+            return b;
+          } else {
+            return (com.google.protobuf.ByteString) ref;
+          }
+        }
+        /**
+         * <code>string nextHops_enc = 2;</code>
+         */
+        public Builder setNextHopsEnc(
+            java.lang.String value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  
+          nextHopsEnc_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string nextHops_enc = 2;</code>
+         */
+        public Builder clearNextHopsEnc() {
+          
+          nextHopsEnc_ = getDefaultInstance().getNextHopsEnc();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>string nextHops_enc = 2;</code>
+         */
+        public Builder setNextHopsEncBytes(
+            com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+          
+          nextHopsEnc_ = value;
+          onChanged();
+          return this;
+        }
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBFlatSet)
+      }
+
+      // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBFlatSet)
+      private static final org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet();
+      }
+
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      private static final com.google.protobuf.Parser<PBFlatSet>
+          PARSER = new com.google.protobuf.AbstractParser<PBFlatSet>() {
+        public PBFlatSet parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            return new PBFlatSet(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<PBFlatSet> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<PBFlatSet> getParserForType() {
+        return PARSER;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBFlatSet getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    public interface PBNodeOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeType pbnt = 1;</code>
+       */
+      int getPbntValue();
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeType pbnt = 1;</code>
+       */
+      org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType getPbnt();
+
+      /**
+       * <code>bytes data = 2;</code>
+       */
+      com.google.protobuf.ByteString getData();
+    }
+    /**
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode}
+     */
+    public  static final class PBNode extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode)
+        PBNodeOrBuilder {
+      // Use PBNode.newBuilder() to construct.
+      private PBNode(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private PBNode() {
+        pbnt_ = 0;
+        data_ = com.google.protobuf.ByteString.EMPTY;
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      }
+      private PBNode(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        int mutable_bitField0_ = 0;
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!input.skipField(tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 8: {
+                int rawValue = input.readEnum();
+
+                pbnt_ = rawValue;
+                break;
+              }
+              case 18: {
+
+                data_ = input.readBytes();
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNode_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNode_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.class, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder.class);
+      }
+
+      public static final int PBNT_FIELD_NUMBER = 1;
+      private int pbnt_;
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeType pbnt = 1;</code>
+       */
+      public int getPbntValue() {
+        return pbnt_;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeType pbnt = 1;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType getPbnt() {
+        org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType result = org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType.valueOf(pbnt_);
+        return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType.UNRECOGNIZED : result;
+      }
+
+      public static final int DATA_FIELD_NUMBER = 2;
+      private com.google.protobuf.ByteString data_;
+      /**
+       * <code>bytes data = 2;</code>
+       */
+      public com.google.protobuf.ByteString getData() {
+        return data_;
+      }
+
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        if (pbnt_ != org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType.PB_EMPTY.getNumber()) {
+          output.writeEnum(1, pbnt_);
+        }
+        if (!data_.isEmpty()) {
+          output.writeBytes(2, data_);
+        }
+      }
+
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (pbnt_ != org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType.PB_EMPTY.getNumber()) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeEnumSize(1, pbnt_);
+        }
+        if (!data_.isEmpty()) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeBytesSize(2, data_);
+        }
+        memoizedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode)) {
+          return super.equals(obj);
+        }
+        org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode other = (org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode) obj;
+
+        boolean result = true;
+        result = result && pbnt_ == other.pbnt_;
+        result = result && getData()
+            .equals(other.getData());
+        return result;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        hash = (37 * hash) + PBNT_FIELD_NUMBER;
+        hash = (53 * hash) + pbnt_;
+        hash = (37 * hash) + DATA_FIELD_NUMBER;
+        hash = (53 * hash) + getData().hashCode();
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode)
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNode_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNode_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.class, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder.class);
+        }
+
+        // Construct using org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        public Builder clear() {
+          super.clear();
+          pbnt_ = 0;
+
+          data_ = com.google.protobuf.ByteString.EMPTY;
+
+          return this;
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNode_descriptor;
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode getDefaultInstanceForType() {
+          return org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.getDefaultInstance();
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode build() {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode buildPartial() {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode result = new org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode(this);
+          result.pbnt_ = pbnt_;
+          result.data_ = data_;
+          onBuilt();
+          return result;
+        }
+
+        public Builder clone() {
+          return (Builder) super.clone();
+        }
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.setField(field, value);
+        }
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return (Builder) super.clearField(field);
+        }
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return (Builder) super.clearOneof(oneof);
+        }
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, Object value) {
+          return (Builder) super.setRepeatedField(field, index, value);
+        }
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.addRepeatedField(field, value);
+        }
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode) {
+            return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode other) {
+          if (other == org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.getDefaultInstance()) return this;
+          if (other.pbnt_ != 0) {
+            setPbntValue(other.getPbntValue());
+          }
+          if (other.getData() != com.google.protobuf.ByteString.EMPTY) {
+            setData(other.getData());
+          }
+          onChanged();
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+
+        private int pbnt_ = 0;
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeType pbnt = 1;</code>
+         */
+        public int getPbntValue() {
+          return pbnt_;
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeType pbnt = 1;</code>
+         */
+        public Builder setPbntValue(int value) {
+          pbnt_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeType pbnt = 1;</code>
+         */
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType getPbnt() {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType result = org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType.valueOf(pbnt_);
+          return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType.UNRECOGNIZED : result;
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeType pbnt = 1;</code>
+         */
+        public Builder setPbnt(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeType value) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          
+          pbnt_ = value.getNumber();
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeType pbnt = 1;</code>
+         */
+        public Builder clearPbnt() {
+          
+          pbnt_ = 0;
+          onChanged();
+          return this;
+        }
+
+        private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
+        /**
+         * <code>bytes data = 2;</code>
+         */
+        public com.google.protobuf.ByteString getData() {
+          return data_;
+        }
+        /**
+         * <code>bytes data = 2;</code>
+         */
+        public Builder setData(com.google.protobuf.ByteString value) {
+          if (value == null) {
+    throw new NullPointerException();
+  }
+  
+          data_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>bytes data = 2;</code>
+         */
+        public Builder clearData() {
+          
+          data_ = getDefaultInstance().getData();
+          onChanged();
+          return this;
+        }
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode)
+      }
+
+      // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode)
+      private static final org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode();
+      }
+
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      private static final com.google.protobuf.Parser<PBNode>
+          PARSER = new com.google.protobuf.AbstractParser<PBNode>() {
+        public PBNode parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            return new PBNode(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<PBNode> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<PBNode> getParserForType() {
+        return PARSER;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    public interface PBNodeSetOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+       */
+      java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode> 
+          getNodesList();
+      /**
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+       */
+      org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode getNodes(int index);
+      /**
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+       */
+      int getNodesCount();
+      /**
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+       */
+      java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder> 
+          getNodesOrBuilderList();
+      /**
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+       */
+      org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder getNodesOrBuilder(
+          int index);
+    }
+    /**
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet}
+     */
+    public  static final class PBNodeSet extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet)
+        PBNodeSetOrBuilder {
+      // Use PBNodeSet.newBuilder() to construct.
+      private PBNodeSet(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private PBNodeSet() {
+        nodes_ = java.util.Collections.emptyList();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      }
+      private PBNodeSet(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        int mutable_bitField0_ = 0;
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!input.skipField(tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 10: {
+                if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                  nodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode>();
+                  mutable_bitField0_ |= 0x00000001;
+                }
+                nodes_.add(
+                    input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.parser(), extensionRegistry));
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+            nodes_ = java.util.Collections.unmodifiableList(nodes_);
+          }
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNodeSet_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNodeSet_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.class, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.Builder.class);
+      }
+
+      public static final int NODES_FIELD_NUMBER = 1;
+      private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode> nodes_;
+      /**
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+       */
+      public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode> getNodesList() {
+        return nodes_;
+      }
+      /**
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+       */
+      public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder> 
+          getNodesOrBuilderList() {
+        return nodes_;
+      }
+      /**
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+       */
+      public int getNodesCount() {
+        return nodes_.size();
+      }
+      /**
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode getNodes(int index) {
+        return nodes_.get(index);
+      }
+      /**
+       * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder getNodesOrBuilder(
+          int index) {
+        return nodes_.get(index);
+      }
+
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        for (int i = 0; i < nodes_.size(); i++) {
+          output.writeMessage(1, nodes_.get(i));
+        }
+      }
+
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        for (int i = 0; i < nodes_.size(); i++) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(1, nodes_.get(i));
+        }
+        memoizedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet)) {
+          return super.equals(obj);
+        }
+        org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet other = (org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet) obj;
+
+        boolean result = true;
+        result = result && getNodesList()
+            .equals(other.getNodesList());
+        return result;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (getNodesCount() > 0) {
+          hash = (37 * hash) + NODES_FIELD_NUMBER;
+          hash = (53 * hash) + getNodesList().hashCode();
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet)
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSetOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNodeSet_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNodeSet_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.class, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.Builder.class);
+        }
+
+        // Construct using org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+            getNodesFieldBuilder();
+          }
+        }
+        public Builder clear() {
+          super.clear();
+          if (nodesBuilder_ == null) {
+            nodes_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000001);
+          } else {
+            nodesBuilder_.clear();
+          }
+          return this;
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNodeSet_descriptor;
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet getDefaultInstanceForType() {
+          return org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.getDefaultInstance();
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet build() {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet buildPartial() {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet result = new org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet(this);
+          int from_bitField0_ = bitField0_;
+          if (nodesBuilder_ == null) {
+            if (((bitField0_ & 0x00000001) == 0x00000001)) {
+              nodes_ = java.util.Collections.unmodifiableList(nodes_);
+              bitField0_ = (bitField0_ & ~0x00000001);
+            }
+            result.nodes_ = nodes_;
+          } else {
+            result.nodes_ = nodesBuilder_.build();
+          }
+          onBuilt();
+          return result;
+        }
+
+        public Builder clone() {
+          return (Builder) super.clone();
+        }
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.setField(field, value);
+        }
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return (Builder) super.clearField(field);
+        }
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return (Builder) super.clearOneof(oneof);
+        }
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, Object value) {
+          return (Builder) super.setRepeatedField(field, index, value);
+        }
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.addRepeatedField(field, value);
+        }
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet) {
+            return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet other) {
+          if (other == org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.getDefaultInstance()) return this;
+          if (nodesBuilder_ == null) {
+            if (!other.nodes_.isEmpty()) {
+              if (nodes_.isEmpty()) {
+                nodes_ = other.nodes_;
+                bitField0_ = (bitField0_ & ~0x00000001);
+              } else {
+                ensureNodesIsMutable();
+                nodes_.addAll(other.nodes_);
+              }
+              onChanged();
+            }
+          } else {
+            if (!other.nodes_.isEmpty()) {
+              if (nodesBuilder_.isEmpty()) {
+                nodesBuilder_.dispose();
+                nodesBuilder_ = null;
+                nodes_ = other.nodes_;
+                bitField0_ = (bitField0_ & ~0x00000001);
+                nodesBuilder_ = 
+                  com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                     getNodesFieldBuilder() : null;
+              } else {
+                nodesBuilder_.addAllMessages(other.nodes_);
+              }
+            }
+          }
+          onChanged();
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+        private int bitField0_;
+
+        private java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode> nodes_ =
+          java.util.Collections.emptyList();
+        private void ensureNodesIsMutable() {
+          if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+            nodes_ = new java.util.ArrayList<org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode>(nodes_);
+            bitField0_ |= 0x00000001;
+           }
+        }
+
+        private com.google.protobuf.RepeatedFieldBuilderV3<
+            org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder> nodesBuilder_;
+
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode> getNodesList() {
+          if (nodesBuilder_ == null) {
+            return java.util.Collections.unmodifiableList(nodes_);
+          } else {
+            return nodesBuilder_.getMessageList();
+          }
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public int getNodesCount() {
+          if (nodesBuilder_ == null) {
+            return nodes_.size();
+          } else {
+            return nodesBuilder_.getCount();
+          }
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode getNodes(int index) {
+          if (nodesBuilder_ == null) {
+            return nodes_.get(index);
+          } else {
+            return nodesBuilder_.getMessage(index);
+          }
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public Builder setNodes(
+            int index, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode value) {
+          if (nodesBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureNodesIsMutable();
+            nodes_.set(index, value);
+            onChanged();
+          } else {
+            nodesBuilder_.setMessage(index, value);
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public Builder setNodes(
+            int index, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder builderForValue) {
+          if (nodesBuilder_ == null) {
+            ensureNodesIsMutable();
+            nodes_.set(index, builderForValue.build());
+            onChanged();
+          } else {
+            nodesBuilder_.setMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public Builder addNodes(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode value) {
+          if (nodesBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureNodesIsMutable();
+            nodes_.add(value);
+            onChanged();
+          } else {
+            nodesBuilder_.addMessage(value);
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public Builder addNodes(
+            int index, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode value) {
+          if (nodesBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            ensureNodesIsMutable();
+            nodes_.add(index, value);
+            onChanged();
+          } else {
+            nodesBuilder_.addMessage(index, value);
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public Builder addNodes(
+            org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder builderForValue) {
+          if (nodesBuilder_ == null) {
+            ensureNodesIsMutable();
+            nodes_.add(builderForValue.build());
+            onChanged();
+          } else {
+            nodesBuilder_.addMessage(builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public Builder addNodes(
+            int index, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder builderForValue) {
+          if (nodesBuilder_ == null) {
+            ensureNodesIsMutable();
+            nodes_.add(index, builderForValue.build());
+            onChanged();
+          } else {
+            nodesBuilder_.addMessage(index, builderForValue.build());
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public Builder addAllNodes(
+            java.lang.Iterable<? extends org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode> values) {
+          if (nodesBuilder_ == null) {
+            ensureNodesIsMutable();
+            com.google.protobuf.AbstractMessageLite.Builder.addAll(
+                values, nodes_);
+            onChanged();
+          } else {
+            nodesBuilder_.addAllMessages(values);
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public Builder clearNodes() {
+          if (nodesBuilder_ == null) {
+            nodes_ = java.util.Collections.emptyList();
+            bitField0_ = (bitField0_ & ~0x00000001);
+            onChanged();
+          } else {
+            nodesBuilder_.clear();
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public Builder removeNodes(int index) {
+          if (nodesBuilder_ == null) {
+            ensureNodesIsMutable();
+            nodes_.remove(index);
+            onChanged();
+          } else {
+            nodesBuilder_.remove(index);
+          }
+          return this;
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder getNodesBuilder(
+            int index) {
+          return getNodesFieldBuilder().getBuilder(index);
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder getNodesOrBuilder(
+            int index) {
+          if (nodesBuilder_ == null) {
+            return nodes_.get(index);  } else {
+            return nodesBuilder_.getMessageOrBuilder(index);
+          }
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public java.util.List<? extends org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder> 
+             getNodesOrBuilderList() {
+          if (nodesBuilder_ != null) {
+            return nodesBuilder_.getMessageOrBuilderList();
+          } else {
+            return java.util.Collections.unmodifiableList(nodes_);
+          }
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder addNodesBuilder() {
+          return getNodesFieldBuilder().addBuilder(
+              org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.getDefaultInstance());
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder addNodesBuilder(
+            int index) {
+          return getNodesFieldBuilder().addBuilder(
+              index, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.getDefaultInstance());
+        }
+        /**
+         * <code>repeated .org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nodes = 1;</code>
+         */
+        public java.util.List<org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder> 
+             getNodesBuilderList() {
+          return getNodesFieldBuilder().getBuilderList();
+        }
+        private com.google.protobuf.RepeatedFieldBuilderV3<
+            org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder> 
+            getNodesFieldBuilder() {
+          if (nodesBuilder_ == null) {
+            nodesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+                org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder>(
+                    nodes_,
+                    ((bitField0_ & 0x00000001) == 0x00000001),
+                    getParentForChildren(),
+                    isClean());
+            nodes_ = null;
+          }
+          return nodesBuilder_;
+        }
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet)
+      }
+
+      // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet)
+      private static final org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet();
+      }
+
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      private static final com.google.protobuf.Parser<PBNodeSet>
+          PARSER = new com.google.protobuf.AbstractParser<PBNodeSet>() {
+        public PBNodeSet parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            return new PBNodeSet(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<PBNodeSet> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<PBNodeSet> getParserForType() {
+        return PARSER;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    public interface PBDeepTreeSetOrBuilder extends
+        // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBDeepTreeSet)
+        com.google.protobuf.MessageOrBuilder {
+
+      /**
+       * <code>int32 fromIdx = 1;</code>
+       */
+      int getFromIdx();
+
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+       */
+      boolean hasTreeHops();
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+       */
+      org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet getTreeHops();
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+       */
+      org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSetOrBuilder getTreeHopsOrBuilder();
+    }
+    /**
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBDeepTreeSet}
+     */
+    public  static final class PBDeepTreeSet extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBDeepTreeSet)
+        PBDeepTreeSetOrBuilder {
+      // Use PBDeepTreeSet.newBuilder() to construct.
+      private PBDeepTreeSet(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+        super(builder);
+      }
+      private PBDeepTreeSet() {
+        fromIdx_ = 0;
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet
+      getUnknownFields() {
+        return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+      }
+      private PBDeepTreeSet(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        this();
+        int mutable_bitField0_ = 0;
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              default: {
+                if (!input.skipField(tag)) {
+                  done = true;
+                }
+                break;
+              }
+              case 8: {
+
+                fromIdx_ = input.readInt32();
+                break;
+              }
+              case 18: {
+                org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.Builder subBuilder = null;
+                if (treeHops_ != null) {
+                  subBuilder = treeHops_.toBuilder();
+                }
+                treeHops_ = input.readMessage(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.parser(), extensionRegistry);
+                if (subBuilder != null) {
+                  subBuilder.mergeFrom(treeHops_);
+                  treeHops_ = subBuilder.buildPartial();
+                }
+
+                break;
+              }
+            }
+          }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(
+              e).setUnfinishedMessage(this);
+        } finally {
+          makeExtensionsImmutable();
+        }
+      }
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBDeepTreeSet_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBDeepTreeSet_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet.class, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet.Builder.class);
+      }
+
+      public static final int FROMIDX_FIELD_NUMBER = 1;
+      private int fromIdx_;
+      /**
+       * <code>int32 fromIdx = 1;</code>
+       */
+      public int getFromIdx() {
+        return fromIdx_;
+      }
+
+      public static final int TREEHOPS_FIELD_NUMBER = 2;
+      private org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet treeHops_;
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+       */
+      public boolean hasTreeHops() {
+        return treeHops_ != null;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet getTreeHops() {
+        return treeHops_ == null ? org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.getDefaultInstance() : treeHops_;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSetOrBuilder getTreeHopsOrBuilder() {
+        return getTreeHops();
+      }
+
+      private byte memoizedIsInitialized = -1;
+      public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+      }
+
+      public void writeTo(com.google.protobuf.CodedOutputStream output)
+                          throws java.io.IOException {
+        if (fromIdx_ != 0) {
+          output.writeInt32(1, fromIdx_);
+        }
+        if (treeHops_ != null) {
+          output.writeMessage(2, getTreeHops());
+        }
+      }
+
+      public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (fromIdx_ != 0) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeInt32Size(1, fromIdx_);
+        }
+        if (treeHops_ != null) {
+          size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(2, getTreeHops());
+        }
+        memoizedSize = size;
+        return size;
+      }
+
+      private static final long serialVersionUID = 0L;
+      @java.lang.Override
+      public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+         return true;
+        }
+        if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet)) {
+          return super.equals(obj);
+        }
+        org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet other = (org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet) obj;
+
+        boolean result = true;
+        result = result && (getFromIdx()
+            == other.getFromIdx());
+        result = result && (hasTreeHops() == other.hasTreeHops());
+        if (hasTreeHops()) {
+          result = result && getTreeHops()
+              .equals(other.getTreeHops());
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public int hashCode() {
+        if (memoizedHashCode != 0) {
+          return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        hash = (37 * hash) + FROMIDX_FIELD_NUMBER;
+        hash = (53 * hash) + getFromIdx();
+        if (hasTreeHops()) {
+          hash = (37 * hash) + TREEHOPS_FIELD_NUMBER;
+          hash = (53 * hash) + getTreeHops().hashCode();
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+      }
+
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet parseFrom(
+          com.google.protobuf.ByteString data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet parseFrom(
+          com.google.protobuf.ByteString data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet parseFrom(byte[] data)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet parseFrom(
+          byte[] data,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet parseFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet parseFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet parseDelimitedFrom(java.io.InputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet parseDelimitedFrom(
+          java.io.InputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet parseFrom(
+          com.google.protobuf.CodedInputStream input)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input);
+      }
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet parseFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessageV3
+            .parseWithIOException(PARSER, input, extensionRegistry);
+      }
+
+      public Builder newBuilderForType() { return newBuilder(); }
+      public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+      }
+      public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      }
+      public Builder toBuilder() {
+        return this == DEFAULT_INSTANCE
+            ? new Builder() : new Builder().mergeFrom(this);
+      }
+
+      @java.lang.Override
+      protected Builder newBuilderForType(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        Builder builder = new Builder(parent);
+        return builder;
+      }
+      /**
+       * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBDeepTreeSet}
+       */
+      public static final class Builder extends
+          com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+          // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBDeepTreeSet)
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSetOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+            getDescriptor() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBDeepTreeSet_descriptor;
+        }
+
+        protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internalGetFieldAccessorTable() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBDeepTreeSet_fieldAccessorTable
+              .ensureFieldAccessorsInitialized(
+                  org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet.class, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet.Builder.class);
+        }
+
+        // Construct using org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet.newBuilder()
+        private Builder() {
+          maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          super(parent);
+          maybeForceBuilderInitialization();
+        }
+        private void maybeForceBuilderInitialization() {
+          if (com.google.protobuf.GeneratedMessageV3
+                  .alwaysUseFieldBuilders) {
+          }
+        }
+        public Builder clear() {
+          super.clear();
+          fromIdx_ = 0;
+
+          if (treeHopsBuilder_ == null) {
+            treeHops_ = null;
+          } else {
+            treeHops_ = null;
+            treeHopsBuilder_ = null;
+          }
+          return this;
+        }
+
+        public com.google.protobuf.Descriptors.Descriptor
+            getDescriptorForType() {
+          return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBDeepTreeSet_descriptor;
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet getDefaultInstanceForType() {
+          return org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet.getDefaultInstance();
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet build() {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet result = buildPartial();
+          if (!result.isInitialized()) {
+            throw newUninitializedMessageException(result);
+          }
+          return result;
+        }
+
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet buildPartial() {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet result = new org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet(this);
+          result.fromIdx_ = fromIdx_;
+          if (treeHopsBuilder_ == null) {
+            result.treeHops_ = treeHops_;
+          } else {
+            result.treeHops_ = treeHopsBuilder_.build();
+          }
+          onBuilt();
+          return result;
+        }
+
+        public Builder clone() {
+          return (Builder) super.clone();
+        }
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.setField(field, value);
+        }
+        public Builder clearField(
+            com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return (Builder) super.clearField(field);
+        }
+        public Builder clearOneof(
+            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return (Builder) super.clearOneof(oneof);
+        }
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index, Object value) {
+          return (Builder) super.setRepeatedField(field, index, value);
+        }
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            Object value) {
+          return (Builder) super.addRepeatedField(field, value);
+        }
+        public Builder mergeFrom(com.google.protobuf.Message other) {
+          if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet) {
+            return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet)other);
+          } else {
+            super.mergeFrom(other);
+            return this;
+          }
+        }
+
+        public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet other) {
+          if (other == org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet.getDefaultInstance()) return this;
+          if (other.getFromIdx() != 0) {
+            setFromIdx(other.getFromIdx());
+          }
+          if (other.hasTreeHops()) {
+            mergeTreeHops(other.getTreeHops());
+          }
+          onChanged();
+          return this;
+        }
+
+        public final boolean isInitialized() {
+          return true;
+        }
+
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet parsedMessage = null;
+          try {
+            parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+            parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet) e.getUnfinishedMessage();
+            throw e.unwrapIOException();
+          } finally {
+            if (parsedMessage != null) {
+              mergeFrom(parsedMessage);
+            }
+          }
+          return this;
+        }
+
+        private int fromIdx_ ;
+        /**
+         * <code>int32 fromIdx = 1;</code>
+         */
+        public int getFromIdx() {
+          return fromIdx_;
+        }
+        /**
+         * <code>int32 fromIdx = 1;</code>
+         */
+        public Builder setFromIdx(int value) {
+          
+          fromIdx_ = value;
+          onChanged();
+          return this;
+        }
+        /**
+         * <code>int32 fromIdx = 1;</code>
+         */
+        public Builder clearFromIdx() {
+          
+          fromIdx_ = 0;
+          onChanged();
+          return this;
+        }
+
+        private org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet treeHops_ = null;
+        private com.google.protobuf.SingleFieldBuilderV3<
+            org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.Builder, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSetOrBuilder> treeHopsBuilder_;
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+         */
+        public boolean hasTreeHops() {
+          return treeHopsBuilder_ != null || treeHops_ != null;
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+         */
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet getTreeHops() {
+          if (treeHopsBuilder_ == null) {
+            return treeHops_ == null ? org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.getDefaultInstance() : treeHops_;
+          } else {
+            return treeHopsBuilder_.getMessage();
+          }
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+         */
+        public Builder setTreeHops(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet value) {
+          if (treeHopsBuilder_ == null) {
+            if (value == null) {
+              throw new NullPointerException();
+            }
+            treeHops_ = value;
+            onChanged();
+          } else {
+            treeHopsBuilder_.setMessage(value);
+          }
+
+          return this;
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+         */
+        public Builder setTreeHops(
+            org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.Builder builderForValue) {
+          if (treeHopsBuilder_ == null) {
+            treeHops_ = builderForValue.build();
+            onChanged();
+          } else {
+            treeHopsBuilder_.setMessage(builderForValue.build());
+          }
+
+          return this;
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+         */
+        public Builder mergeTreeHops(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet value) {
+          if (treeHopsBuilder_ == null) {
+            if (treeHops_ != null) {
+              treeHops_ =
+                org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.newBuilder(treeHops_).mergeFrom(value).buildPartial();
+            } else {
+              treeHops_ = value;
+            }
+            onChanged();
+          } else {
+            treeHopsBuilder_.mergeFrom(value);
+          }
+
+          return this;
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+         */
+        public Builder clearTreeHops() {
+          if (treeHopsBuilder_ == null) {
+            treeHops_ = null;
+            onChanged();
+          } else {
+            treeHops_ = null;
+            treeHopsBuilder_ = null;
+          }
+
+          return this;
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+         */
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.Builder getTreeHopsBuilder() {
+          
+          onChanged();
+          return getTreeHopsFieldBuilder().getBuilder();
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+         */
+        public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSetOrBuilder getTreeHopsOrBuilder() {
+          if (treeHopsBuilder_ != null) {
+            return treeHopsBuilder_.getMessageOrBuilder();
+          } else {
+            return treeHops_ == null ?
+                org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.getDefaultInstance() : treeHops_;
+          }
+        }
+        /**
+         * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNodeSet treeHops = 2;</code>
+         */
+        private com.google.protobuf.SingleFieldBuilderV3<
+            org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.Builder, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSetOrBuilder> 
+            getTreeHopsFieldBuilder() {
+          if (treeHopsBuilder_ == null) {
+            treeHopsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+                org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSet.Builder, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeSetOrBuilder>(
+                    getTreeHops(),
+                    getParentForChildren(),
+                    isClean());
+            treeHops_ = null;
+          }
+          return treeHopsBuilder_;
+        }
+        public final Builder setUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+        public final Builder mergeUnknownFields(
+            final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return this;
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBDeepTreeSet)
+      }
+
+      // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBDeepTreeSet)
+      private static final org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet DEFAULT_INSTANCE;
+      static {
+        DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet();
+      }
+
+      public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+      }
+
+      private static final com.google.protobuf.Parser<PBDeepTreeSet>
+          PARSER = new com.google.protobuf.AbstractParser<PBDeepTreeSet>() {
+        public PBDeepTreeSet parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            return new PBDeepTreeSet(input, extensionRegistry);
+        }
+      };
+
+      public static com.google.protobuf.Parser<PBDeepTreeSet> parser() {
+        return PARSER;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Parser<PBDeepTreeSet> getParserForType() {
+        return PARSER;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBDeepTreeSet getDefaultInstanceForType() {
+        return DEFAULT_INSTANCE;
+      }
+
+    }
+
+    public static final int GCMD_FIELD_NUMBER = 1;
+    private volatile java.lang.Object gcmd_;
+    /**
+     * <code>string gcmd = 1;</code>
+     */
+    public java.lang.String getGcmd() {
+      java.lang.Object ref = gcmd_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        gcmd_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string gcmd = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getGcmdBytes() {
+      java.lang.Object ref = gcmd_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        gcmd_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int BODY_FIELD_NUMBER = 2;
+    private com.google.protobuf.ByteString body_;
+    /**
+     * <code>bytes body = 2;</code>
+     */
+    public com.google.protobuf.ByteString getBody() {
+      return body_;
+    }
+
+    public static final int FROMIDX_FIELD_NUMBER = 3;
+    private int fromIdx_;
+    /**
+     * <code>int32 fromIdx = 3;</code>
+     */
+    public int getFromIdx() {
+      return fromIdx_;
+    }
+
+    public static final int NEXTHOPS_FIELD_NUMBER = 4;
+    private org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode nextHops_;
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+     */
+    public boolean hasNextHops() {
+      return nextHops_ != null;
+    }
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode getNextHops() {
+      return nextHops_ == null ? org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.getDefaultInstance() : nextHops_;
+    }
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder getNextHopsOrBuilder() {
+      return getNextHops();
+    }
+
+    public static final int NETWORK_FIELD_NUMBER = 5;
+    private volatile java.lang.Object network_;
+    /**
+     * <code>string network = 5;</code>
+     */
+    public java.lang.String getNetwork() {
+      java.lang.Object ref = network_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        network_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string network = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNetworkBytes() {
+      java.lang.Object ref = network_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        network_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int MESSAGEID_FIELD_NUMBER = 6;
+    private volatile java.lang.Object messageid_;
+    /**
+     * <code>string messageid = 6;</code>
+     */
+    public java.lang.String getMessageid() {
+      java.lang.Object ref = messageid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        messageid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string messageid = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMessageidBytes() {
+      java.lang.Object ref = messageid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        messageid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int MSGTYPE_FIELD_NUMBER = 7;
+    private int msgtype_;
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBRouteMsgType msgtype = 7;</code>
+     */
+    public int getMsgtypeValue() {
+      return msgtype_;
+    }
+    /**
+     * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBRouteMsgType msgtype = 7;</code>
+     */
+    public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType getMsgtype() {
+      org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType result = org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType.valueOf(msgtype_);
+      return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType.UNRECOGNIZED : result;
+    }
+
+    public static final int ENCBITS_FIELD_NUMBER = 8;
+    private volatile java.lang.Object encbits_;
+    /**
+     * <code>string encbits = 8;</code>
+     */
+    public java.lang.String getEncbits() {
+      java.lang.Object ref = encbits_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        encbits_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string encbits = 8;</code>
+     */
+    public com.google.protobuf.ByteString
+        getEncbitsBytes() {
+      java.lang.Object ref = encbits_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        encbits_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int NID_FIELD_NUMBER = 50;
+    private volatile java.lang.Object nid_;
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public java.lang.String getNid() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        nid_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *网络ID
+     * </pre>
+     *
+     * <code>string nid = 50;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNidBytes() {
+      java.lang.Object ref = nid_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        nid_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getGcmdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, gcmd_);
+      }
+      if (!body_.isEmpty()) {
+        output.writeBytes(2, body_);
+      }
+      if (fromIdx_ != 0) {
+        output.writeInt32(3, fromIdx_);
+      }
+      if (nextHops_ != null) {
+        output.writeMessage(4, getNextHops());
+      }
+      if (!getNetworkBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, network_);
+      }
+      if (!getMessageidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, messageid_);
+      }
+      if (msgtype_ != org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType.PM_VBASE.getNumber()) {
+        output.writeEnum(7, msgtype_);
+      }
+      if (!getEncbitsBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 8, encbits_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 50, nid_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getGcmdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, gcmd_);
+      }
+      if (!body_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, body_);
+      }
+      if (fromIdx_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, fromIdx_);
+      }
+      if (nextHops_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, getNextHops());
+      }
+      if (!getNetworkBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, network_);
+      }
+      if (!getMessageidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, messageid_);
+      }
+      if (msgtype_ != org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType.PM_VBASE.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(7, msgtype_);
+      }
+      if (!getEncbitsBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, encbits_);
+      }
+      if (!getNidBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(50, nid_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage)) {
+        return super.equals(obj);
+      }
+      org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage other = (org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage) obj;
+
+      boolean result = true;
+      result = result && getGcmd()
+          .equals(other.getGcmd());
+      result = result && getBody()
+          .equals(other.getBody());
+      result = result && (getFromIdx()
+          == other.getFromIdx());
+      result = result && (hasNextHops() == other.hasNextHops());
+      if (hasNextHops()) {
+        result = result && getNextHops()
+            .equals(other.getNextHops());
+      }
+      result = result && getNetwork()
+          .equals(other.getNetwork());
+      result = result && getMessageid()
+          .equals(other.getMessageid());
+      result = result && msgtype_ == other.msgtype_;
+      result = result && getEncbits()
+          .equals(other.getEncbits());
+      result = result && getNid()
+          .equals(other.getNid());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + GCMD_FIELD_NUMBER;
+      hash = (53 * hash) + getGcmd().hashCode();
+      hash = (37 * hash) + BODY_FIELD_NUMBER;
+      hash = (53 * hash) + getBody().hashCode();
+      hash = (37 * hash) + FROMIDX_FIELD_NUMBER;
+      hash = (53 * hash) + getFromIdx();
+      if (hasNextHops()) {
+        hash = (37 * hash) + NEXTHOPS_FIELD_NUMBER;
+        hash = (53 * hash) + getNextHops().hashCode();
+      }
+      hash = (37 * hash) + NETWORK_FIELD_NUMBER;
+      hash = (53 * hash) + getNetwork().hashCode();
+      hash = (37 * hash) + MESSAGEID_FIELD_NUMBER;
+      hash = (53 * hash) + getMessageid().hashCode();
+      hash = (37 * hash) + MSGTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + msgtype_;
+      hash = (37 * hash) + ENCBITS_FIELD_NUMBER;
+      hash = (53 * hash) + getEncbits().hashCode();
+      hash = (37 * hash) + NID_FIELD_NUMBER;
+      hash = (53 * hash) + getNid().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PSRouteMessage}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.PSRouteMessage)
+        org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.class, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.Builder.class);
+      }
+
+      // Construct using org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        gcmd_ = "";
+
+        body_ = com.google.protobuf.ByteString.EMPTY;
+
+        fromIdx_ = 0;
+
+        if (nextHopsBuilder_ == null) {
+          nextHops_ = null;
+        } else {
+          nextHops_ = null;
+          nextHopsBuilder_ = null;
+        }
+        network_ = "";
+
+        messageid_ = "";
+
+        msgtype_ = 0;
+
+        encbits_ = "";
+
+        nid_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_descriptor;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage getDefaultInstanceForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.getDefaultInstance();
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage build() {
+        org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage buildPartial() {
+        org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage result = new org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage(this);
+        result.gcmd_ = gcmd_;
+        result.body_ = body_;
+        result.fromIdx_ = fromIdx_;
+        if (nextHopsBuilder_ == null) {
+          result.nextHops_ = nextHops_;
+        } else {
+          result.nextHops_ = nextHopsBuilder_.build();
+        }
+        result.network_ = network_;
+        result.messageid_ = messageid_;
+        result.msgtype_ = msgtype_;
+        result.encbits_ = encbits_;
+        result.nid_ = nid_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage) {
+          return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage other) {
+        if (other == org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.getDefaultInstance()) return this;
+        if (!other.getGcmd().isEmpty()) {
+          gcmd_ = other.gcmd_;
+          onChanged();
+        }
+        if (other.getBody() != com.google.protobuf.ByteString.EMPTY) {
+          setBody(other.getBody());
+        }
+        if (other.getFromIdx() != 0) {
+          setFromIdx(other.getFromIdx());
+        }
+        if (other.hasNextHops()) {
+          mergeNextHops(other.getNextHops());
+        }
+        if (!other.getNetwork().isEmpty()) {
+          network_ = other.network_;
+          onChanged();
+        }
+        if (!other.getMessageid().isEmpty()) {
+          messageid_ = other.messageid_;
+          onChanged();
+        }
+        if (other.msgtype_ != 0) {
+          setMsgtypeValue(other.getMsgtypeValue());
+        }
+        if (!other.getEncbits().isEmpty()) {
+          encbits_ = other.encbits_;
+          onChanged();
+        }
+        if (!other.getNid().isEmpty()) {
+          nid_ = other.nid_;
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object gcmd_ = "";
+      /**
+       * <code>string gcmd = 1;</code>
+       */
+      public java.lang.String getGcmd() {
+        java.lang.Object ref = gcmd_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          gcmd_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string gcmd = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getGcmdBytes() {
+        java.lang.Object ref = gcmd_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          gcmd_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string gcmd = 1;</code>
+       */
+      public Builder setGcmd(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        gcmd_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string gcmd = 1;</code>
+       */
+      public Builder clearGcmd() {
+        
+        gcmd_ = getDefaultInstance().getGcmd();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string gcmd = 1;</code>
+       */
+      public Builder setGcmdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        gcmd_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString body_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>bytes body = 2;</code>
+       */
+      public com.google.protobuf.ByteString getBody() {
+        return body_;
+      }
+      /**
+       * <code>bytes body = 2;</code>
+       */
+      public Builder setBody(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        body_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bytes body = 2;</code>
+       */
+      public Builder clearBody() {
+        
+        body_ = getDefaultInstance().getBody();
+        onChanged();
+        return this;
+      }
+
+      private int fromIdx_ ;
+      /**
+       * <code>int32 fromIdx = 3;</code>
+       */
+      public int getFromIdx() {
+        return fromIdx_;
+      }
+      /**
+       * <code>int32 fromIdx = 3;</code>
+       */
+      public Builder setFromIdx(int value) {
+        
+        fromIdx_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 fromIdx = 3;</code>
+       */
+      public Builder clearFromIdx() {
+        
+        fromIdx_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode nextHops_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder> nextHopsBuilder_;
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+       */
+      public boolean hasNextHops() {
+        return nextHopsBuilder_ != null || nextHops_ != null;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode getNextHops() {
+        if (nextHopsBuilder_ == null) {
+          return nextHops_ == null ? org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.getDefaultInstance() : nextHops_;
+        } else {
+          return nextHopsBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+       */
+      public Builder setNextHops(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode value) {
+        if (nextHopsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          nextHops_ = value;
+          onChanged();
+        } else {
+          nextHopsBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+       */
+      public Builder setNextHops(
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder builderForValue) {
+        if (nextHopsBuilder_ == null) {
+          nextHops_ = builderForValue.build();
+          onChanged();
+        } else {
+          nextHopsBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+       */
+      public Builder mergeNextHops(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode value) {
+        if (nextHopsBuilder_ == null) {
+          if (nextHops_ != null) {
+            nextHops_ =
+              org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.newBuilder(nextHops_).mergeFrom(value).buildPartial();
+          } else {
+            nextHops_ = value;
+          }
+          onChanged();
+        } else {
+          nextHopsBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+       */
+      public Builder clearNextHops() {
+        if (nextHopsBuilder_ == null) {
+          nextHops_ = null;
+          onChanged();
+        } else {
+          nextHops_ = null;
+          nextHopsBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder getNextHopsBuilder() {
+        
+        onChanged();
+        return getNextHopsFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder getNextHopsOrBuilder() {
+        if (nextHopsBuilder_ != null) {
+          return nextHopsBuilder_.getMessageOrBuilder();
+        } else {
+          return nextHops_ == null ?
+              org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.getDefaultInstance() : nextHops_;
+        }
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBNode nextHops = 4;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder> 
+          getNextHopsFieldBuilder() {
+        if (nextHopsBuilder_ == null) {
+          nextHopsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNode.Builder, org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBNodeOrBuilder>(
+                  getNextHops(),
+                  getParentForChildren(),
+                  isClean());
+          nextHops_ = null;
+        }
+        return nextHopsBuilder_;
+      }
+
+      private java.lang.Object network_ = "";
+      /**
+       * <code>string network = 5;</code>
+       */
+      public java.lang.String getNetwork() {
+        java.lang.Object ref = network_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          network_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string network = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNetworkBytes() {
+        java.lang.Object ref = network_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          network_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string network = 5;</code>
+       */
+      public Builder setNetwork(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        network_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string network = 5;</code>
+       */
+      public Builder clearNetwork() {
+        
+        network_ = getDefaultInstance().getNetwork();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string network = 5;</code>
+       */
+      public Builder setNetworkBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        network_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object messageid_ = "";
+      /**
+       * <code>string messageid = 6;</code>
+       */
+      public java.lang.String getMessageid() {
+        java.lang.Object ref = messageid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          messageid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string messageid = 6;</code>
+       */
+      public com.google.protobuf.ByteString
+          getMessageidBytes() {
+        java.lang.Object ref = messageid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          messageid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string messageid = 6;</code>
+       */
+      public Builder setMessageid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        messageid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string messageid = 6;</code>
+       */
+      public Builder clearMessageid() {
+        
+        messageid_ = getDefaultInstance().getMessageid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string messageid = 6;</code>
+       */
+      public Builder setMessageidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        messageid_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int msgtype_ = 0;
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBRouteMsgType msgtype = 7;</code>
+       */
+      public int getMsgtypeValue() {
+        return msgtype_;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBRouteMsgType msgtype = 7;</code>
+       */
+      public Builder setMsgtypeValue(int value) {
+        msgtype_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBRouteMsgType msgtype = 7;</code>
+       */
+      public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType getMsgtype() {
+        org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType result = org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType.valueOf(msgtype_);
+        return result == null ? org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBRouteMsgType msgtype = 7;</code>
+       */
+      public Builder setMsgtype(org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage.PBRouteMsgType value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        msgtype_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.org.fc.brewchain.p22p.pbgens.PSRouteMessage.PBRouteMsgType msgtype = 7;</code>
+       */
+      public Builder clearMsgtype() {
+        
+        msgtype_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object encbits_ = "";
+      /**
+       * <code>string encbits = 8;</code>
+       */
+      public java.lang.String getEncbits() {
+        java.lang.Object ref = encbits_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          encbits_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string encbits = 8;</code>
+       */
+      public com.google.protobuf.ByteString
+          getEncbitsBytes() {
+        java.lang.Object ref = encbits_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          encbits_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string encbits = 8;</code>
+       */
+      public Builder setEncbits(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        encbits_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string encbits = 8;</code>
+       */
+      public Builder clearEncbits() {
+        
+        encbits_ = getDefaultInstance().getEncbits();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string encbits = 8;</code>
+       */
+      public Builder setEncbitsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        encbits_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object nid_ = "";
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public java.lang.String getNid() {
+        java.lang.Object ref = nid_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          nid_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNidBytes() {
+        java.lang.Object ref = nid_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          nid_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder clearNid() {
+        
+        nid_ = getDefaultInstance().getNid();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *网络ID
+       * </pre>
+       *
+       * <code>string nid = 50;</code>
+       */
+      public Builder setNidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        nid_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage)
+    }
+
+    // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.PSRouteMessage)
+    private static final org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage();
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PSRouteMessage>
+        PARSER = new com.google.protobuf.AbstractParser<PSRouteMessage>() {
+      public PSRouteMessage parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new PSRouteMessage(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PSRouteMessage> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PSRouteMessage> getParserForType() {
+      return PARSER;
+    }
+
+    public org.fc.brewchain.p22p.pbgens.P22P.PSRouteMessage getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PRetRouteMessageOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:org.fc.brewchain.p22p.pbgens.PRetRouteMessage)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     *返回
+     * </pre>
+     *
+     * <code>int32 ret_code = 1;</code>
+     */
+    int getRetCode();
+
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    java.lang.String getRetMessage();
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getRetMessageBytes();
+
+    /**
+     * <code>int32 dnode_count = 3;</code>
+     */
+    int getDnodeCount();
+
+    /**
+     * <code>int32 pending_count = 4;</code>
+     */
+    int getPendingCount();
+
+    /**
+     * <code>string bitencs = 5;</code>
+     */
+    java.lang.String getBitencs();
+    /**
+     * <code>string bitencs = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getBitencsBytes();
+  }
+  /**
+   * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PRetRouteMessage}
+   */
+  public  static final class PRetRouteMessage extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:org.fc.brewchain.p22p.pbgens.PRetRouteMessage)
+      PRetRouteMessageOrBuilder {
+    // Use PRetRouteMessage.newBuilder() to construct.
+    private PRetRouteMessage(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PRetRouteMessage() {
+      retCode_ = 0;
+      retMessage_ = "";
+      dnodeCount_ = 0;
+      pendingCount_ = 0;
+      bitencs_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private PRetRouteMessage(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+
+              retCode_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              retMessage_ = s;
+              break;
+            }
+            case 24: {
+
+              dnodeCount_ = input.readInt32();
+              break;
+            }
+            case 32: {
+
+              pendingCount_ = input.readInt32();
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              bitencs_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetRouteMessage_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetRouteMessage_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage.class, org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage.Builder.class);
+    }
+
+    public static final int RET_CODE_FIELD_NUMBER = 1;
+    private int retCode_;
+    /**
+     * <pre>
+     *返回
+     * </pre>
+     *
+     * <code>int32 ret_code = 1;</code>
+     */
+    public int getRetCode() {
+      return retCode_;
+    }
+
+    public static final int RET_MESSAGE_FIELD_NUMBER = 2;
+    private volatile java.lang.Object retMessage_;
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    public java.lang.String getRetMessage() {
+      java.lang.Object ref = retMessage_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        retMessage_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *返回信息
+     * </pre>
+     *
+     * <code>string ret_message = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRetMessageBytes() {
+      java.lang.Object ref = retMessage_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        retMessage_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int DNODE_COUNT_FIELD_NUMBER = 3;
+    private int dnodeCount_;
+    /**
+     * <code>int32 dnode_count = 3;</code>
+     */
+    public int getDnodeCount() {
+      return dnodeCount_;
+    }
+
+    public static final int PENDING_COUNT_FIELD_NUMBER = 4;
+    private int pendingCount_;
+    /**
+     * <code>int32 pending_count = 4;</code>
+     */
+    public int getPendingCount() {
+      return pendingCount_;
+    }
+
+    public static final int BITENCS_FIELD_NUMBER = 5;
+    private volatile java.lang.Object bitencs_;
+    /**
+     * <code>string bitencs = 5;</code>
+     */
+    public java.lang.String getBitencs() {
+      java.lang.Object ref = bitencs_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        bitencs_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string bitencs = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getBitencsBytes() {
+      java.lang.Object ref = bitencs_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        bitencs_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (retCode_ != 0) {
+        output.writeInt32(1, retCode_);
+      }
+      if (!getRetMessageBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, retMessage_);
+      }
+      if (dnodeCount_ != 0) {
+        output.writeInt32(3, dnodeCount_);
+      }
+      if (pendingCount_ != 0) {
+        output.writeInt32(4, pendingCount_);
+      }
+      if (!getBitencsBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, bitencs_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (retCode_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, retCode_);
+      }
+      if (!getRetMessageBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, retMessage_);
+      }
+      if (dnodeCount_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, dnodeCount_);
+      }
+      if (pendingCount_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, pendingCount_);
+      }
+      if (!getBitencsBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, bitencs_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage)) {
+        return super.equals(obj);
+      }
+      org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage other = (org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage) obj;
+
+      boolean result = true;
+      result = result && (getRetCode()
+          == other.getRetCode());
+      result = result && getRetMessage()
+          .equals(other.getRetMessage());
+      result = result && (getDnodeCount()
+          == other.getDnodeCount());
+      result = result && (getPendingCount()
+          == other.getPendingCount());
+      result = result && getBitencs()
+          .equals(other.getBitencs());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + RET_CODE_FIELD_NUMBER;
+      hash = (53 * hash) + getRetCode();
+      hash = (37 * hash) + RET_MESSAGE_FIELD_NUMBER;
+      hash = (53 * hash) + getRetMessage().hashCode();
+      hash = (37 * hash) + DNODE_COUNT_FIELD_NUMBER;
+      hash = (53 * hash) + getDnodeCount();
+      hash = (37 * hash) + PENDING_COUNT_FIELD_NUMBER;
+      hash = (53 * hash) + getPendingCount();
+      hash = (37 * hash) + BITENCS_FIELD_NUMBER;
+      hash = (53 * hash) + getBitencs().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code org.fc.brewchain.p22p.pbgens.PRetRouteMessage}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:org.fc.brewchain.p22p.pbgens.PRetRouteMessage)
+        org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessageOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetRouteMessage_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetRouteMessage_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage.class, org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage.Builder.class);
+      }
+
+      // Construct using org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        retCode_ = 0;
+
+        retMessage_ = "";
+
+        dnodeCount_ = 0;
+
+        pendingCount_ = 0;
+
+        bitencs_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.internal_static_org_fc_brewchain_p22p_pbgens_PRetRouteMessage_descriptor;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage getDefaultInstanceForType() {
+        return org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage.getDefaultInstance();
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage build() {
+        org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage buildPartial() {
+        org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage result = new org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage(this);
+        result.retCode_ = retCode_;
+        result.retMessage_ = retMessage_;
+        result.dnodeCount_ = dnodeCount_;
+        result.pendingCount_ = pendingCount_;
+        result.bitencs_ = bitencs_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage) {
+          return mergeFrom((org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage other) {
+        if (other == org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage.getDefaultInstance()) return this;
+        if (other.getRetCode() != 0) {
+          setRetCode(other.getRetCode());
+        }
+        if (!other.getRetMessage().isEmpty()) {
+          retMessage_ = other.retMessage_;
+          onChanged();
+        }
+        if (other.getDnodeCount() != 0) {
+          setDnodeCount(other.getDnodeCount());
+        }
+        if (other.getPendingCount() != 0) {
+          setPendingCount(other.getPendingCount());
+        }
+        if (!other.getBitencs().isEmpty()) {
+          bitencs_ = other.bitencs_;
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int retCode_ ;
+      /**
+       * <pre>
+       *返回
+       * </pre>
+       *
+       * <code>int32 ret_code = 1;</code>
+       */
+      public int getRetCode() {
+        return retCode_;
+      }
+      /**
+       * <pre>
+       *返回
+       * </pre>
+       *
+       * <code>int32 ret_code = 1;</code>
+       */
+      public Builder setRetCode(int value) {
+        
+        retCode_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *返回
+       * </pre>
+       *
+       * <code>int32 ret_code = 1;</code>
+       */
+      public Builder clearRetCode() {
+        
+        retCode_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object retMessage_ = "";
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public java.lang.String getRetMessage() {
+        java.lang.Object ref = retMessage_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          retMessage_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRetMessageBytes() {
+        java.lang.Object ref = retMessage_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          retMessage_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public Builder setRetMessage(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        retMessage_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public Builder clearRetMessage() {
+        
+        retMessage_ = getDefaultInstance().getRetMessage();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       *返回信息
+       * </pre>
+       *
+       * <code>string ret_message = 2;</code>
+       */
+      public Builder setRetMessageBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        retMessage_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int dnodeCount_ ;
+      /**
+       * <code>int32 dnode_count = 3;</code>
+       */
+      public int getDnodeCount() {
+        return dnodeCount_;
+      }
+      /**
+       * <code>int32 dnode_count = 3;</code>
+       */
+      public Builder setDnodeCount(int value) {
+        
+        dnodeCount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 dnode_count = 3;</code>
+       */
+      public Builder clearDnodeCount() {
+        
+        dnodeCount_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int pendingCount_ ;
+      /**
+       * <code>int32 pending_count = 4;</code>
+       */
+      public int getPendingCount() {
+        return pendingCount_;
+      }
+      /**
+       * <code>int32 pending_count = 4;</code>
+       */
+      public Builder setPendingCount(int value) {
+        
+        pendingCount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 pending_count = 4;</code>
+       */
+      public Builder clearPendingCount() {
+        
+        pendingCount_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object bitencs_ = "";
+      /**
+       * <code>string bitencs = 5;</code>
+       */
+      public java.lang.String getBitencs() {
+        java.lang.Object ref = bitencs_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          bitencs_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string bitencs = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getBitencsBytes() {
+        java.lang.Object ref = bitencs_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          bitencs_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string bitencs = 5;</code>
+       */
+      public Builder setBitencs(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        bitencs_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string bitencs = 5;</code>
+       */
+      public Builder clearBitencs() {
+        
+        bitencs_ = getDefaultInstance().getBitencs();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string bitencs = 5;</code>
+       */
+      public Builder setBitencsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        bitencs_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:org.fc.brewchain.p22p.pbgens.PRetRouteMessage)
+    }
+
+    // @@protoc_insertion_point(class_scope:org.fc.brewchain.p22p.pbgens.PRetRouteMessage)
+    private static final org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage();
+    }
+
+    public static org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PRetRouteMessage>
+        PARSER = new com.google.protobuf.AbstractParser<PRetRouteMessage>() {
+      public PRetRouteMessage parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new PRetRouteMessage(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<PRetRouteMessage> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PRetRouteMessage> getParserForType() {
+      return PARSER;
+    }
+
+    public org.fc.brewchain.p22p.pbgens.P22P.PRetRouteMessage getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_org_fc_brewchain_p22p_pbgens_PMNodeInfo_descriptor;
   private static final 
@@ -11188,6 +25768,66 @@ public final class P22P {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_org_fc_brewchain_p22p_pbgens_PBVoteNodeIdx_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_PBVoteViewChange_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_PBVoteViewChange_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_PSVoteState_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_PSVoteState_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_NodeStateInfo_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_NodeStateInfo_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_PRetVoteState_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_PRetVoteState_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_PSTestMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_PSTestMessage_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_PRetTestMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_PRetTestMessage_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBFlatSet_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBFlatSet_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNode_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNode_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNodeSet_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNodeSet_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBDeepTreeSet_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBDeepTreeSet_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_fc_brewchain_p22p_pbgens_PRetRouteMessage_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_org_fc_brewchain_p22p_pbgens_PRetRouteMessage_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -11198,45 +25838,106 @@ public final class P22P {
   static {
     java.lang.String[] descriptorData = {
       "\n\np22p.proto\022\034org.fc.brewchain.p22p.pbge" +
-      "ns\032\031google/protobuf/any.proto\"\201\002\n\nPMNode" +
-      "Info\022\021\n\tnode_name\030\001 \001(\t\022\020\n\010protocol\030\002 \001(" +
-      "\t\022\017\n\007address\030\003 \001(\t\022\014\n\004port\030\004 \001(\005\022\024\n\014star" +
-      "tup_time\030\005 \001(\003\022\017\n\007pub_key\030\006 \001(\t\022\r\n\005bcuid" +
-      "\030\007 \001(\t\022\024\n\014try_node_idx\030\010 \001(\005\022\017\n\007pri_key\030" +
-      "\t \001(\t\022\020\n\010node_idx\030\n \001(\005\022\017\n\007recv_cc\030\013 \001(\003" +
-      "\022\017\n\007send_cc\030\014 \001(\003\022\020\n\010block_cc\030\r \001(\003\022\014\n\004s" +
-      "ign\030d \001(\t\"\261\001\n\006PSJoin\0229\n\007my_info\030\001 \001(\0132(." +
-      "org.fc.brewchain.p22p.pbgens.PMNodeInfo\022",
-      ":\n\002op\030\002 \001(\0162..org.fc.brewchain.p22p.pbge" +
-      "ns.PSJoin.Operation\"0\n\tOperation\022\021\n\rMANU" +
-      "_DISCOVER\020\000\022\020\n\014NODE_CONNECT\020\001\"\263\001\n\010PRetJo" +
-      "in\022\020\n\010ret_code\030\001 \001(\005\022\023\n\013ret_message\030\002 \001(" +
-      "\t\0229\n\007my_info\030\003 \001(\0132(.org.fc.brewchain.p2" +
-      "2p.pbgens.PMNodeInfo\0227\n\005nodes\030\004 \003(\0132(.or" +
-      "g.fc.brewchain.p22p.pbgens.PMNodeInfo\022\014\n" +
-      "\004sign\030d \001(\t\"\037\n\nPSNodeInfo\022\021\n\treq_token\030\001" +
-      " \001(\t\"\363\001\n\014PRetNodeInfo\022\020\n\010ret_code\030\001 \001(\005\022" +
-      "\023\n\013ret_message\030\002 \001(\t\0229\n\007current\030\004 \001(\0132(.",
-      "org.fc.brewchain.p22p.pbgens.PMNodeInfo\022" +
-      ":\n\010pendings\030\005 \003(\0132(.org.fc.brewchain.p22" +
-      "p.pbgens.PMNodeInfo\0227\n\005nodes\030\006 \003(\0132(.org" +
-      ".fc.brewchain.p22p.pbgens.PMNodeInfo\022\014\n\004" +
-      "sign\030d \001(\t\"\221\001\n\rPBSwitchNodes\0227\n\005nodes\030\001 " +
+      "ns\032\031google/protobuf/any.proto\"\335\001\n\nPMNode" +
+      "Info\022\021\n\tnode_name\030\001 \001(\t\022\013\n\003uri\030\002 \001(\t\022\024\n\014" +
+      "startup_time\030\005 \001(\003\022\017\n\007pub_key\030\006 \001(\t\022\r\n\005b" +
+      "cuid\030\007 \001(\t\022\024\n\014try_node_idx\030\010 \001(\005\022\017\n\007pri_" +
+      "key\030\t \001(\t\022\020\n\010node_idx\030\n \001(\005\022\017\n\007recv_cc\030\013" +
+      " \001(\003\022\017\n\007send_cc\030\014 \001(\003\022\020\n\010block_cc\030\r \001(\003\022" +
+      "\014\n\004sign\030d \001(\t\"\357\001\n\006PSJoin\0229\n\007my_info\030\001 \001(" +
+      "\0132(.org.fc.brewchain.p22p.pbgens.PMNodeI" +
+      "nfo\022:\n\002op\030\002 \001(\0162..org.fc.brewchain.p22p.",
+      "pbgens.PSJoin.Operation\022\022\n\nnode_count\030\003 " +
+      "\001(\005\022\033\n\023node_notified_count\030\004 \001(\005\022\013\n\003nid\030" +
+      "2 \001(\t\"0\n\tOperation\022\021\n\rMANU_DISCOVER\020\000\022\020\n" +
+      "\014NODE_CONNECT\020\001\"\263\001\n\010PRetJoin\022\020\n\010ret_code" +
+      "\030\001 \001(\005\022\023\n\013ret_message\030\002 \001(\t\0229\n\007my_info\030\003" +
+      " \001(\0132(.org.fc.brewchain.p22p.pbgens.PMNo" +
+      "deInfo\0227\n\005nodes\030\004 \003(\0132(.org.fc.brewchain" +
+      ".p22p.pbgens.PMNodeInfo\022\014\n\004sign\030d \001(\t\"d\n" +
+      "\nPSNodeInfo\022\021\n\treq_token\030\001 \001(\t\0226\n\004node\030\002" +
+      " \001(\0132(.org.fc.brewchain.p22p.pbgens.PMNo",
+      "deInfo\022\013\n\003nid\0302 \001(\t\"\204\002\n\014PRetNodeInfo\022\020\n\010" +
+      "ret_code\030\001 \001(\005\022\023\n\013ret_message\030\002 \001(\t\0229\n\007c" +
+      "urrent\030\004 \001(\0132(.org.fc.brewchain.p22p.pbg" +
+      "ens.PMNodeInfo\022\020\n\010bit_encs\030\005 \001(\t\0228\n\006pnod" +
+      "es\030\006 \003(\0132(.org.fc.brewchain.p22p.pbgens." +
+      "PMNodeInfo\0228\n\006dnodes\030\007 \003(\0132(.org.fc.brew" +
+      "chain.p22p.pbgens.PMNodeInfo\022\014\n\004sign\030d \001" +
+      "(\t\"\236\001\n\rPBSwitchNodes\0227\n\005nodes\030\001 \003(\0132(.or" +
+      "g.fc.brewchain.p22p.pbgens.PMNodeInfo\0229\n" +
+      "\007my_info\030\002 \001(\0132(.org.fc.brewchain.p22p.p",
+      "bgens.PMNodeInfo\022\013\n\003nid\0302 \001(\t\022\014\n\004sign\030d " +
+      "\001(\t\"\334\003\n\006PVBase\0226\n\005state\030\001 \001(\0162\'.org.fc.b" +
+      "rewchain.p22p.pbgens.PBFTStage\0224\n\006m_type" +
+      "\030\002 \001(\0162$.org.fc.brewchain.p22p.pbgens.PV" +
+      "Type\022\t\n\001v\030\003 \001(\r\022\017\n\007max_vid\030\004 \001(\r\022\t\n\001n\030\005 " +
+      "\001(\r\022\023\n\013create_time\030\006 \001(\004\022\030\n\020last_update_" +
+      "time\030\007 \001(\004\022:\n\told_state\030\010 \001(\0162\'.org.fc.b" +
+      "rewchain.p22p.pbgens.PBFTStage\022=\n\014reject" +
+      "_state\030\t \001(\0162\'.org.fc.brewchain.p22p.pbg" +
+      "ens.PBFTStage\022\020\n\010contents\030\n \001(\014\022\021\n\tstore",
+      "_num\030\013 \001(\r\022\024\n\014view_counter\030\014 \001(\r\022\024\n\014orig" +
+      "in_bcuid\030\024 \001(\t\022\023\n\013message_uid\030\036 \001(\t\022\022\n\nf" +
+      "rom_bcuid\030\037 \001(\t\022\013\n\003nid\0302 \001(\t\022\014\n\004sign\030d \001" +
+      "(\t\"\311\001\n\rPBVoteNodeIdx\022?\n\rpending_nodes\030\001 " +
       "\003(\0132(.org.fc.brewchain.p22p.pbgens.PMNod" +
-      "eInfo\0229\n\007my_info\030\002 \001(\0132(.org.fc.brewchai" +
-      "n.p22p.pbgens.PMNodeInfo\022\014\n\004sign\030d \001(\t\"\300" +
-      "\001\n\006PVBase\0226\n\005state\030\001 \001(\0162\'.org.fc.brewch" +
-      "ain.p22p.pbgens.PBFTStage\022\016\n\006m_type\030\002 \001(",
-      "\r\022\t\n\001v\030\003 \001(\r\022\017\n\007max_vid\030\004 \001(\r\022\t\n\001n\030\005 \001(\r" +
-      "\022\020\n\010contents\030\n \001(\014\022\023\n\013message_uid\030\036 \001(\t\022" +
-      "\022\n\nfrom_bcuid\030\037 \001(\t\022\014\n\004sign\030d \001(\t\"_\n\rPBV" +
-      "oteNodeIdx\0227\n\005nodes\030\001 \003(\0132(.org.fc.brewc" +
-      "hain.p22p.pbgens.PMNodeInfo\022\025\n\rnode_bits" +
-      "_enc\030\002 \001(\t*\022\n\007PModule\022\007\n\003PZP\020\000*@\n\010PComma" +
-      "nd\022\007\n\003JIN\020\000\022\007\n\003SWX\020\001\022\007\n\003SET\020\002\022\007\n\003INF\020\003\022\007" +
-      "\n\003VOT\020\004\022\007\n\003HBT\020\n*@\n\tPBFTStage\022\017\n\013PRE_PRE" +
-      "PARE\020\000\022\013\n\007PREPARE\020\001\022\n\n\006COMMIT\020\002\022\t\n\005REPLY" +
-      "\020\003b\006proto3"
+      "eInfo\022\025\n\rnode_bits_enc\030\002 \001(\t\022\030\n\020pending_" +
+      "bits_enc\030\003 \001(\t\0229\n\007d_nodes\030\004 \003(\0132(.org.fc" +
+      ".brewchain.p22p.pbgens.PMNodeInfo\022\013\n\003nid" +
+      "\0302 \001(\t\"S\n\020PBVoteViewChange\022\t\n\001v\030\001 \001(\r\022\024\n" +
+      "\014view_counter\030\002 \001(\r\022\021\n\tstore_num\030\003 \001(\r\022\013",
+      "\n\003nid\0302 \001(\t\"V\n\013PSVoteState\022/\n\001t\030\001 \001(\0162$." +
+      "org.fc.brewchain.p22p.pbgens.PVType\022\t\n\001v" +
+      "\030\002 \001(\005\022\013\n\003nid\0302 \001(\t\"K\n\rNodeStateInfo\022\t\n\001" +
+      "k\030\001 \001(\t\022/\n\001v\030\002 \001(\0132$.org.fc.brewchain.p2" +
+      "2p.pbgens.PVBase\"\357\001\n\rPRetVoteState\022\020\n\010re" +
+      "t_code\030\001 \001(\005\022\023\n\013ret_message\030\002 \001(\t\0224\n\006m_t" +
+      "ype\030\003 \001(\0162$.org.fc.brewchain.p22p.pbgens" +
+      ".PVType\0228\n\003cur\030\004 \001(\0132+.org.fc.brewchain." +
+      "p22p.pbgens.NodeStateInfo\022:\n\005nodes\030\005 \003(\013" +
+      "2+.org.fc.brewchain.p22p.pbgens.NodeStat",
+      "eInfo\022\013\n\003nid\0302 \001(\t\"\364\001\n\rPSTestMessage\022\017\n\007" +
+      "content\030\001 \001(\t\022;\n\004type\030\002 \001(\0162-.org.fc.bre" +
+      "wchain.p22p.pbgens.TestMessageType\022\021\n\twa" +
+      "ll_time\030\003 \001(\003\022\021\n\trecv_time\030\004 \001(\003\022\021\n\tmess" +
+      "ageid\030\005 \001(\t\022\021\n\torg_bcuid\030\006 \001(\t\022\022\n\nfrom_b" +
+      "cuid\030\007 \001(\t\022\r\n\005dwall\030\010 \001(\010\022\r\n\005block\030\n \001(\010" +
+      "\022\n\n\002ps\030\t \001(\003\022\013\n\003nid\0302 \001(\t\"\202\001\n\017PRetTestMe" +
+      "ssage\022\020\n\010ret_code\030\001 \001(\005\022\023\n\013ret_message\030\002" +
+      " \001(\t\022\023\n\013dnode_count\030\003 \001(\005\022\025\n\rpending_cou" +
+      "nt\030\004 \001(\005\022\017\n\007bitencs\030\005 \001(\t\022\013\n\003nid\0302 \001(\t\"\366",
+      "\005\n\016PSRouteMessage\022\014\n\004gcmd\030\001 \001(\t\022\014\n\004body\030" +
+      "\002 \001(\014\022\017\n\007fromIdx\030\003 \001(\005\022E\n\010nextHops\030\004 \001(\013" +
+      "23.org.fc.brewchain.p22p.pbgens.PSRouteM" +
+      "essage.PBNode\022\017\n\007network\030\005 \001(\t\022\021\n\tmessag" +
+      "eid\030\006 \001(\t\022L\n\007msgtype\030\007 \001(\0162;.org.fc.brew" +
+      "chain.p22p.pbgens.PSRouteMessage.PBRoute" +
+      "MsgType\022\017\n\007encbits\030\010 \001(\t\022\013\n\003nid\0302 \001(\t\0322\n" +
+      "\tPBFlatSet\022\017\n\007fromIdx\030\001 \001(\005\022\024\n\014nextHops_" +
+      "enc\030\002 \001(\t\032]\n\006PBNode\022E\n\004pbnt\030\001 \001(\01627.org." +
+      "fc.brewchain.p22p.pbgens.PSRouteMessage.",
+      "PBNodeType\022\014\n\004data\030\002 \001(\014\032O\n\tPBNodeSet\022B\n" +
+      "\005nodes\030\001 \003(\01323.org.fc.brewchain.p22p.pbg" +
+      "ens.PSRouteMessage.PBNode\032j\n\rPBDeepTreeS" +
+      "et\022\017\n\007fromIdx\030\001 \001(\005\022H\n\010treeHops\030\002 \001(\01326." +
+      "org.fc.brewchain.p22p.pbgens.PSRouteMess" +
+      "age.PBNodeSet\"c\n\nPBNodeType\022\014\n\010PB_EMPTY\020" +
+      "\000\022\017\n\013PB_FULLNODE\020\001\022\017\n\013PB_FLAT_SET\020\002\022\017\n\013P" +
+      "B_NODE_SET\020\003\022\024\n\020PB_DEEP_TREE_SET\020\004\"+\n\016PB" +
+      "RouteMsgType\022\014\n\010PM_VBASE\020\000\022\013\n\007PM_TEST\020\001\"" +
+      "v\n\020PRetRouteMessage\022\020\n\010ret_code\030\001 \001(\005\022\023\n",
+      "\013ret_message\030\002 \001(\t\022\023\n\013dnode_count\030\003 \001(\005\022" +
+      "\025\n\rpending_count\030\004 \001(\005\022\017\n\007bitencs\030\005 \001(\t*" +
+      "\022\n\007PModule\022\007\n\003PZP\020\000*[\n\010PCommand\022\007\n\003JIN\020\000" +
+      "\022\007\n\003SWX\020\001\022\007\n\003SET\020\002\022\007\n\003INF\020\003\022\007\n\003VOT\020\004\022\007\n\003" +
+      "VTI\020\005\022\007\n\003RRR\020\006\022\007\n\003HBT\020\n\022\007\n\003TTT\020\036*\201\001\n\tPBF" +
+      "TStage\022\010\n\004INIT\020\000\022\017\n\013PRE_PREPARE\020\001\022\013\n\007PRE" +
+      "PARE\020\002\022\n\n\006COMMIT\020\003\022\t\n\005REPLY\020\004\022\010\n\004NOOP\020\005\022" +
+      "\r\n\tDUPLICATE\020\006\022\020\n\014PENDING_SEND\020\n\022\n\n\006REJE" +
+      "CT\020c**\n\006PVType\022\017\n\013NETWORK_IDX\020\000\022\017\n\013VIEW_" +
+      "CHANGE\020\001*/\n\017TestMessageType\022\010\n\004WALL\020\000\022\010\n",
+      "\004PING\020\001\022\010\n\004PONG\020\002b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -11256,13 +25957,13 @@ public final class P22P {
     internal_static_org_fc_brewchain_p22p_pbgens_PMNodeInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_fc_brewchain_p22p_pbgens_PMNodeInfo_descriptor,
-        new java.lang.String[] { "NodeName", "Protocol", "Address", "Port", "StartupTime", "PubKey", "Bcuid", "TryNodeIdx", "PriKey", "NodeIdx", "RecvCc", "SendCc", "BlockCc", "Sign", });
+        new java.lang.String[] { "NodeName", "Uri", "StartupTime", "PubKey", "Bcuid", "TryNodeIdx", "PriKey", "NodeIdx", "RecvCc", "SendCc", "BlockCc", "Sign", });
     internal_static_org_fc_brewchain_p22p_pbgens_PSJoin_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_org_fc_brewchain_p22p_pbgens_PSJoin_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_fc_brewchain_p22p_pbgens_PSJoin_descriptor,
-        new java.lang.String[] { "MyInfo", "Op", });
+        new java.lang.String[] { "MyInfo", "Op", "NodeCount", "NodeNotifiedCount", "Nid", });
     internal_static_org_fc_brewchain_p22p_pbgens_PRetJoin_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_org_fc_brewchain_p22p_pbgens_PRetJoin_fieldAccessorTable = new
@@ -11274,31 +25975,103 @@ public final class P22P {
     internal_static_org_fc_brewchain_p22p_pbgens_PSNodeInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_fc_brewchain_p22p_pbgens_PSNodeInfo_descriptor,
-        new java.lang.String[] { "ReqToken", });
+        new java.lang.String[] { "ReqToken", "Node", "Nid", });
     internal_static_org_fc_brewchain_p22p_pbgens_PRetNodeInfo_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_org_fc_brewchain_p22p_pbgens_PRetNodeInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_fc_brewchain_p22p_pbgens_PRetNodeInfo_descriptor,
-        new java.lang.String[] { "RetCode", "RetMessage", "Current", "Pendings", "Nodes", "Sign", });
+        new java.lang.String[] { "RetCode", "RetMessage", "Current", "BitEncs", "Pnodes", "Dnodes", "Sign", });
     internal_static_org_fc_brewchain_p22p_pbgens_PBSwitchNodes_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_org_fc_brewchain_p22p_pbgens_PBSwitchNodes_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_fc_brewchain_p22p_pbgens_PBSwitchNodes_descriptor,
-        new java.lang.String[] { "Nodes", "MyInfo", "Sign", });
+        new java.lang.String[] { "Nodes", "MyInfo", "Nid", "Sign", });
     internal_static_org_fc_brewchain_p22p_pbgens_PVBase_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_org_fc_brewchain_p22p_pbgens_PVBase_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_fc_brewchain_p22p_pbgens_PVBase_descriptor,
-        new java.lang.String[] { "State", "MType", "V", "MaxVid", "N", "Contents", "MessageUid", "FromBcuid", "Sign", });
+        new java.lang.String[] { "State", "MType", "V", "MaxVid", "N", "CreateTime", "LastUpdateTime", "OldState", "RejectState", "Contents", "StoreNum", "ViewCounter", "OriginBcuid", "MessageUid", "FromBcuid", "Nid", "Sign", });
     internal_static_org_fc_brewchain_p22p_pbgens_PBVoteNodeIdx_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_org_fc_brewchain_p22p_pbgens_PBVoteNodeIdx_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_org_fc_brewchain_p22p_pbgens_PBVoteNodeIdx_descriptor,
-        new java.lang.String[] { "Nodes", "NodeBitsEnc", });
+        new java.lang.String[] { "PendingNodes", "NodeBitsEnc", "PendingBitsEnc", "DNodes", "Nid", });
+    internal_static_org_fc_brewchain_p22p_pbgens_PBVoteViewChange_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_org_fc_brewchain_p22p_pbgens_PBVoteViewChange_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_PBVoteViewChange_descriptor,
+        new java.lang.String[] { "V", "ViewCounter", "StoreNum", "Nid", });
+    internal_static_org_fc_brewchain_p22p_pbgens_PSVoteState_descriptor =
+      getDescriptor().getMessageTypes().get(9);
+    internal_static_org_fc_brewchain_p22p_pbgens_PSVoteState_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_PSVoteState_descriptor,
+        new java.lang.String[] { "T", "V", "Nid", });
+    internal_static_org_fc_brewchain_p22p_pbgens_NodeStateInfo_descriptor =
+      getDescriptor().getMessageTypes().get(10);
+    internal_static_org_fc_brewchain_p22p_pbgens_NodeStateInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_NodeStateInfo_descriptor,
+        new java.lang.String[] { "K", "V", });
+    internal_static_org_fc_brewchain_p22p_pbgens_PRetVoteState_descriptor =
+      getDescriptor().getMessageTypes().get(11);
+    internal_static_org_fc_brewchain_p22p_pbgens_PRetVoteState_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_PRetVoteState_descriptor,
+        new java.lang.String[] { "RetCode", "RetMessage", "MType", "Cur", "Nodes", "Nid", });
+    internal_static_org_fc_brewchain_p22p_pbgens_PSTestMessage_descriptor =
+      getDescriptor().getMessageTypes().get(12);
+    internal_static_org_fc_brewchain_p22p_pbgens_PSTestMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_PSTestMessage_descriptor,
+        new java.lang.String[] { "Content", "Type", "WallTime", "RecvTime", "Messageid", "OrgBcuid", "FromBcuid", "Dwall", "Block", "Ps", "Nid", });
+    internal_static_org_fc_brewchain_p22p_pbgens_PRetTestMessage_descriptor =
+      getDescriptor().getMessageTypes().get(13);
+    internal_static_org_fc_brewchain_p22p_pbgens_PRetTestMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_PRetTestMessage_descriptor,
+        new java.lang.String[] { "RetCode", "RetMessage", "DnodeCount", "PendingCount", "Bitencs", "Nid", });
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_descriptor =
+      getDescriptor().getMessageTypes().get(14);
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_descriptor,
+        new java.lang.String[] { "Gcmd", "Body", "FromIdx", "NextHops", "Network", "Messageid", "Msgtype", "Encbits", "Nid", });
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBFlatSet_descriptor =
+      internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_descriptor.getNestedTypes().get(0);
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBFlatSet_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBFlatSet_descriptor,
+        new java.lang.String[] { "FromIdx", "NextHopsEnc", });
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNode_descriptor =
+      internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_descriptor.getNestedTypes().get(1);
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNode_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNode_descriptor,
+        new java.lang.String[] { "Pbnt", "Data", });
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNodeSet_descriptor =
+      internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_descriptor.getNestedTypes().get(2);
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNodeSet_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBNodeSet_descriptor,
+        new java.lang.String[] { "Nodes", });
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBDeepTreeSet_descriptor =
+      internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_descriptor.getNestedTypes().get(3);
+    internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBDeepTreeSet_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_PSRouteMessage_PBDeepTreeSet_descriptor,
+        new java.lang.String[] { "FromIdx", "TreeHops", });
+    internal_static_org_fc_brewchain_p22p_pbgens_PRetRouteMessage_descriptor =
+      getDescriptor().getMessageTypes().get(15);
+    internal_static_org_fc_brewchain_p22p_pbgens_PRetRouteMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_org_fc_brewchain_p22p_pbgens_PRetRouteMessage_descriptor,
+        new java.lang.String[] { "RetCode", "RetMessage", "DnodeCount", "PendingCount", "Bitencs", });
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

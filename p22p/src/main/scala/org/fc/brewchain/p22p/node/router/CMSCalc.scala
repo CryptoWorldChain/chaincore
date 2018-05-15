@@ -6,7 +6,9 @@ object CMSCalc {
 
   case class CalcInfo(realn: Int = 10) {
     val delta = Math.sqrt(realn.asInstanceOf[Double]).asInstanceOf[Int];
-    val maxDeep = realn / delta + 1
+    
+      
+    val maxDeep = if(delta>0) realn / delta + 1 else 1
     // for bestN where n cannot sqrt with Int
 //    val bestN = if (delta * delta == realn) realn else (delta + 1) * (delta + 1)
     val bestN = realn; //if (delta * delta == realn) realn else (delta + 1) * (delta + 1)

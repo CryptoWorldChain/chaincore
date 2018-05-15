@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package org.brewchain.zero.pbgens;
+
+enum PGBModule {
+	GBN = 0;
+};
+
+enum PGBCommand {
+	GBG = 0; //创世
+};
+
+message PSGenesisBlock{//编译
+	repeated TokenInfo token = 1;
+}
+
+message PRetGenesisBlock{
+	int32 ret_code = 1;//返回
+	string ret_message = 2; //返回信息
+	string bolck_ext = 3;
+	repeated RetInfo token = 4;
+}
+
+message TokenInfo {
+	string name = 1; //名称
+	string type = 2; //名称
+	repeated HostInfo hosts = 3; //节点地址,个数应该等于账户地址个数
+	int32 addr_count = 4; //账户地址个数，默认100
+	int32 addr_amount = 5; //每个地址金额，默认1000000
+	// int32 pool_amount = 4; //矿池，默认200000000
+	// AddrInfo pool_contract = 5;//挖矿合约地址
+}
+
+message HostInfo{
+	string ip = 1;
+	int32 port = 2;
+}
+
+message RetInfo{
+	string token_name = 1;
+	repeated TXInfo tx = 2;
+}
+
+message TXInfo{
+	int32  Nonce = 1;
+	string ext = 2;
+	repeated Output outputs = 3;
+}
+
+message Output {
+	string bcuid = 1;
+	string pri = 2;
+	string pub = 3;
+	string address = 4;
+	int32  value = 5;
+}
+
+message AddrInfo{
+	string pub_key = 1; //共钥
+	string address = 2; //地址
+}
+

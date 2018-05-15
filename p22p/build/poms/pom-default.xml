@@ -2,8 +2,8 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.fc.brewchain</groupId>
-  <artifactId>org.fc.brewchain.p22p</artifactId>
+  <groupId>org.brewchain</groupId>
+  <artifactId>org.brewchain.p22p</artifactId>
   <version>3.0.0</version>
   <dependencies>
     <dependency>
@@ -165,19 +165,7 @@
     <dependency>
       <groupId>onight.osgi</groupId>
       <artifactId>zpp-gradle</artifactId>
-      <version>3.0.0</version>
-      <scope>compile</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>org.scala-lang.scala-library</artifactId>
-          <groupId>*</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.fc.brewchain</groupId>
-      <artifactId>org.fc.brewchain.bcapi</artifactId>
-      <version>3.1.0</version>
+      <version>3.2.0</version>
       <scope>compile</scope>
       <exclusions>
         <exclusion>
@@ -189,7 +177,31 @@
     <dependency>
       <groupId>org.fc.zippo</groupId>
       <artifactId>org.fc.zippo.oapi</artifactId>
-      <version>3.3.0</version>
+      <version>3.3.2</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>org.scala-lang.scala-library</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.annotation</artifactId>
+      <version>6.0.0</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>org.scala-lang.scala-library</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.brewchain</groupId>
+      <artifactId>org.brewchain.bcapi</artifactId>
+      <version>3.3.2</version>
       <scope>compile</scope>
       <exclusions>
         <exclusion>
